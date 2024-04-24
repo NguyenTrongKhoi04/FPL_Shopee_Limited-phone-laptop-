@@ -21,17 +21,17 @@ $router->get('/', function () {
 });
 //định nghĩa đường dẫn trỏ đến Product Controller
 // user
-$router->get('product', [App\Controllers\UserController::class, 'index']);
-$router->get('cart', [App\Controllers\UserController::class, 'cart']);
-$router->get('change-pass', [App\Controllers\UserController::class, 'change_pass']);
-$router->get('forgot-pass', [App\Controllers\UserController::class, 'forgot_pass']);
-$router->get('info-acccount', [App\Controllers\UserController::class, 'infoAccout']);
-$router->get('info-pro', [App\Controllers\UserController::class, 'infoPro']);
-$router->get('login', [App\Controllers\UserController::class, 'login']);
-$router->get('order', [App\Controllers\UserController::class, 'order']);
-$router->get('register', [App\Controllers\UserController::class, 'register']);
-$router->get('review_info', [App\Controllers\UserController::class, 'review_info']);
-$router->get('thong-tin-dat-hang', [App\Controllers\UserController::class, 'thongTinDatHang']);
+$router->get('product', [App\Controllers\User\UserController::class, 'index']);
+$router->get('cart', [App\Controllers\User\UserController::class, 'cart']);
+$router->get('change-pass', [App\Controllers\User\UserController::class, 'change_pass']);
+$router->get('forgot-pass', [App\Controllers\User\UserController::class, 'forgot_pass']);
+$router->get('info-acccount', [App\Controllers\User\UserController::class, 'infoAccout']);
+$router->get('info-pro', [App\Controllers\User\UserController::class, 'infoPro']);
+$router->get('login', [App\Controllers\User\UserController::class, 'login']);
+$router->get('order', [App\Controllers\User\UserController::class, 'order']);
+$router->get('register', [App\Controllers\User\UserController::class, 'register']);
+$router->get('review_info', [App\Controllers\User\UserController::class, 'review_info']);
+$router->get('thong-tin-dat-hang', [App\Controllers\User\UserController::class, 'thongTinDatHang']);
 // end user
 // admin
 $router->get('index-admin', [App\Controllers\Admin\AdminController::class, 'index_admin']);
