@@ -1,0 +1,5 @@
+<?php $_shouldextend[2]=1; ?>
+<?php $this->startSection('content'); ?>
+<h1>ádsadasasdasd</h1>
+<?php $this->stopSection(); ?>
+<?php if (isset($_shouldextend[2])) { echo $this->runChild('layout.main'); } ?>
