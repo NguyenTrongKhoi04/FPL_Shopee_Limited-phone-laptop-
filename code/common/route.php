@@ -49,7 +49,9 @@ $router->get('until_border', [App\Controllers\Admin\AdminController::class, 'unt
 $router->get('until_color', [App\Controllers\Admin\AdminController::class, 'until_color']);
 $router->get('until_other', [App\Controllers\Admin\AdminController::class, 'until_other']);
 
-// $router->get('add-product', [App\Controllers\ProductController::class, 'addProduct']);
+//admin -> quản lý kho hàng:
+
+$router->get('listStorepro', [App\Controllers\Admin\AdminController::class, 'listStorepro']);
 // $router->post('post-product', [App\Controllers\ProductController::class, 'postProduct']);
 // $router->get('detail-product/{id}', [App\Controllers\ProductController::class, 'detail']);
 // $router->post('edit-product/{id}', [App\Controllers\ProductController::class, 'editProduct']);

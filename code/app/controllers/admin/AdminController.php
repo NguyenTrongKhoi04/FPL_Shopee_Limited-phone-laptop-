@@ -2,87 +2,100 @@
 
 namespace App\Controllers\Admin;
 
-use App\Models\Product;
+use App\Models\StoreProduct;
 
 class AdminController extends BaseAdminController
 {
     public $product;
     public function __construct()
     {
-        $this->product = new Product();
+        $this->product = new StoreProduct();
     }
 
     public function index_admin()
     {
-        $products = $this->product->getProduct();
+        $product = $this->product->getProduct();
         return $this->render('index');
     }
     public function err()
     {
-        $products = $this->product->getProduct();
+        $product = $this->product->getProduct();
         return $this->render('404');
     }
     public function blank()
     {
-        $products = $this->product->getProduct();
+        $product = $this->product->getProduct();
         return $this->render('blank');
     }
     public function buttons()
     {
-        $products = $this->product->getProduct();
+        $product = $this->product->getProduct();
         return $this->render('buttons');
     }
     public function cards()
     {
-        $products = $this->product->getProduct();
+        $product = $this->product->getProduct();
         return $this->render('cards');
     }
     public function charts()
     {
-        $products = $this->product->getProduct();
+        $product = $this->product->getProduct();
         return $this->render('charts');
     }
     public function forgot_pass()
     {
-        $products = $this->product->getProduct();
+        $product = $this->product->getProduct();
         return $this->render('forgot-password');
     }
     public function login()
     {
-        $products = $this->product->getProduct();
+        $product = $this->product->getProduct();
         return $this->render('login');
     }
     public function register()
     {
-        $products = $this->product->getProduct();
+        $product = $this->product->getProduct();
         return $this->render('register');
     }
     public function tables()
     {
-        $products = $this->product->getProduct();
+        $product = $this->product->getProduct();
         return $this->render('tables');
     }
     public function until_animation()
     {
-        $products = $this->product->getProduct();
+        $product = $this->product->getProduct();
         return $this->render('utilities-animation');
     }
     public function until_border()
     {
-        $products = $this->product->getProduct();
+        $product = $this->product->getProduct();
         return $this->render('utilities-border');
     }
     public function until_color()
     {
-        $products = $this->product->getProduct();
+        $product = $this->product->getProduct();
         return $this->render('utilities-color');
     }
     public function until_other()
     {
-        $products = $this->product->getProduct();
+        $product = $this->product->getProduct();
         return $this->render('utilities-other');
     }
 
+
+    //quản lý kho:
+    public function listStorepro(){
+        $products = $this->product->listStorepro();
+        $subcategory = $this->product->getSubategory();
+        $storedetaiproduct = $this->product->getStoreDetailProduct();
+        $size = $this->product->getSize();
+        return $this->render('Products.listStorepro', compact('products','subcategory', 'storedetaiproduct', 'size'));
+    }
+    // public function getSubategory(){
+    //     $subcategory = $this->product->getSubategory();
+    //     return $this->render('Products.listStorepro', compact('subcategory'));
+    // }
     //     public function addProduct()
     //     {
     //         return $this->render('product.add');
