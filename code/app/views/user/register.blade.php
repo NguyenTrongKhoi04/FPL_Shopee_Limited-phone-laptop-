@@ -1,28 +1,25 @@
 @extends('layout.main')
 @section('content')
-<div class="modal d-flex ">
-    <div class="modal__overlay"></div>
-    <div class="modal__body">
+<div class=" d-flex ">
+    <div class="modal__body border-black ">
         <div class="auth-form auth-form-register">
             <form action="" method="POST">
                 <div class="auth-form__container">
                     <div class="auth-form__header">
                         <h3 class="auth__heading">Đăng ký</h3>
-                        <a href="login.html" style="text-decoration: none;" class="auth-form__switch-btn">Đăng
+                        <a href="{{route('login/')}}" style="text-decoration: none;" class="auth-form__switch-btn">Đăng
                             nhập</a>
                     </div>
                     <div class="auth-form__group">
                         <label class="auth-form__group-label" for="email">Email:</label>
                         <input id="email" name="email" type="text" placeholder="Nhập email của bạn" class="auth-form__input">
                         <span class="auth-form__form-masage">
-                            <?= isset($validate["email"]) ? $validate["email"] : ""; ?>
                         </span>
                     </div>
                     <div class="auth-form__group">
                         <label class="auth-form__group-label" for="password">Mật khẩu:</label>
                         <input id="password" name="password" type="password" placeholder="Nhập mật khẩu của bạn" class="auth-form__input">
                         <span class="auth-form__form-masage">
-                            <?= isset($validate["password"]) ? $validate["password"] : ""; ?>
                         </span>
                     </div>
                     <div class="auth-form__form">

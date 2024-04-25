@@ -16,25 +16,11 @@
                 </ul>
                 <ul class="header__navbar-list">
                     <li class="header__navbar-item">
-                        <!-- Link của admin -->
-                        <a href="../admin/index.php" class="header__navbar-item-link">
-                            <i class="header__navbar-icon fa-solid fa-user-gear"></i>
-                            Quản trị</a>
-                    </li>
-
-                    <li class="header__navbar-item">
                         <a href="" class="header__navbar-item-link">
                             <i class="header__navbar-icon fa-solid fa-circle-question"></i>
                             Trợ giúp</a>
                     </li>
-                    <li class="header__navbar-item ">
-                        <a href="home.php?act=register" class="header__navbar-item-link header__navbar-item--strong header__navbar-item-separate">Đăng
-                            ký</a>
-                    </li>
-                    <li class="header__navbar-item">
-                        <a href="home.php?act=login" class="header__navbar-item-link header__navbar-item--strong">Đăng
-                            nhập</a>
-                    </li>
+                    @if(isset($_SESSION['acount']))
                     <li class="header__navbar-item header__navbar-user">
                         <img src="{{BASE_URL.'public/user/assets/img_user/avtgithub.png'}}" alt="" class="header__navbar-user-img">
                         <span class="header__navbar-user-name">
@@ -58,6 +44,16 @@
                             </ul>
                         </div>
                     </li>
+                    @else
+                    <li class="header__navbar-item ">
+                        <a href="{{route('register/')}}" class="header__navbar-item-link header__navbar-item--strong header__navbar-item-separate">Đăng
+                            ký</a>
+                    </li>
+                    <li class="header__navbar-item">
+                        <a href="{{route('login/')}}" class="header__navbar-item-link header__navbar-item--strong">Đăng
+                            nhập</a>
+                    </li>
+                    @endif
                 </ul>
             </nav>
             <!-- Header with search -->
@@ -105,6 +101,7 @@
                     </div>
             </form>
             <!-- cart layout -->
+            @if(!isset($_SESSION['cart']))
             <div class="header__cart">
                 <div class="header__cart-wrap">
                     <i class="header__cart-icon fa-solid fa-cart-shopping"></i>
@@ -115,8 +112,8 @@
                         <span class="header__cart-list-no-cart-msg">Chưa có sản phẩm</span>
                     </div>
                 </div>
-
             </div>
+            @endif
             </form>
         </div>
     </header>

@@ -1,14 +1,14 @@
 @extends('layout.main')
 @section('content')
-<div class="modal d-flex ">
-    <div class=" modal__overlay"></div>
+<div class=" d-flex ">
     <div class="modal__body">
         <div class="auth-form">
             <form action="" method="POST">
                 <div class="auth-form__container">
                     <div class="auth-form__header">
                         <h3 class="auth__heading">Đăng nhập</h3>
-                        <a href="register.html" style="text-decoration: none;" class="auth-form__switch-btn">Đăng ký</a>
+                        <a href="{{route('register/')}}" style="text-decoration: none;"
+                            class="auth-form__switch-btn">Đăng ký</a>
                     </div>
                     <div class="auth-form__form">
                         <div class="auth-form__group">
@@ -20,7 +20,8 @@
                         </div>
                         <div class="auth-form__group">
                             <label class="auth-form__group-label" for="password">Mật khẩu:</label>
-                            <input name="password" type="password" placeholder="Nhập mật khẩu của bạn" class="auth-form__input">
+                            <input name="password" type="password" placeholder="Nhập mật khẩu của bạn"
+                                class="auth-form__input">
                             <span class="auth-form__form-masage">
                                 Validate
                             </span>
@@ -28,7 +29,7 @@
                     </div>
                     <div class="auth-form__aside">
                         <div class="auth-form__help">
-                            <a href="forgot_password.html" class="auth-form__help-link auth-form__help-forgot">Quên
+                            <a href="{{route('forgot-pass/')}}" class="auth-form__help-link auth-form__help-forgot">Quên
                                 mật khẩu</a>
 
                         </div>
