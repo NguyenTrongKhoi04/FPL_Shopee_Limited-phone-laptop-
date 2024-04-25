@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\User;
 
 use App\Models\Product;
 
@@ -14,7 +14,6 @@ class UserController extends BaseController
 
     public function index()
     {
-        $products = $this->product->getProduct();
         return $this->render('product');
     }
     public function cart()
