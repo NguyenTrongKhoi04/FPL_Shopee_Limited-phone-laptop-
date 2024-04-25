@@ -14,7 +14,6 @@ class AdminController extends BaseAdminController
 
     public function index_admin()
     {
-        $products = $this->product->getProduct();
         return $this->render('index');
     }
     public function err()
