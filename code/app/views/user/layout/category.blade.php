@@ -4,13 +4,14 @@
             <i class="category__heading-icon fa-solid fa-list"></i>
             Danh mục
         </h3>
-        <ul class="category-list">
+        <ul class="categorys-list">
+            @foreach($categorys as $cate)
             <li class="category-item">
                 <a href="home.php" class="catogery-item__link">
-                    Danh mục 1
+                    {{$cate -> name_cate }}
                 </a>
             </li>
-            <li class="category-item">
+            <!-- <li class="category-item">
                 <a href="home.php" class="catogery-item__link">
                     Danh mục 2
                 </a>
@@ -25,7 +26,8 @@
                 <a href="home.php" class="catogery-item__link">
                     Danh mục 4
                 </a>
-            </li>
+            </li> -->
+            @endforeach
         </ul>
     </nav>
 </div>

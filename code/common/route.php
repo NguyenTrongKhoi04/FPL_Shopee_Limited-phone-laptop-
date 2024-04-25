@@ -21,7 +21,7 @@ $router->get('/', function () {
 });
 //định nghĩa đường dẫn trỏ đến Product Controller
 // user
-$router->get('product', [App\Controllers\User\UserController::class, 'index']);
+$router->get('product', [App\Controllers\User\UserController::class, 'product']);
 $router->get('cart', [App\Controllers\User\UserController::class, 'cart']);
 $router->get('change-pass', [App\Controllers\User\UserController::class, 'change_pass']);
 $router->get('forgot-pass', [App\Controllers\User\UserController::class, 'forgot_pass']);

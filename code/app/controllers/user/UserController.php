@@ -3,64 +3,80 @@
 namespace App\Controllers\User;
 
 use App\Models\Product;
+use App\Models\Category;
 
 class UserController extends BaseController
 {
     public $product;
+    public $category;
+
     public function __construct()
     {
         $this->product = new Product();
+        $this->category = new Category();
     }
-
-    public function index()
+    // lấy sản phẩm
+    public function product()
     {
-        return $this->render('product');
+        $products = $this->product->getProduct();
+        $categorys = $this->category->getCategory();
+        return $this->render('product', compact('products', 'categorys'));
     }
+    // chuyển trang giỏ hàng
     public function cart()
     {
         $products = $this->product->getProduct();
         return $this->render('cart');
     }
+    // chuyển trang quên mật khẩu
     public function forgot_pass()
     {
         $products = $this->product->getProduct();
         return $this->render('forgot_password');
     }
+    // chuyển trang đổi mật khẩu
     public function change_pass()
     {
         $products = $this->product->getProduct();
         return $this->render('change_password');
     }
+    // chuyển trang thông tin tài khoản
     public function infoAccout()
     {
         $products = $this->product->getProduct();
         return $this->render('infomation_account');
     }
+    // chuyển trang chi tiết sản phẩm
     public function infoPro()
     {
         $products = $this->product->getProduct();
         return $this->render('infomation_product');
     }
+    // chuyển trang đăng nhập
     public function login()
     {
         $products = $this->product->getProduct();
         return $this->render('login');
     }
+    // chuyển trang đặt hàng
     public function order()
     {
         $products = $this->product->getProduct();
         return $this->render('order');
     }
+    // chuyển trang đăng ký
     public function register()
     {
         $products = $this->product->getProduct();
         return $this->render('register');
     }
+    // chuyển trang mua hàng
     public function review_info()
     {
         $products = $this->product->getProduct();
         return $this->render('review_infomation');
     }
+    // chuyển trang thông tin đặt hàng
     public function thongTinDatHang()
     {
         $products = $this->product->getProduct();

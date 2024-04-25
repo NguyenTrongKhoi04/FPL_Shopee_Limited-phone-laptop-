@@ -36,7 +36,7 @@
                             nhập</a>
                     </li>
                     <li class="header__navbar-item header__navbar-user">
-                        <img src="../assets/img_user/avtgithub.png" alt="" class="header__navbar-user-img">
+                        <img src="{{BASE_URL.'public/user/assets/img_user/avtgithub.png'}}" alt="" class="header__navbar-user-img">
                         <span class="header__navbar-user-name">
                             Tên user
                         </span>
@@ -65,7 +65,7 @@
                 <div class="header-with-search">
                     <div class="header__logo">
                         <a href="home.php" class="header__logo-link">
-                            <img class="header__logo-img" src="../assets/img/Logo_poly.png" alt="">
+                            <img class="header__logo-img" src="{{BASE_URL.'public/user/assets/img/Logo_poly.png'}}" alt="">
                         </a>
                     </div>
                     <div class="header__search">
@@ -111,7 +111,7 @@
                     <span class="header__cart-notice">0</span>
                     <!-- No cart: header__cart-list--no-cart -->
                     <div class="header__cart-list header__cart-list--no-cart">
-                        <img src="../assets/img/no_cart.png" alt="" class="header__cart-no-cart-img">
+                        <img src="{{BASE_URL.'public/user/assets/img/no_cart.png'}}" alt="" class="header__cart-no-cart-img">
                         <span class="header__cart-list-no-cart-msg">Chưa có sản phẩm</span>
                     </div>
                 </div>
