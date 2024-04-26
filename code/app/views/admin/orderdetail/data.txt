@@ -1,0 +1,20 @@
+ [id] => 24
+            [id_order] => 8
+            [id_pro] => 23
+            [count] => 3
+            [comment] => sản phẩm thật là tuyệt vời
+            [address] => trịnh văn bô
+            [phone] => 0
+            [image] => https://www.google.com/url?sa=i&url=https%3A%2F%2Fstatusneo.com%2Ffrom-pixels-to-reality-how-ai-generated-images-are-revolutionizing-industries%2F&psig=AOvVaw2nIO_F_XbpVRrWWMrPkJwZ&ust=1713958043034000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCL
+            [price] => 342000
+            [size] => 1
+            [namepro] => sản phẩm 1
+            [quantity] => 101
+            [datepro] => 2022-11-12
+            [id_subcategory] => 4
+            [description] => It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters
+            [sale] => 3
+            [orderdetail_id] => 15
+            [detailproduct_id] => 24
+            [orderdetail_count] => 523
+            [detailproduct_count] => 3

@@ -4,57 +4,32 @@ namespace App\Models\Admin;
 
 use App\Models\BaseModel;
 
-class Order extends BaseModel
+class Status extends BaseModel
 {
 
-    protected $table = "orders";
+    protected $table = "statusorder";
     // lấy danh sách sản phẩm
 
-    public function getOrder($field,$where=1, $condition = null)
+    public function getStatus($field)
     {
-        $sql = "select $field from $this->table WHERE $where $condition";
-        $this->setQuery($sql);
-        // echo "<pre>";
-        // print_r($this->loadAllRows());
-        // echo "</pre>";
-        return $this->loadAllRows();
-    }
-
-    public function getOrderRequestConfirm($field,$where=null)
-    {
-        $sql = "
-        SELECT $field 
-        FROM $this->table 
-        INNER JOIN account ON orders.id_user = account.id
-        LEFT JOIN orderdetail ON orderdetail.id_order = orders.id 
-        WHERE orders.status = 1
-        GROUP BY orders.id
-        ORDER BY time_order";
+        $sql = "select $field from $this->table";
         $this->setQuery($sql);
         return $this->loadAllRows();
     }
-
-    public function getTotalStatus($idStatus, $field)
-    {
-        if($idStatus != null){
-            $idStatus = "WHERE status = $idStatus";
-        };
-        $sql = "select $field from $this->table 
-        $idStatus";
-        $this->setQuery($sql);
-            // echo "<pre>";
-            // print_r($this->loadAllRows());
-            // echo "</pre>";
-        return $this->loadAllRows();
-    }
-
 
     
-    /**
-     * =============================================================================
-     *                                         
-     * =============================================================================
-     */
+// =======================
+    public function getOrderRequestConfirm()
+    {
+        $sql = "
+        select * from $this->table 
+        INNER JOIN ship ON orders.id_ship = ship.id 
+        INNER JOIN statusorder ON orders.status = statusorder.id
+        INNER JOIN account ON orders.id_user = account.id
+        WHERE statusorder.id = 1";
+        $this->setQuery($sql);
+        return $this->loadAllRows();
+    }
     // xây dựng hàm thêm sản phẩm
     public function addOrder($id, $tenSp, $gia)
     {
@@ -65,6 +40,12 @@ class Order extends BaseModel
     }
 
     // hàm truyền vào id để lấy ra chi tiết sản phẩm
+    public function getDetailOrder($id)
+    {
+        $sql = "select * from $this->table where id = ?";
+        $this->setQuery($sql);
+        return $this->loadRow($id);
+    }
 
     // xây dựng hàm sửa sản phẩm
     public function updateOrder($id, $tenSp, $gia)

@@ -4,10 +4,9 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Đơn Chờ Xác Nhận <span
-            style="color: orange;">({{$totalOrderRequestConfirm[0]->count }})</span>
+    <h1 class="h3 mb-2 text-gray-800">Tổng đơn <span style="color: orange;">({{$totalAllOrder[0]->count }})</span>
     </h1>
-    <p class="mb-4">Xác nhận các đơn hàng được khách hàng đặt</p>
+    <p class="mb-4">Tổng tất cả đơn hàng</p>
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
@@ -36,9 +35,8 @@
                             <th>Tài khoản đặt</th>
                             <th>Thời gian đặt</th>
                             <th>Tổng tiền đơn</th>
-                            <th>Giảm giá voucher</th>
-                            <th>Comment đơn hàng</th>
-                            <th>Thao tác</th>
+                            <th>Trạng thái đơn</th>
+                            <th>Xem chi tiết</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -47,44 +45,38 @@
                             <th>Tài khoản đặt</th>
                             <th>Thời gian đặt</th>
                             <th>Tổng tiền đơn</th>
-                            <th>Giảm giá voucher</th>
-                            <th>Comment đơn hàng</th>
-                            <th>Thao tác</th>
+                            <th>Trạng thái đơn</th>
+                            <th>Xem chi tiết</th>
                         </tr>
                     </tfoot>
                     <tbody>
                         @foreach($listOrder as $i)
                         <tr>
-                            <td>{{$i->order_id}}</td>
-                            <td>{{$i->username}}</td>
+                            <td>{{$i->id}}</td>
+                            <td>
+                                <?php
+                                foreach ($listAccount as $acc) {
+                                    if ($acc->id == $i->id_user) {
+                                        echo $acc->username;
+                                    }
+                                }
+                                ?>
+                            </td>
                             <td>{{$i->time_order}}</td>
                             <td class="text-center">{{$i->totalorder}} $</td>
                             <td>
                                 <?php
-                                if ($i->id_voucher != 0) {
-                                    foreach ($listVoucher as $v) {
-                                        if ($v->id == $i->id_voucher) {
-                                            echo $v->valuevoucher . "%";
-                                        }
+                                foreach ($listStatus as $st) {
+                                    if ($st->id == $i->status) {
+                                        echo $st->name;
                                     }
-                                } else {
-                                    echo "không voucher";
                                 }
                                 ?>
                             </td>
-                            <td class="text-center" <?= ($i->countcomment > 0) ? 'style="color: orange;"' : ''  ?>>
-                                {{$i->countcomment}}
-                            </td>
                             <td>
-                                <a href="{{route('orderDetail/'.$i->order_id)}}"><button class="btn btn-primary">Chi
-                                        tiết
-                                        đơn hàng</button></a>
-                                <a href="{{route('confirmOrder/'.$i->order_id)}}">
-                                    <button onclick=" return confirm('Chắc chắn xác nhận đơn hàng')"
-                                        class="btn btn-success">Xác nhận</button></a>
-                                <a href="{{route('confirmOrder/'.$i->order_id)}}">
-                                    <button onclick=" return confirm('Chắc chắn từ chối xác nhận')"
-                                        class="btn btn-danger">Từ chối</button></a>
+                                <a href="{{route('orderDetail/'.$i->id)}}" style="text-decoration: underline;">Chi
+                                    tiết
+                                    đơn hàng</a>
                             </td>
                         <tr>
                             @endforeach

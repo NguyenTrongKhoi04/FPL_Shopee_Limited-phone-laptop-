@@ -4,15 +4,15 @@ namespace App\Models\Admin;
 
 use App\Models\BaseModel;
 
-class Order extends BaseModel
+class Account extends BaseModel
 {
 
-    protected $table = "orders";
+    protected $table = "account";
     // lấy danh sách sản phẩm
 
-    public function getOrder($field,$where=1, $condition = null)
+    public function getAccount($field, $where = 1)
     {
-        $sql = "select $field from $this->table WHERE $where $condition";
+        $sql = "select $field from $this->table WHERE $where";
         $this->setQuery($sql);
         // echo "<pre>";
         // print_r($this->loadAllRows());
@@ -20,7 +20,7 @@ class Order extends BaseModel
         return $this->loadAllRows();
     }
 
-    public function getOrderRequestConfirm($field,$where=null)
+    public function getOrderRequestConfirm($field, $where = null)
     {
         $sql = "
         SELECT $field 
@@ -36,20 +36,20 @@ class Order extends BaseModel
 
     public function getTotalStatus($idStatus, $field)
     {
-        if($idStatus != null){
+        if ($idStatus != null) {
             $idStatus = "WHERE status = $idStatus";
         };
         $sql = "select $field from $this->table 
         $idStatus";
         $this->setQuery($sql);
-            // echo "<pre>";
-            // print_r($this->loadAllRows());
-            // echo "</pre>";
+        // echo "<pre>";
+        // print_r($this->loadAllRows());
+        // echo "</pre>";
         return $this->loadAllRows();
     }
 
 
-    
+
     /**
      * =============================================================================
      *                                         

@@ -34,9 +34,16 @@ $router->get('product', [App\Controllers\User\UserController::class, 'index']);
 // $router->get('thong-tin-dat-hang', [App\Controllers\User\UserController::class, 'thongTinDatHang']);
 // end user
 // admin
-$router->get('order', [App\Controllers\Admin\OrderController::class, 'listRequestConfirm']);
-$router->get('orderdetail/{id}', [App\Controllers\Admin\OrderController::class, 'detailOrder']);
-$router->get('confirmorder/{id}', [App\Controllers\Admin\OrderController::class, 'detailOrder']);
+$router->get('listRequestConfirm', [App\Controllers\Admin\OrderController::class, 'listRequestConfirm']);
+$router->get('listAllOrder', [App\Controllers\Admin\OrderController::class, 'listAllOrder']);
+$router->get('listConfirm', [App\Controllers\Admin\OrderController::class, 'listRequestConfirm']);
+$router->get('listTransfer', [App\Controllers\Admin\OrderController::class, 'listRequestConfirm']);
+$router->get('listSuccess', [App\Controllers\Admin\OrderController::class, 'listRequestConfirm']);
+$router->get('listReject', [App\Controllers\Admin\OrderController::class, 'listRequestConfirm']);
+$router->get('listReturn', [App\Controllers\Admin\OrderController::class, 'listRequestConfirm']);
+
+$router->get('confirmOrder/{id}', [App\Controllers\Admin\OrderController::class, 'detailOrder']);
+$router->get('orderDetail/{id}', [App\Controllers\Admin\OrderDetailController::class, 'detailOrder']);
 // $router->get('err', [App\Controllers\Admin\AdminController::class, 'err']);
 // $router->get('blank', [App\Controllers\Admin\AdminController::class, 'blank']);
 // $router->get('buttons', [App\Controllers\Admin\AdminController::class, 'buttons']);

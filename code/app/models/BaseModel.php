@@ -74,7 +74,7 @@ class BaseModel
             if(!$result = $this->execute($option))
                 return false;
         }
-        return $result->fetch(PDO::FETCH_OBJ);
+        return $result->fetchAll(PDO::FETCH_OBJ);
     }
 
     //Function count the record on the table
