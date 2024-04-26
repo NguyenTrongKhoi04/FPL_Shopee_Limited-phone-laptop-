@@ -6,7 +6,7 @@ const DBPASS = "";
 const DBHOST = "127.0.0.1";
 const DBCHARSET = "utf8";
 
-const BASE_URL = "http://localhost/FPL_Shoppe_limited/FPL_Shopee_Limited-phone-laptop-/code/";
+const BASE_URL = "http://localhost/FPL_Shopee_Limited-phone-laptop-/code/";
 
 function route($url)
 {
