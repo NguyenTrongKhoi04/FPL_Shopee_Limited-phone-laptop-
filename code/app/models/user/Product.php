@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\User;
+
+use App\Models\BaseModel;
 
 class Product extends BaseModel
 {
@@ -10,7 +12,7 @@ class Product extends BaseModel
 
     public function getProduct()
     {
-        $sql = "select * from $this->item 
+        $sql = "SELECT * from $this->item 
         join detailproduct on $this->item.id = detailproduct.id_pro
         ";
         $this->setQuery($sql);

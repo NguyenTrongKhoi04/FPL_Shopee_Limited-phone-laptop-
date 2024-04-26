@@ -1,8 +1,8 @@
 @extends('layout.main')
 @section('content')
 <div class=" d-flex ">
-    <div class="modal__body border-black ">
-        <div class="auth-form auth-form-register">
+    <div class="modal__body ">
+        <div class="auth-form auth-form-register bg-warning-subtle my-3 ">
             <form action="" method="POST">
                 <div class="auth-form__container">
                     <div class="auth-form__header">
@@ -28,13 +28,6 @@
                             <input id="fullname" name="fullname" type="text" placeholder="Nhập tên của bạn" class="auth-form__input">
                             <span class="auth-form__form-masage">
                                 <?= isset($validate["fullname"]) ? $validate["fullname"] : ""; ?>
-                            </span>
-                        </div>
-                        <div class="auth-form__group">
-                            <label class="auth-form__group-label" for="phone">Số điện thoại:</label>
-                            <input id="phone" name="phone" type="text" placeholder="Nhập số điện thoại của bạn" class="auth-form__input">
-                            <span class="auth-form__form-masage">
-                                <?= isset($validate["phoneNumber"]) ? $validate["phoneNumber"] : ""; ?>
                             </span>
                         </div>
                         <div class="auth-form__group">

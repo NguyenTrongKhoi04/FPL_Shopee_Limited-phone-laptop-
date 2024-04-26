@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Admin;
 
-use App\Models\Product;
+use App\Models\User\Product;
 
 class AdminController extends BaseAdminController
 {

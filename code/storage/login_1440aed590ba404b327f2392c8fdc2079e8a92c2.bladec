@@ -2,7 +2,7 @@
 <?php $this->startSection('content'); ?>
 <div class=" d-flex ">
  <div class="modal__body">
- <div class="auth-form">
+ <div class="auth-form bg-warning-subtle pb-3 my-3">
  <form action="" method="POST">
  <div class="auth-form__container">
  <div class="auth-form__header">
@@ -35,15 +35,12 @@
  </div>
  </div>
  <div class="auth-form__controls">
- <a href="../index.html" class="btn auth-form__controls-back btn--nomals">TRỞ VỀ</a>
+ <a href="../index.html"
+ class="btn align-content-center bg-light   auth-form__controls-back btn--nomals">TRỞ VỀ</a>
  <button name="dangnhap" type="submit" class="btn btn--primary">ĐĂNG NHẬP</button>
  </div>
  </div>
  </form>
-
- <div class="auth-form__socials">
-
- </div>
  </div>
  </div>
 </div>

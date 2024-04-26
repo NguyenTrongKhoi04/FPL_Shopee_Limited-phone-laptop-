@@ -2,26 +2,43 @@
 
 namespace App\Controllers\User;
 
-use App\Models\Product;
-use App\Models\Category;
+use App\Models\User\Product;
+use App\Models\User\Category;
+use App\Models\User\SubCategory;
+use App\Models\User\Account;
 
 class UserController extends BaseController
 {
     public $product;
     public $category;
+    public $subCategory;
+    public $account;
 
+
+    // Tạo magic funcion
     public function __construct()
     {
         $this->product = new Product();
         $this->category = new Category();
+        $this->subCategory = new SubCategory();
+        $this->account = new Account();
     }
-    // lấy sản phẩm
+    // lấy sản phẩm, danh mục chỉnh, danh mục phụ cho vào trang product
     public function product()
     {
         $products = $this->product->getProduct();
         $categorys = $this->category->getCategory();
-        return $this->render('product', compact('products', 'categorys'));
+        $subCategorys = $this->subCategory->getSubCategory();
+        return $this->render('product', compact('products', 'categorys', 'subCategorys'));
     }
+    // END
+    // Đăng nhập
+    // chuyển trang đăng nhập
+    public function login()
+    {
+        return $this->render('login');
+    }
+    //END
     // chuyển trang giỏ hàng
     public function cart()
     {
@@ -52,12 +69,7 @@ class UserController extends BaseController
         $products = $this->product->getProduct();
         return $this->render('infomation_product');
     }
-    // chuyển trang đăng nhập
-    public function login()
-    {
-        $products = $this->product->getProduct();
-        return $this->render('login');
-    }
+
     // chuyển trang đặt hàng
     public function order()
     {

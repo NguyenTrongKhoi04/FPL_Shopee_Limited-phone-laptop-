@@ -7,12 +7,23 @@
  <ul class="categorys-list">
  <?php $__currentLoopData = $categorys; $this->addLoop($__currentLoopData);$this->getFirstLoop();
  foreach($__currentLoopData as $cate): $loop = $this->incrementLoopIndices();  ?>
- <li class="category-item">
- <a href="home.php" class="catogery-item__link">
- <?php echo \htmlentities($cate -> name_cate??'', ENT_QUOTES, 'UTF-8', false); ?>
+ <div class="dropdown">
+ <button class="btn btn-warning text-bg-light  dropdown-toggle my-3 w-75" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <?php echo \htmlentities($cate->name_cate??'', ENT_QUOTES, 'UTF-8', false); ?>
 
- </a>
- </li>
+ </button>
+ <ul class="dropdown-menu w-100 ">
+ <?php $__currentLoopData = $subCategorys; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $subcate): $loop = $this->incrementLoopIndices();  ?>
+ <?php if($subcate->id_category == $cate->id): ?>
+ <li><a class="dropdown-item py-3 h4" href=""><?php echo \htmlentities($subcate->name_subcate??'', ENT_QUOTES, 'UTF-8', false); ?></a></li>
+ <?php endif; ?>
+ <!-- <li><a class="dropdown-item" href="#">Another action</a></li>
+ <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ </ul>
+ </div>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
  <!-- <li class="category-item">
  <a href="home.php" class="catogery-item__link">
  Danh mục 2
@@ -29,7 +40,7 @@
  Danh mục 4
  </a>
  </li> -->
- <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+
  </ul>
  </nav>
 </div>
