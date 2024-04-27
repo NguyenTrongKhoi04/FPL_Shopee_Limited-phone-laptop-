@@ -4,7 +4,7 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Đơn Chờ Xác Nhận <span
+    <h1 class="h3 mb-2 text-gray-800">Đơn Đang Chuẩn Bị <span
             style="color: orange;">({{$totalOrderRequestConfirm[0]->count }})</span>
     </h1>
     <p class="mb-4">Xác nhận các đơn hàng được khách hàng đặt</p>
@@ -36,7 +36,7 @@
                             <th>Tài khoản đặt</th>
                             <th>Thời gian đặt</th>
                             <th>Tổng tiền đơn</th>
-                            <th>Giảm giá voucher</th>
+                            <th>Dự tính thời gian giao thành công</th>
                             <th>Ship</th>
                             <th>Comment đơn hàng</th>
                             <th>Thao tác</th>
@@ -48,7 +48,7 @@
                             <th>Tài khoản đặt</th>
                             <th>Thời gian đặt</th>
                             <th>Tổng tiền đơn</th>
-                            <th>Giảm giá voucher</th>
+                            <th>Dự tính thời gian giao thành công</th>
                             <th>Ship</th>
                             <th>Comment đơn hàng</th>
                             <th>Thao tác</th>
@@ -59,7 +59,7 @@
                         <tr>
                             <td>{{$i->order_id}}</td>
                             <td>{{$i->username}}</td>
-                            <td><?= date('H:i:s d/m/Y', strtotime($i->time_order))?></td>
+                            <td><?= date('H:i:s d/m/Y', strtotime($i->time_order)) ?></td>
                             <td class="text-center">{{$i->totalorder}} $</td>
                             <td>
                                 <?php
@@ -92,10 +92,7 @@
                                         đơn hàng</button></a>
                                 <a href="{{route('confirmOrder/'.$i->order_id)}}">
                                     <button onclick=" return confirm('Chắc chắn xác nhận đơn hàng')"
-                                        class="btn btn-success">Xác nhận</button></a>
-                                <a href="{{route('confirmOrder/'.$i->order_id)}}">
-                                    <button onclick=" return confirm('Chắc chắn từ chối xác nhận')"
-                                        class="btn btn-danger">Từ chối</button></a>
+                                        class="btn btn-success">Vận chuyển</button></a>
                             </td>
                         <tr>
                             @endforeach

@@ -19,8 +19,25 @@ $router->filter('auth', function () {
 $router->get('/', function () {
     return "trang chủ";
 });
-//định nghĩa đường dẫn trỏ đến Product Controller
-// user
+
+// TODO: Load All Router
+$arr_directory_admin = scandir('common/router/admin');
+$arr_directory_user = scandir('common/router/user');
+// quét một thư mục và trả về một mảng chứa tên của các tệp và thư mục trong đó
+
+// include router admin
+foreach ($arr_directory_admin as $item) {
+    if ($item != '..' && $item != '.' && file_exists('common/router/admin/' . $item)) {
+        include_once 'common/router/admin/' . $item;
+    }
+};
+// include router user
+foreach ($arr_directory_user as $item) {
+    if ($item != '..' && $item != '.' && file_exists('common/router/user/' . $item)) {
+        include_once 'common/router/user/' . $item;
+    }
+};
+
 $router->get('product', [App\Controllers\User\UserController::class, 'index']);
 // $router->get('cart', [App\Controllers\User\UserController::class, 'cart']);
 // $router->get('change-pass', [App\Controllers\User\UserController::class, 'change_pass']);
@@ -32,18 +49,9 @@ $router->get('product', [App\Controllers\User\UserController::class, 'index']);
 // $router->get('register', [App\Controllers\User\UserController::class, 'register']);
 // $router->get('review_info', [App\Controllers\User\UserController::class, 'review_info']);
 // $router->get('thong-tin-dat-hang', [App\Controllers\User\UserController::class, 'thongTinDatHang']);
-// end user
-// admin
-$router->get('listRequestConfirm', [App\Controllers\Admin\OrderController::class, 'listRequestConfirm']);
-$router->get('listAllOrder', [App\Controllers\Admin\OrderController::class, 'listAllOrder']);
-$router->get('listConfirm', [App\Controllers\Admin\OrderController::class, 'listRequestConfirm']);
-$router->get('listTransfer', [App\Controllers\Admin\OrderController::class, 'listRequestConfirm']);
-$router->get('listSuccess', [App\Controllers\Admin\OrderController::class, 'listRequestConfirm']);
-$router->get('listReject', [App\Controllers\Admin\OrderController::class, 'listRequestConfirm']);
-$router->get('listReturn', [App\Controllers\Admin\OrderController::class, 'listRequestConfirm']);
 
-$router->get('confirmOrder/{id}', [App\Controllers\Admin\OrderController::class, 'detailOrder']);
-$router->get('orderDetail/{id}', [App\Controllers\Admin\OrderDetailController::class, 'detailOrder']);
+
+
 // $router->get('err', [App\Controllers\Admin\AdminController::class, 'err']);
 // $router->get('blank', [App\Controllers\Admin\AdminController::class, 'blank']);
 // $router->get('buttons', [App\Controllers\Admin\AdminController::class, 'buttons']);

@@ -31,6 +31,9 @@ class Order extends BaseModel
         GROUP BY orders.id
         ORDER BY time_order";
         $this->setQuery($sql);
+        // echo "<pre>";
+        // print_r($this->loadAllRows());
+        // echo "</pre>";die;
         return $this->loadAllRows();
     }
 
@@ -48,7 +51,22 @@ class Order extends BaseModel
         return $this->loadAllRows();
     }
 
-
+    public function getOrderConfirm($field, $where = null)
+    {
+        $sql = "
+        SELECT $field 
+        FROM $this->table 
+        INNER JOIN account ON orders.id_user = account.id
+        LEFT JOIN orderdetail ON orderdetail.id_order = orders.id 
+        WHERE orders.status = 2
+        GROUP BY orders.id
+        ORDER BY time_order";
+        $this->setQuery($sql);
+        // echo "<pre>";
+        // print_r($this->loadAllRows());
+        // echo "</pre>";die;
+        return $this->loadAllRows();
+    }
     
     /**
      * =============================================================================
