@@ -112,7 +112,7 @@ class OrderController extends BaseAdminController
         $listShip = $this->ship->getShip('*');
         $listOrder = $this->order->getOrderConfirm(join(', ', $arrField), 'orders.status = 1', "orders.id", "time_order");
 
-        $totalOrderRequestConfirm = $this->order->getTotalStatus(1, 'COUNT(status) AS count');
+        $totalOrderRequestConfirm = $this->order->getTotalStatus(2, 'COUNT(status) AS count');
         $totalOrderConfirm = $this->order->getTotalStatus(2, 'COUNT(status) AS count');
         $totalOrderTransfer = $this->order->getTotalStatus(3, 'COUNT(status) AS count');
         $totalOrderSuccess = $this->order->getTotalStatus(4, 'COUNT(status) AS count');
@@ -138,6 +138,39 @@ class OrderController extends BaseAdminController
 
     public function listTransfer()
     {
+        $arrField = [
+            "*",
+            "COUNT(orders.status) AS totalrequestconfirm",
+            "orders.id AS order_id",
+            "COUNT(DISTINCT orderdetail.comment) AS countcomment"
+        ];
+
+        $listVoucher = $this->voucher->getVoucher('*');
+        $listShip = $this->ship->getShip('*');
+        $listOrder = $this->order->getOrderConfirm(join(', ', $arrField), 'orders.status = 1', "orders.id", "time_order");
+
+        $totalOrderRequestConfirm = $this->order->getTotalStatus(3, 'COUNT(status) AS count');
+        $totalOrderConfirm = $this->order->getTotalStatus(2, 'COUNT(status) AS count');
+        $totalOrderTransfer = $this->order->getTotalStatus(3, 'COUNT(status) AS count');
+        $totalOrderSuccess = $this->order->getTotalStatus(4, 'COUNT(status) AS count');
+        $totalOrderReturn = $this->order->getTotalStatus(7, 'COUNT(status) AS count');
+        $totalOrderReject = $this->order->getTotalStatus(6, 'COUNT(status) AS count');
+        $totalAllOrder = $this->order->getTotalStatus(null, 'COUNT(status) AS count');
+
+        return $this->render('order.ListOrderTransfer', compact(
+            "listOrder",
+            "listVoucher",
+            "listShip",
+
+            "listVoucher",
+            "totalOrderRequestConfirm",
+            "totalOrderConfirm",
+            "totalOrderSuccess",
+            "totalOrderTransfer",
+            "totalOrderReturn",
+            "totalOrderReject",
+            "totalAllOrder"
+        ));
     }
 
     public function listSuccess()

@@ -27,5 +27,20 @@ class OrderDetailController extends BaseAdminController
         $orderDetail = $this->orderDetail->getDetailOrder(($id),implode(',',$arrField));
         return $this->render('orderdetail.OrderDetailRequestConfirm', compact('orderDetail'));
     }
+
+    public function detailOrderConfirm($id)
+    {
+        $arrField = [
+            '*',
+            'orderdetail.id AS orderdetail_id',
+            'detailproduct.id AS detailproduct_id',
+            'orderdetail.count AS orderdetail_count',
+            'detailproduct.count AS detailproduct_count',
+            'size.id AS size_id',
+            'orders.id AS orders_id'
+        ];
+        $orderDetail = $this->orderDetail->getDetailOrder(($id), implode(',', $arrField));
+        return $this->render('orderdetail.OrderDetailConfirm', compact('orderDetail'));
+    }
     
 }

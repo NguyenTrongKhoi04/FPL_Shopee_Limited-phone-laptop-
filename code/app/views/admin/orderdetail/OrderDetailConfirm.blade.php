@@ -13,10 +13,11 @@
             <!-- <h6 class="m-0 font-weight-bold text-primary"><a href="">linktest </a>DataTables Example</h6> -->
             <div>
 
-                <a href="{{route('listRequestConfirm')}}"><button class="btn btn-secondary">Trờ lại trang xác
-                        nhận</button></a>
+                <a href="{{route('listConfirm')}}"><button class="btn btn-secondary">Trờ lại trang chuẩn bị
+                    </button></a>
 
-                <a href="{{route(''.$orderDetail[0]->orders_id)}}"><button class="btn btn-success">Xác nhận đơn
+                <a href="{{route(''.$orderDetail[0]->orders_id)}}"><button class="btn btn-success">Vận chuyển
+                        đơn
                         hàng</button></a>
             </div>
             <h4 style="color: orangered;">Tổng tiền đơn hàng: {{$orderDetail[0]->totalorder}}$</a></h5>

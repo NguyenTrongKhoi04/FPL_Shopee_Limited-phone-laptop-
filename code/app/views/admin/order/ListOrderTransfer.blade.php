@@ -34,24 +34,22 @@
                         <tr>
                             <th>ID</th>
                             <th>Tài khoản đặt</th>
-                            <th>Thời gian xác nhận đơn</th>
+                            <th>Thời gian bắt đầu giao đơn</th>
                             <th>Tổng tiền đơn</th>
-                            <th>Thời gian giao hàng</th>
+                            <th>Đếm ngược</th>
+                            <th>Dự tính thời gian giao thành công</th>
                             <th>Tên ship</th>
-                            <th>Comment đơn hàng</th>
-                            <th>Thao tác</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
                             <th>ID</th>
                             <th>Tài khoản đặt</th>
-                            <th>Thời gian xác nhận đơn</th>
+                            <th>Thời gian bắt đầu giao đơn</th>
                             <th>Tổng tiền đơn</th>
-                            <th>Thời gian giao hàng</th>
+                            <th>Đếm ngược</th>
+                            <th>Dự tính thời gian giao thành công</th>
                             <th>Tên ship</th>
-                            <th>Comment đơn hàng</th>
-                            <th>Thao tác</th>
                         </tr>
                     </tfoot>
                     <tbody>
@@ -65,30 +63,22 @@
                                 <?php
                                 foreach ($listShip as $v) {
                                     if ($v->id == $i->id_ship) {
-                                        $days = floor($v->timeship / (24 * 60)); // Số ngày
-                                        $remaining_minutes = $v->timeship % (24 * 60); // Số phút còn lại sau khi loại bỏ số ngày
-
-                                        $hours = floor($remaining_minutes / 60); // Số giờ
-                                        $remaining_minutes %= 60; // Số phút còn lại sau khi loại bỏ số giờ
-
-                                        $result = '';
-
-                                        if ($days > 0) {
-                                            $result .= $days . 'd ';
-                                        }
-                                        if ($hours > 0) {
-                                            $result .= $hours . 'h ';
-                                        }
-                                        if ($remaining_minutes > 0) {
-                                            $result .= $remaining_minutes . 'p';
-                                        }
-
-                                        echo $result;
                                     }
                                 }
-                                ?>
+                                ?></td>
+                            <td>
+                            <td data-set-countdown="<?= $i->time_complete ?>"></td>
+                            <td><?= $i->time_complete ?></td>
+
+                            <?php foreach ($listShip as $v) {
+                                if ($v->id == $i->id_ship) {
+                                    $newTime = date('H:i:s d/m/Y', strtotime($i->time_complete) + $v->timeship * 60);
+                                    echo $newTime;
+                                }
+                            }
+                            ?>
                             </td>
-                            <td class="text-center">
+                            <td class=" text-center">
                                 <?php
                                 foreach ($listShip as $v) {
                                     if ($v->id == $i->id_ship) {
@@ -99,15 +89,6 @@
                             </td>
                             <td class="text-center" <?= ($i->countcomment > 0) ? 'style="color: orange;"' : ''  ?>>
                                 {{$i->countcomment}}
-                            </td>
-                            <td>
-                                <a href="{{route('orderDetailConfirm/'.$i->order_id)}}"><button
-                                        class="btn btn-primary">Chi
-                                        tiết
-                                        đơn hàng</button></a>
-                                <a href="{{route('confirmOrder/'.$i->order_id)}}">
-                                    <button onclick=" return confirm('Chắc chắn xác nhận đơn hàng')"
-                                        class="btn btn-success">Vận chuyển</button></a>
                             </td>
                         <tr>
                             @endforeach
@@ -121,5 +102,39 @@
 <!-- /.container-fluid -->
 
 </div>
+<script>
+// Lấy thời gian hoàn thành dự kiến từ thuộc tính data-set-countdown của phần tử HTML
+var countdownElements = document.querySelectorAll('[data-set-countdown]');
+countdownElements.forEach(function(element) {
+    var targetTimeString = element.dataset.setCountdown;
+    var targetTime = new Date(targetTimeString);
+    updateCountdown(element, targetTime);
+});
+
+// Hàm cập nhật đồng hồ đếm ngược
+function updateCountdown(element, targetTime) {
+    function update() {
+        var now = new Date();
+
+        // console.log(now, targetTime);
+        var distance = (targetTime.getTime() - now.getTime());
+
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        element.innerHTML = days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's ';
+
+        if (distance > 0) {
+            setTimeout(update, 1000); // Cập nhật lại sau mỗi giây
+        } else {
+            element.innerHTML = 'Expired';
+        }
+    }
+
+    update();
+}
+</script>
 <!-- End of Main Content -->
 @endsection
