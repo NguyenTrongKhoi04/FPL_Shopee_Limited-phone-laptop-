@@ -38,7 +38,51 @@ class UserController extends BaseController
     {
         return $this->render('login');
     }
+    // kiểm tra thông tin đăng nhập
+    public function loginRequest()
+    {
+        if (isset($_POST['login'])) {
+            $gmail = $_POST['gmail'];
+            $password = $_POST['password'];
+            // var_dump($gmail,$password);
+            // die;
+            $checkAccount = $this->account->checkAccount($gmail, $password);
+            // var_dump($checkAccount);
+            // die;
+            if ((isset($checkAccount)) && (is_array($checkAccount)) && (count($checkAccount) > 0)) {
+                // extract($checkAccount[0]);
+                $_SESSION['account'] = $checkAccount;
+                // echo "<pre>";
+                // var_dump($_SESSION['account']);
+                // die;
+                // echo "</pre>";
+                if ($checkAccount[0]->role == 1) {
+                    flash('success', 'Đăng nhập admin thành công', 'index-admin');
+                } else {
+                    flash('success', 'Đăng nhập người dùng thành công', 'product');
+                }
+            } else {
+                $errors = [];
+                if (empty($_POST['gmail'])) {
+                    $errors['email']['required'] = "Bạn phải nhập gmail";
+                } else {
+                    if (filter_var($_POST['gamil'], FILTER_VALIDATE_EMAIL)) {
+                        $errors['email']['invaild'] = "Bạn phải nhập đúng định dạng gmail";
+                    };
+                }
+                flash('errors', 'Đăng nhập không thành công', 'login');
+            }
+        }
+    }
     //END
+    // logout
+    public function logout()
+    {
+        if (isset($_SESSION['account'])) {
+            unset($_SESSION['account']);
+            flash('success', 'Đăng xuất thành công', 'login/');
+        }
+    }
     // chuyển trang giỏ hàng
     public function cart()
     {

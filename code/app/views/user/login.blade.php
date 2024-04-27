@@ -3,7 +3,7 @@
 <div class=" d-flex ">
     <div class="modal__body">
         <div class="auth-form bg-warning-subtle pb-3 my-3">
-            <form action="" method="POST">
+            <form action="{{route('login-request/')}}" method="POST">
                 <div class="auth-form__container">
                     <div class="auth-form__header">
                         <h3 class="auth__heading">Đăng nhập</h3>
@@ -13,9 +13,13 @@
                     <div class="auth-form__form">
                         <div class="auth-form__group">
                             <label class="auth-form__group-label" for="email">Email:</label>
-                            <input name="email" type="text" placeholder="Nhập email của bạn" class="auth-form__input">
+                            <input name="gmail" type="text" placeholder="Nhập email của bạn" class="auth-form__input">
                             <span class="auth-form__form-masage">
-                                Validate
+                                @if(isset($errors['gmail']['requied']))
+                                {{$errors['gmail']['requied']}}
+                                @elseif(isset($errors['gmail']['invaild']))
+                                {{isset($errors['gmail']['invaild'])}}
+                                @endif
                             </span>
                         </div>
                         <div class="auth-form__group">
@@ -31,13 +35,12 @@
                         <div class="auth-form__help">
                             <a href="{{route('forgot-pass/')}}" class="auth-form__help-link auth-form__help-forgot">Quên
                                 mật khẩu</a>
-
                         </div>
                     </div>
                     <div class="auth-form__controls">
-                        <a href="../index.html"
+                        <a href="{{route('product/')}}"
                             class="btn align-content-center bg-light   auth-form__controls-back btn--nomals">TRỞ VỀ</a>
-                        <button name="dangnhap" type="submit" class="btn hov btn--primary">ĐĂNG NHẬP</button>
+                        <button name="login" type="submit" class="btn hov btn--primary">ĐĂNG NHẬP</button>
                     </div>
                 </div>
             </form>
