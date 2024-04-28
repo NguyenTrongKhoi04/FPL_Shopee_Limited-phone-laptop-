@@ -68,6 +68,12 @@ class StoreProduct extends BaseModel {
         return $this->loadRow($id_category);
     }
 
+    public function get1Subcategory($id){
+        $sql = "select * from subcategory where id = ?";
+        $this->setQuery($sql);
+        return $this->loadRow([$id]);
+    }
+
     public function addStoreProduct( $name_pro, $quantity, $datepro, $id_subcategory, $description){
         $sql = "INSERT INTO `storepro`(name_pro, quantity, datepro, id_subcategory, description) VALUES (?,?,?,?,?)";
         $this->setQuery($sql);
@@ -86,6 +92,21 @@ class StoreProduct extends BaseModel {
         return $this->execute([$namepro , $quantity , $datepro , $id_subcategory , $description, $id]);
     }
 
+    public function addToSopSc($id, $namepro, $quantity, $datepro, $id_subcategory, $description, $sale){
+        $sql = "INSERT INTO `product`(`id`, `namepro`, `quantity`, `datepro`, `id_subcategory`, `description`, `sale`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]')";
+    }
+
+    public function deleteSubcate($id){
+        $sql = "DELETE FROM `subcategory` WHERE id = ?";
+        $this->setQuery($sql);
+        return $this->execute([$id]);
+    }
+
+    public function updateSubcate($id , $name_subcate , $id_category){
+        $sql = "UPDATE `subcategory` SET name_subcate=?,id_category=? WHERE id = ?";
+        $this->setQuery($sql);
+        return $this->execute([ $name_subcate , $id_category, $id]);
+    }
 
     public function getProduct(){
 

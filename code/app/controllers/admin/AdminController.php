@@ -197,6 +197,44 @@ class AdminController extends BaseAdminController
             $this->render('Products.listStorepro', compact('check', 'products', 'subcategory', 'storedetaiproduct', 'size', 'countpro', 'cate'));
         }
     }
+// quản lý cate:
+public function deleteSubcate($id){
+    $this->product->deleteSubcate($id);
+    $check = 'xóa thành công dannh mục';
+    $products = $this->product->listStorepro();
+    $subcategory = $this->product->getSubAllCategory();
+    $storedetaiproduct = $this->product->getStoreDetailProduct();
+    $size = $this->product->getSize();
+    $cate = $this->product->getCategory();
+    $countpro = $this->product->getCountStoreDetailProduct();
+    $this->render('Products.listStorepro', compact('check', 'products', 'subcategory', 'storedetaiproduct', 'size', 'countpro', 'cate'));
+}
+
+public function detailSubcate($id){
+    $subcategory = $this->product->getSubAllCategory();
+    $cate = $this->product->getCategory();
+    $oneSub = $this->product->get1Subcategory($id);
+    $this->render('Products.detailSubcate', compact('oneSub','subcategory', 'cate'));
+
+}
+
+public function updateSubcate($id){
+    if (isset($_POST['btn-submit'])) {
+        $this->product->updateSubcate( $id,$_POST['name_subcate'], $_POST['id_category']);
+        $check = 'sửa thành công';
+        $products = $this->product->listStorepro();
+        $subcategory = $this->product->getSubAllCategory();
+        $storedetaiproduct = $this->product->getStoreDetailProduct();
+        $size = $this->product->getSize();
+        $cate = $this->product->getCategory();
+        $countpro = $this->product->getCountStoreDetailProduct();
+        $this->render('Products.listStorepro', compact('check', 'products', 'subcategory', 'storedetaiproduct', 'size', 'countpro', 'cate'));
+    }
+}
+
+
+
+
 //Up lên Cửa Hàng:
     public function upToShop(){
         $cate = $this->product->getCategory();
@@ -213,6 +251,9 @@ class AdminController extends BaseAdminController
         $cate = $this->product->getCategory();
         $oneproduct = $this->product->getOneProduct($id);
         $this->render('Products.upToShopSc', compact('subcate','cate','oneproduct'));
+
+    }
+    public function addToSopSc(){
 
     }
 

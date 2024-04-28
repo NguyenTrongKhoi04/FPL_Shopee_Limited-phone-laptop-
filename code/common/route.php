@@ -54,14 +54,20 @@ $router->get('until_other', [App\Controllers\Admin\AdminController::class, 'unti
 
 $router->get('listStorepro', [App\Controllers\Admin\AdminController::class, 'listStorepro']);
 $router->post('add-storeProduct', [App\Controllers\Admin\AdminController::class, 'addStorepro']);
-$router->post('add-subcategory', [App\Controllers\Admin\AdminController::class, 'addSubCategory']);
 $router->post('edit-storeDetailProduct/{id}', [App\Controllers\Admin\AdminController::class, 'updateDetailStoreProducts']);
 $router->post('edit-storeProduct/{id}', [App\Controllers\Admin\AdminController::class, 'updateStoreProducts']);
 $router->get('deleteStoreProduct/{id}', [App\Controllers\Admin\AdminController::class, 'deleteStoreProduct']);
+// category - sub
+$router->post('add-subcategory', [App\Controllers\Admin\AdminController::class, 'addSubCategory']);
+$router->get('deleteSubcate/{id}', [App\Controllers\Admin\AdminController::class, 'deleteSubcate']);
+$router->get('detailSubcate/{id}', [App\Controllers\Admin\AdminController::class, 'detailSubcate']);
+$router->post('updateSubcate/{id}', [App\Controllers\Admin\AdminController::class, 'updateSubcate']);
+
 
 //up lên shop:
 $router->get('upToShop', [App\Controllers\Admin\AdminController::class, 'upToShop']);
 $router->get('upToShop/{id}', [App\Controllers\Admin\AdminController::class, 'upToShopSc']);
+$router->post('addUpToShop', [App\Controllers\Admin\AdminController::class, 'addToSopSc']);
 // $router->post('post-product', [App\Controllers\ProductController::class, 'postProduct']);
 // $router->get('detail-product/{id}', [App\Controllers\ProductController::class, 'detail']);
 // $router->post('edit-product/{id}', [App\Controllers\ProductController::class, 'editProduct']);
