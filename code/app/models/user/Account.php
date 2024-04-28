@@ -13,10 +13,10 @@ class Account extends BaseModel
         $this->setQuery($sql);
         return $this->loadAllRows();
     }
-    public function addAccount($gmail, $password, $username, $address)
+    public function addAccount($gmail, $password, $username, $birthday, $address)
     {
-        $sql = "INSERT INTO $this->item('gmail','password','username','address') Values('$gmail','$password','$username','$address')";
+        $sql = "INSERT INTO $this->item(gmail,password,username,birthday,address) Values(?,?,?,?,?)";
         $this->setQuery($sql);
-        return $this->execute();
+        return $this->execute([$gmail, $password, $username, $birthday, $address]);
     }
 }

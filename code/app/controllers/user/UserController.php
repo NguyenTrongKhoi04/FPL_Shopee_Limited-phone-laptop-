@@ -64,13 +64,16 @@ class UserController extends BaseController
             } else {
                 $errors = [];
                 if (empty($_POST['gmail'])) {
-                    $errors['email']['required'] = "Bạn phải nhập gmail";
+                    $errors['gmail']['required'] = "Bạn phải nhập gmail";
                 } else {
-                    if (filter_var($_POST['gamil'], FILTER_VALIDATE_EMAIL)) {
-                        $errors['email']['invaild'] = "Bạn phải nhập đúng định dạng gmail";
+                    if (!filter_var($_POST['gmail'], FILTER_VALIDATE_EMAIL)) {
+                        $errors['gmail']['required'] = "Bạn phải nhập đúng định dạng gmail";
                     };
+                };
+                if (empty($_POST['password'])) {
+                    $errors['password']['required'] = "Bạn phải nhập password";
                 }
-                flash('errors', 'Đăng nhập không thành công', 'login');
+                return $this->render('login', compact('errors'));
             }
         }
     }
@@ -82,6 +85,62 @@ class UserController extends BaseController
             unset($_SESSION['account']);
             flash('success', 'Đăng xuất thành công', 'login/');
         }
+    }
+    // END
+    // Đăng ký
+    // chuyển trang đăng ký
+    public function register()
+    {
+        return $this->render('register');
+    }
+    public function registerRequest()
+    {
+        if (isset($_POST['register'])) {
+            $gmail = $_POST['gmail'];
+            $password = $_POST['password'];
+            $username = $_POST['username'];
+            $birthday =  $_POST['birthday'];
+            $address = $_POST['address'];
+            $errors = [];
+            if (empty($_POST['gmail'])) {
+                $errors['gmail'] = "Bạn phải nhập gmail";
+            } else {
+                if (!filter_var($_POST['gmail'], FILTER_VALIDATE_EMAIL)) {
+                    $errors['gmail'] = "Bạn phải nhập đúng định dạng gamil";
+                }
+            }
+            if (empty($_POST['password'])) {
+                $errors['password'] = "Bạn phải nhập mật khẩu";
+            }
+            if (empty($_POST['username'])) {
+                $errors['username'] = "Bạn phải nhập tên ";
+            }
+            if (empty($_POST['birthday'])) {
+                $errors['birthday'] = "Bạn phải chọn ngày sinh ";
+            }
+            if (empty($_POST['address'])) {
+                $errors['address'] = "Bạn phải nhập địa chỉ";
+            }
+            // var_dump($errors);
+            // die;
+            if (count($errors) > 0) {
+                // có lỗi
+                return $this->render('register', compact('errors'));
+            } else {
+                $addAccount = $this->account->addAccount($gmail, $password, $username, $birthday, $address);
+                if ($addAccount) {
+                    flash('success', 'Đăng ký thành công', 'login');
+                }
+            }
+        }
+    }
+    //END
+    // Chi tiết sản phẩm
+    // chuyển trang chi tiết sản phẩm
+    public function infoPro($id)
+    {
+        $products = $this->product->getProduct();
+        return $this->render('infomation_product');
     }
     // chuyển trang giỏ hàng
     public function cart()
@@ -107,12 +166,8 @@ class UserController extends BaseController
         $products = $this->product->getProduct();
         return $this->render('infomation_account');
     }
-    // chuyển trang chi tiết sản phẩm
-    public function infoPro()
-    {
-        $products = $this->product->getProduct();
-        return $this->render('infomation_product');
-    }
+
+
 
     // chuyển trang đặt hàng
     public function order()
@@ -120,12 +175,7 @@ class UserController extends BaseController
         $products = $this->product->getProduct();
         return $this->render('order');
     }
-    // chuyển trang đăng ký
-    public function register()
-    {
-        $products = $this->product->getProduct();
-        return $this->render('register');
-    }
+
     // chuyển trang mua hàng
     public function review_info()
     {

@@ -3,7 +3,7 @@
 <div class=" d-flex ">
     <div class="modal__body ">
         <div class="auth-form auth-form-register bg-warning-subtle my-3 ">
-            <form action="" method="POST">
+            <form action="{{route('register-request')}}" method="POST">
                 <div class="auth-form__container">
                     <div class="auth-form__header">
                         <h3 class="auth__heading">Đăng ký</h3>
@@ -12,29 +12,38 @@
                     </div>
                     <div class="auth-form__group">
                         <label class="auth-form__group-label" for="email">Email:</label>
-                        <input id="email" name="email" type="text" placeholder="Nhập email của bạn" class="auth-form__input">
+                        <input id="email" name="gmail" type="text" placeholder="Nhập email của bạn" class="auth-form__input">
                         <span class="auth-form__form-masage">
+                            <?= $errors['gmail'] ?? ""; ?>
                         </span>
                     </div>
                     <div class="auth-form__group">
                         <label class="auth-form__group-label" for="password">Mật khẩu:</label>
                         <input id="password" name="password" type="password" placeholder="Nhập mật khẩu của bạn" class="auth-form__input">
                         <span class="auth-form__form-masage">
+                            <?= $errors['password'] ?? ""; ?>
                         </span>
                     </div>
                     <div class="auth-form__form">
                         <div class="auth-form__group ">
                             <label class="auth-form__group-label" for="fullname">Tên hiển thị:</label>
-                            <input id="fullname" name="fullname" type="text" placeholder="Nhập tên của bạn" class="auth-form__input">
+                            <input id="username" name="username" type="text" placeholder="Nhập tên của bạn" class="auth-form__input">
                             <span class="auth-form__form-masage">
-                                <?= isset($validate["fullname"]) ? $validate["fullname"] : ""; ?>
+                                <?= $errors['username'] ?? ""; ?>
+                            </span>
+                        </div>
+                        <div class="auth-form__group ">
+                            <label class="auth-form__group-label" for="fullname">Birthday:</label>
+                            <input id="username" name="birthday" type="date" placeholder="Nhập tên của bạn" class="auth-form__input">
+                            <span class="auth-form__form-masage">
+                                <?= $errors['birthday'] ?? ""; ?>
                             </span>
                         </div>
                         <div class="auth-form__group">
                             <label class="auth-form__group-label" for="address">Địa chỉ:</label>
                             <input id="address" name="address" type="text" placeholder="Nhập địa chỉ của bạn" class="auth-form__input">
                             <span class="auth-form__form-masage">
-                                <?= isset($validate["address"]) ? $validate["address"] : ""; ?>
+                                <?= $errors['address'] ?? ""; ?>
                             </span>
                         </div>
                     </div>
@@ -47,7 +56,7 @@
                     </div>
                     <div class="auth-form__controls">
                         <a href="../index.html" class="btn auth-form__controls-back btn--nomals">TRỞ VỀ</a>
-                        <button type="submit" name="dangnhap" class="btn btn--primary">ĐĂNG KÝ</button>
+                        <button type="submit" name="register" class="btn btn--primary">ĐĂNG KÝ</button>
                     </div>
                 </div>
             </form>

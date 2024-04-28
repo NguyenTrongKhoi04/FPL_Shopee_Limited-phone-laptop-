@@ -32,6 +32,7 @@ $router->post('login-request', [App\Controllers\User\UserController::class, 'log
 $router->get('logout', [App\Controllers\User\UserController::class, 'logout']);
 $router->get('order', [App\Controllers\User\UserController::class, 'order']);
 $router->get('register', [App\Controllers\User\UserController::class, 'register']);
+$router->post('register-request', [App\Controllers\User\UserController::class, 'registerRequest']);
 $router->get('review_info', [App\Controllers\User\UserController::class, 'review_info']);
 $router->get('thong-tin-dat-hang', [App\Controllers\User\UserController::class, 'thongTinDatHang']);
 // end user

@@ -28,7 +28,7 @@
                         <!-- product column 2-4 phần sản phẩm copy cả grid__column-2-4 -->
                         @foreach($products as $pr)
                         <div class="grid__column-2-4">
-                            <a href="{{route('info-pro'.$pr->id)}}" class="home-product-item">
+                            <a href="{{route('info-pro/'.$pr->id)}}" class="home-product-item">
                                 <div class="home-product-item__img">
                                     <img src="https://toigingiuvedep.vn/wp-content/uploads/2020/12/anh-phong-canh-thien-nhien-tuyet-dep.jpg" style=" width: 100%;" alt="">
                                 </div>
