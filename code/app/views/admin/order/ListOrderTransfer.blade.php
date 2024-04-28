@@ -4,7 +4,7 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Đơn Đang Chuẩn Bị <span
+    <h1 class="h3 mb-2 text-gray-800">Đơn Đang Giao <span
             style="color: orange;">({{$totalOrderRequestConfirm[0]->count }})</span>
     </h1>
     <p class="mb-4">Xác nhận các đơn hàng được khách hàng đặt</p>
@@ -39,6 +39,7 @@
                             <th>Đếm ngược</th>
                             <th>Dự tính thời gian giao thành công</th>
                             <th>Tên ship</th>
+                            <th>Thao tác</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -50,6 +51,7 @@
                             <th>Đếm ngược</th>
                             <th>Dự tính thời gian giao thành công</th>
                             <th>Tên ship</th>
+                            <th>Thao tác</th>
                         </tr>
                     </tfoot>
                     <tbody>
@@ -57,28 +59,15 @@
                         <tr>
                             <td>{{$i->order_id}}</td>
                             <td>{{$i->username}}</td>
-                            <td><?= date('H:i:s d/m/Y', strtotime($i->time_complete)) ?></td>
+                            <td><?= date('H:i:s d/m/Y', strtotime($i->time_order)) ?></td>
                             <td class="text-center">{{$i->totalorder}} $</td>
-                            <td style="color:orangered;">
-                                <?php
-                                foreach ($listShip as $v) {
-                                    if ($v->id == $i->id_ship) {
-                                    }
-                                }
-                                ?></td>
-                            <td>
-                            <td data-set-countdown="<?= $i->time_complete ?>"></td>
-                            <td><?= $i->time_complete ?></td>
 
-                            <?php foreach ($listShip as $v) {
-                                if ($v->id == $i->id_ship) {
-                                    $newTime = date('H:i:s d/m/Y', strtotime($i->time_complete) + $v->timeship * 60);
-                                    echo $newTime;
-                                }
-                            }
-                            ?>
+                            <td style="color: orange;" data-set-countdown="<?= $i->time_complete ?>"></td>
+                            <td><?= date('H:i:s d/m/Y', strtotime($i->time_complete)) ?></td>
+
+
                             </td>
-                            <td class=" text-center">
+                            <td>
                                 <?php
                                 foreach ($listShip as $v) {
                                     if ($v->id == $i->id_ship) {
@@ -87,8 +76,12 @@
                                 }
                                 ?>
                             </td>
-                            <td class="text-center" <?= ($i->countcomment > 0) ? 'style="color: orange;"' : ''  ?>>
-                                {{$i->countcomment}}
+                            <td>
+                                <a style="text-decoration: underline;"
+                                    href="{{route('orderDetailTransfer/'.$i->order_id)}}">Chi
+                                    tiết
+                                    đơn hàng</a>
+
                             </td>
                         <tr>
                             @endforeach
@@ -124,12 +117,13 @@ function updateCountdown(element, targetTime) {
         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        element.innerHTML = days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's ';
+        // element.innerHTML = days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's ';
+        element.innerHTML = days + 'd ' + hours + 'h ' + minutes + 'm';
 
         if (distance > 0) {
             setTimeout(update, 1000); // Cập nhật lại sau mỗi giây
         } else {
-            element.innerHTML = 'Expired';
+            element.innerHTML = 'Hoàn Thành';
         }
     }
 

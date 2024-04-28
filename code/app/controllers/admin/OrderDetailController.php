@@ -14,7 +14,22 @@ class OrderDetailController extends BaseAdminController
         $this->orderDetail = new OrderDetail();
     }
 
-    public function detailOrder($id){
+    public function detailOrder($id)
+    {
+        $arrField = [
+            '*',
+            'orderdetail.id AS orderdetail_id',
+            'detailproduct.id AS detailproduct_id',
+            'orderdetail.count AS orderdetail_count',
+            'detailproduct.count AS detailproduct_count',
+            'size.id AS size_id',
+            'orders.id AS orders_id'
+        ];
+        $orderDetail = $this->orderDetail->getDetailOrder(($id), implode(',', $arrField));
+        return $this->render('orderdetail.OrderDetail', compact('orderDetail'));
+    }
+
+    public function detailOrderRequestConfirm($id){
         $arrField = [
             '*',
             'orderdetail.id AS orderdetail_id',
@@ -41,6 +56,36 @@ class OrderDetailController extends BaseAdminController
         ];
         $orderDetail = $this->orderDetail->getDetailOrder(($id), implode(',', $arrField));
         return $this->render('orderdetail.OrderDetailConfirm', compact('orderDetail'));
+    }
+    
+    public function detailOrderTransfer($id)
+    {
+        $arrField = [
+            '*',
+            'orderdetail.id AS orderdetail_id',
+            'detailproduct.id AS detailproduct_id',
+            'orderdetail.count AS orderdetail_count',
+            'detailproduct.count AS detailproduct_count',
+            'size.id AS size_id',
+            'orders.id AS orders_id'
+        ];
+        $orderDetail = $this->orderDetail->getDetailOrder(($id), implode(',', $arrField));
+        return $this->render('orderdetail.OrderDetailTransfer', compact('orderDetail'));
+    }
+    
+    public function detailOrderSuccess($id)
+    {
+        $arrField = [
+            '*',
+            'orderdetail.id AS orderdetail_id',
+            'detailproduct.id AS detailproduct_id',
+            'orderdetail.count AS orderdetail_count',
+            'detailproduct.count AS detailproduct_count',
+            'size.id AS size_id',
+            'orders.id AS orders_id'
+        ];
+        $orderDetail = $this->orderDetail->getDetailOrder(($id), implode(',', $arrField));
+        return $this->render('orderdetail.OrderDetailSuccess', compact('orderDetail'));
     }
     
 }

@@ -4,7 +4,7 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Đơn Chờ Xác Nhận <span
+    <h1 class="h3 mb-2 text-gray-800">Đơn Hủy <span
             style="color: orange;">({{$totalOrderRequestConfirm[0]->count }})</span>
     </h1>
     <p class="mb-4">Xác nhận các đơn hàng được khách hàng đặt</p>
@@ -35,10 +35,8 @@
                             <th>ID</th>
                             <th>Tài khoản đặt</th>
                             <th>Thời gian đặt</th>
-                            <th>Tổng tiền đơn</th>
-                            <th>Giảm giá voucher</th>
-                            <th>Ship</th>
-                            <th>Comment đơn hàng</th>
+                            <th>Thời gian hủy</th>
+                            <th>Lý do hủy</th>
                             <th>Thao tác</th>
                         </tr>
                     </thead>
@@ -47,10 +45,8 @@
                             <th>ID</th>
                             <th>Tài khoản đặt</th>
                             <th>Thời gian đặt</th>
-                            <th>Tổng tiền đơn</th>
-                            <th>Giảm giá voucher</th>
-                            <th>Ship</th>
-                            <th>Comment đơn hàng</th>
+                            <th>Thời gian hủy</th>
+                            <th>Lý do hủy</th>
                             <th>Thao tác</th>
                         </tr>
                     </tfoot>
@@ -60,43 +56,27 @@
                             <td>{{$i->order_id}}</td>
                             <td>{{$i->username}}</td>
                             <td><?= date('H:i:s d/m/Y', strtotime($i->time_order)) ?></td>
-                            <td class="text-center">{{$i->totalorder}} $</td>
+                            <td><?= date('H:i:s d/m/Y', strtotime($i->time_complete)) ?></td>
+                            <td>{{$i->status}}</td>
                             <td>
                                 <?php
-                                if ($i->id_voucher != 0) {
-                                    foreach ($listVoucher as $v) {
-                                        if ($v->id == $i->id_voucher) {
-                                            echo $v->valuevoucher . "%";
+                                    if ($i->status == 9) {
+                                        echo "Shop không xác nhận đơn hàng";
+                                    }else {
+                                        foreach($listReasonReject as $v){
+                                            if($i->reason_reject == $v->id){
+                                                echo  $v->name;
+                                            }   
                                         }
                                     }
-                                } else {
-                                    echo "không voucher";
-                                }
                                 ?>
-                            </td>
-                            <td class="text-center">
-                                <?php
-                                foreach ($listShip as $v) {
-                                    if ($v->id == $i->id_ship) {
-                                        echo $v->nameship;
-                                    }
-                                }
-                                ?>
-                            </td>
-                            <td class="text-center" <?= ($i->countcomment > 0) ? 'style="color: orange;"' : ''  ?>>
-                                {{$i->countcomment}}
                             </td>
                             <td>
-                                <a href="{{route('orderDetailRequestConfirm/'.$i->order_id)}}"><button
-                                        class="btn btn-primary">Chi
-                                        tiết
-                                        đơn hàng</button></a>
-                                <a href="{{route('confirmOrder/'.$i->order_id)}}">
-                                    <button onclick=" return confirm('Chắc chắn xác nhận đơn hàng')"
-                                        class="btn btn-success">Xác nhận</button></a>
-                                <a href="{{route('confirmOrder/'.$i->order_id)}}">
-                                    <button onclick=" return confirm('Chắc chắn từ chối xác nhận')"
-                                        class="btn btn-danger">Từ chối</button></a>
+                                <a style="text-decoration: underline;"
+                                    href="{{route('orderDetailReasonReject/'.$i->order_id)}}">Chi
+                                    tiết
+                                    đơn hàng</a>
+
                             </td>
                         <tr>
                             @endforeach
@@ -110,5 +90,40 @@
 <!-- /.container-fluid -->
 
 </div>
+<script>
+// Lấy thời gian hoàn thành dự kiến từ thuộc tính data-set-countdown của phần tử HTML
+var countdownElements = document.querySelectorAll('[data-set-countdown]');
+countdownElements.forEach(function(element) {
+    var targetTimeString = element.dataset.setCountdown;
+    var targetTime = new Date(targetTimeString);
+    updateCountdown(element, targetTime);
+});
+
+// Hàm cập nhật đồng hồ đếm ngược
+function updateCountdown(element, targetTime) {
+    function update() {
+        var now = new Date();
+
+        // console.log(now, targetTime);
+        var distance = (targetTime.getTime() - now.getTime());
+
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // element.innerHTML = days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's ';
+        element.innerHTML = days + 'd ' + hours + 'h ' + minutes + 'm';
+
+        if (distance > 0) {
+            setTimeout(update, 1000); // Cập nhật lại sau mỗi giây
+        } else {
+            element.innerHTML = 'Hoàn Thành';
+        }
+    }
+
+    update();
+}
+</script>
 <!-- End of Main Content -->
 @endsection

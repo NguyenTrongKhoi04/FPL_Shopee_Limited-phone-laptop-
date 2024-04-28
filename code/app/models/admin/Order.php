@@ -10,7 +10,7 @@ class Order extends BaseModel
     protected $table = "orders";
     // lấy danh sách sản phẩm
 
-    public function getOrder($field,$where=1, $condition = null)
+    public function getOrder($field, $where = 1, $condition = null)
     {
         $sql = "select $field from $this->table WHERE $where $condition";
         $this->setQuery($sql);
@@ -20,14 +20,14 @@ class Order extends BaseModel
         return $this->loadAllRows();
     }
 
-    public function getOrderRequestConfirm($field,$where=null)
+    public function getOrderRequestConfirm($field, $where = null)
     {
         $sql = "
         SELECT $field 
         FROM $this->table 
         INNER JOIN account ON orders.id_user = account.id
         LEFT JOIN orderdetail ON orderdetail.id_order = orders.id 
-        WHERE orders.status = 1
+        WHERE $where
         GROUP BY orders.id
         ORDER BY time_order";
         $this->setQuery($sql);
@@ -39,15 +39,15 @@ class Order extends BaseModel
 
     public function getTotalStatus($idStatus, $field)
     {
-        if($idStatus != null){
+        if ($idStatus != null) {
             $idStatus = "WHERE status = $idStatus";
         };
         $sql = "select $field from $this->table 
         $idStatus";
         $this->setQuery($sql);
-            // echo "<pre>";
-            // print_r($this->loadAllRows());
-            // echo "</pre>";
+        // echo "<pre>";
+        // print_r($this->loadAllRows());
+        // echo "</pre>";
         return $this->loadAllRows();
     }
 
@@ -58,7 +58,7 @@ class Order extends BaseModel
         FROM $this->table 
         INNER JOIN account ON orders.id_user = account.id
         LEFT JOIN orderdetail ON orderdetail.id_order = orders.id 
-        WHERE orders.status = 2
+        WHERE $where
         GROUP BY orders.id
         ORDER BY time_order";
         $this->setQuery($sql);
@@ -67,7 +67,41 @@ class Order extends BaseModel
         // echo "</pre>";die;
         return $this->loadAllRows();
     }
-    
+
+    public function getOrderTransfer($field, $where = null)
+    {
+        $sql = "
+        SELECT $field 
+        FROM $this->table 
+        INNER JOIN account ON orders.id_user = account.id
+        LEFT JOIN orderdetail ON orderdetail.id_order = orders.id 
+        WHERE $where
+        GROUP BY orders.id
+        ORDER BY time_order";
+        $this->setQuery($sql);
+        // echo "<pre>";
+        // print_r($this->loadAllRows());
+        // echo "</pre>";die;
+        return $this->loadAllRows();
+    }
+
+    public function getOrderSuccess($field, $where = null)
+    {
+        $sql = "
+        SELECT $field 
+        FROM $this->table 
+        INNER JOIN account ON orders.id_user = account.id
+        LEFT JOIN orderdetail ON orderdetail.id_order = orders.id 
+        WHERE $where
+        GROUP BY orders.id
+        ORDER BY time_order";
+        $this->setQuery($sql);
+        // echo "<pre>";
+        // print_r($this->loadAllRows());
+        // echo "</pre>";die;
+        return $this->loadAllRows();
+    }
+
     /**
      * =============================================================================
      *                                         

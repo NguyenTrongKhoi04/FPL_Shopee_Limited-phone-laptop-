@@ -62,7 +62,7 @@
                                 }
                                 ?>
                             </td>
-                            <td>{{$i->time_order}}</td>
+                            <td><?= date('H:i:s d/m/Y', strtotime($i->time_order))  ?></td>
                             <td class="text-center">{{$i->totalorder}} $</td>
                             <td>
                                 <?php
