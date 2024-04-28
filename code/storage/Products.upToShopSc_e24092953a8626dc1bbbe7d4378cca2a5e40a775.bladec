@@ -1,0 +1,47 @@
+<?php $_shouldextend[1]=1; ?>
+<?php $this->startSection('content'); ?>
+
+
+<?php $__currentLoopData = $subcate; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $sub): $loop = $this->incrementLoopIndices();  ?>
+<?php $__currentLoopData = $oneproduct; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $one): $loop = $this->incrementLoopIndices();  ?>
+<?php if($sub->id == $one->id_subcategory): ?>
+<h1 class="h3 mb-4 text-gray-800">Các sản phẩm của <?php echo \htmlentities($sub->name_subcate??'', ENT_QUOTES, 'UTF-8', false); ?></h1>
+<?php endif; ?>
+<?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+<?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+
+<form action="" method="post">
+<select name="tinh-thanh[]" class="js-select2" multiple="multiple">
+<?php $__currentLoopData = $oneproduct; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $one): $loop = $this->incrementLoopIndices();  ?>
+<a href="<?php echo \htmlentities(route('addUpToShop/'.$one->id)??'', ENT_QUOTES, 'UTF-8', false); ?>">
+ <option value="<?php echo \htmlentities($one->id??'', ENT_QUOTES, 'UTF-8', false); ?>">
+ <td style="background-color: blue;"><b><?php echo \htmlentities($one->name_pro??'', ENT_QUOTES, 'UTF-8', false); ?></b></td> |
+ <td style="background-color: blue;"><?php echo \htmlentities($one->quantity??'', ENT_QUOTES, 'UTF-8', false); ?></td> |
+ <td style="background-color: blue;"><?php echo \htmlentities($one->datepro??'', ENT_QUOTES, 'UTF-8', false); ?></td> |
+ <td style="background-color: blue;"><?php echo \htmlentities($one->id_subcategory??'', ENT_QUOTES, 'UTF-8', false); ?></td> |
+ <td style="background-color: blue; width: 100px;"><?php echo \htmlentities($one->description??'', ENT_QUOTES, 'UTF-8', false); ?></td>
+ </option>
+</a>
+<?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+
+</select>
+<script type="text/javascript">
+ $(document).ready(function() {
+ $('.js-select2').select2();
+ });
+</script>
+</form>
+
+
+
+
+
+
+
+
+
+<?php $this->stopSection(); ?>
+<?php if (isset($_shouldextend[1])) { echo $this->runChild('layout.main'); } ?>

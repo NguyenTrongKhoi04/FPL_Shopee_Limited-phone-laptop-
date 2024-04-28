@@ -33,6 +33,7 @@ $router->get('register', [App\Controllers\UserController::class, 'register']);
 $router->get('review_info', [App\Controllers\UserController::class, 'review_info']);
 $router->get('thong-tin-dat-hang', [App\Controllers\UserController::class, 'thongTinDatHang']);
 // end user
+
 // admin
 $router->get('index-admin', [App\Controllers\Admin\AdminController::class, 'index_admin']);
 $router->get('err', [App\Controllers\Admin\AdminController::class, 'err']);
@@ -52,6 +53,15 @@ $router->get('until_other', [App\Controllers\Admin\AdminController::class, 'unti
 //admin -> quản lý kho hàng:
 
 $router->get('listStorepro', [App\Controllers\Admin\AdminController::class, 'listStorepro']);
+$router->post('add-storeProduct', [App\Controllers\Admin\AdminController::class, 'addStorepro']);
+$router->post('add-subcategory', [App\Controllers\Admin\AdminController::class, 'addSubCategory']);
+$router->post('edit-storeDetailProduct/{id}', [App\Controllers\Admin\AdminController::class, 'updateDetailStoreProducts']);
+$router->post('edit-storeProduct/{id}', [App\Controllers\Admin\AdminController::class, 'updateStoreProducts']);
+$router->get('deleteStoreProduct/{id}', [App\Controllers\Admin\AdminController::class, 'deleteStoreProduct']);
+
+//up lên shop:
+$router->get('upToShop', [App\Controllers\Admin\AdminController::class, 'upToShop']);
+$router->get('upToShop/{id}', [App\Controllers\Admin\AdminController::class, 'upToShopSc']);
 // $router->post('post-product', [App\Controllers\ProductController::class, 'postProduct']);
 // $router->get('detail-product/{id}', [App\Controllers\ProductController::class, 'detail']);
 // $router->post('edit-product/{id}', [App\Controllers\ProductController::class, 'editProduct']);

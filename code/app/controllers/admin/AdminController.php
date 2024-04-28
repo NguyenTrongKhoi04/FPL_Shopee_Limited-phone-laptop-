@@ -85,72 +85,139 @@ class AdminController extends BaseAdminController
 
 
     //quản lý kho:
-    public function listStorepro(){
+    public function listStorepro()
+    {
         $products = $this->product->listStorepro();
-        $subcategory = $this->product->getSubategory();
+        $subcategory = $this->product->getSubAllCategory();
         $storedetaiproduct = $this->product->getStoreDetailProduct();
         $size = $this->product->getSize();
-        return $this->render('Products.listStorepro', compact('products','subcategory', 'storedetaiproduct', 'size'));
+        $cate = $this->product->getCategory();
+        $countpro = $this->product->getCountStoreDetailProduct();
+        return $this->render('Products.listStorepro', compact('products', 'subcategory', 'storedetaiproduct', 'size', 'countpro', 'cate'));
     }
-    // public function getSubategory(){
-    //     $subcategory = $this->product->getSubategory();
-    //     return $this->render('Products.listStorepro', compact('subcategory'));
-    // }
-    //     public function addProduct()
-    //     {
-    //         return $this->render('product.add');
-    //     }
+    public function updateDetailStoreProducts($id)
+    {
+        if (isset($_POST['btn-submit'])) {
 
-    //     public function postProduct()
-    //     {
-    //         //khi submit ở màn hình addproduct sẽ bắn về class này
-    //         if (isset($_POST['add'])) {
-    //             //validate
-    //             // tạo ra mảng lỗi = rỗng
-    //             $errors = [];
-    //             // tên sản phẩm không đc bỏ trống
-    //             if (empty($_POST['ten_sp'])) {
-    //                 $errors[] = "Tên sản phẩm không được để trống";
-    //             }
-    //             // giá không đc bỏ trống
-    //             if (empty($_POST['gia'])) {
-    //                 $errors[] = "Giá sản phẩm không được để trống";
-    //             }
+            $this->product->updateDetailStoreProduct($id, $_POST['image'], $_POST['price'], $_POST['size'], $_POST['count']);
+            $check = 'update thành công';
+            $products = $this->product->listStorepro();
+            $subcategory = $this->product->getSubAllCategory();
+            $storedetaiproduct = $this->product->getStoreDetailProduct();
+            $size = $this->product->getSize();
+            $cate = $this->product->getCategory();
+            $countpro = $this->product->getCountStoreDetailProduct();
+            $this->render('Products.listStorepro', compact('check', 'products', 'subcategory', 'storedetaiproduct', 'size', 'countpro', 'cate'));
+        } else {
+            echo "lỗi";
+        }
+    }
 
-    //             if (count($errors) > 0) {
-    //                 // có lỗi
-    //                 flash('errors', $errors, 'add-product');
-    //             } else {
-    //                 // không lỗi
-    //                 $result = $this->product->addProduct(NULL, $_POST['ten_sp'], $_POST['gia']);
-    //                 if ($result) {
-    //                     flash('success', 'Thêm mới thành công', 'add-product');
-    //                 }
-    //             }
-    //         }
-    //     }
+    public function updateStoreProducts($id)
+    {
+        if (isset($_POST['btn-submit'])) {
+            $datepro = date("Y-m-d");
+            $this->product->updateStoreProduct($id, $_POST['name_pro'], $_POST['quantity'], $datepro, $_POST['id_subcategory'], $_POST['description']);
+            $check = 'update thành công';
+            $products = $this->product->listStorepro();
+            $subcategory = $this->product->getSubAllCategory();
+            $storedetaiproduct = $this->product->getStoreDetailProduct();
+            $size = $this->product->getSize();
+            $cate = $this->product->getCategory();
+            $countpro = $this->product->getCountStoreDetailProduct();
+            $this->render('Products.listStorepro', compact('check', 'products', 'subcategory', 'storedetaiproduct', 'size', 'countpro', 'cate'));
+        } else {
+            echo "lỗi";
+        }
+    }
 
-    //     public function detail($id)
-    //     {
-    //         $product = $this->product->getDetailProduct($id);
-    //         return $this->render('product.edit', compact('product'));
-    //     }
+    public function addStorepro()
+    {            
+            if (isset($_POST['btn-submit'])) {
+                if ( empty($_POST['name_pro'])) {
+                    $error[] = 'vui long nhap ten';
+                }  if ( empty($_POST['quantity'])) {
+                    $error[] = 'vui long nhap số lượng';
+                }  if ( empty($_POST['id_subcategory'])) {
+                    $error[] = 'vui long chọn loại';
+                }  if ( empty($_POST['description'])) {
+                    $error[] = 'vui long nhap mo ta';
+                }
+                if (count($error) > 0) {
+                    $check = 'xem lại các dữ liệu nhập vào';
+                    $products = $this->product->listStorepro();
+                    $subcategory = $this->product->getSubAllCategory();
+                    $storedetaiproduct = $this->product->getStoreDetailProduct();
+                    $size = $this->product->getSize();
+                    $cate = $this->product->getCategory();
+                    $countpro = $this->product->getCountStoreDetailProduct();
+                    $this->render('Products.listStorepro', compact('check', 'products', 'subcategory', 'storedetaiproduct', 'size', 'countpro', 'cate'));
 
-    //     public function editProduct($id)
-    //     {
-    //         if (isset($_POST['edit'])) {
-    //             $result = $this->product->updateProduct($id, $_POST['ten_sp'], $_POST['don_gia']);
-    //             if ($result) {
-    //                 flash('success', 'Sửa thành công', 'detail-product/' . $id);
-    //             }
-    //         }
-    //     }
+                } else {
 
-    //     public function deleteProduct($id)
-    //     {
-    //         $result = $this->product->deleteProduct($id);
-    //         if ($result) {
-    //             flash('success', 'Xóa thành công', 'list-product');
-    //         }
-    //     }
+                    $datepro = date("Y-m-d");
+                    $this->product->addStoreProduct($_POST['name_pro'], $_POST['quantity'], $datepro, $_POST['id_subcategory'], $_POST['description']);
+                    $check = 'thêm thành công';
+                    $products = $this->product->listStorepro();
+                    $subcategory = $this->product->getSubAllCategory();
+                    $storedetaiproduct = $this->product->getStoreDetailProduct();
+                    $size = $this->product->getSize();
+                    $cate = $this->product->getCategory();
+                    $countpro = $this->product->getCountStoreDetailProduct();
+                    $this->render('Products.listStorepro', compact('check', 'products', 'subcategory', 'storedetaiproduct', 'size', 'countpro', 'cate'));
+                
+            }
+        }
+        
+    }
+    public function deleteStoreProduct($id)
+    {
+        $this->product->deleteStoreProduct($id);
+        $check = 'xóa thành công';
+        $products = $this->product->listStorepro();
+        $subcategory = $this->product->getSubAllCategory();
+        $storedetaiproduct = $this->product->getStoreDetailProduct();
+        $size = $this->product->getSize();
+        $cate = $this->product->getCategory();
+        $countpro = $this->product->getCountStoreDetailProduct();
+        $this->render('Products.listStorepro', compact('check', 'products', 'subcategory', 'storedetaiproduct', 'size', 'countpro', 'cate'));
+    }
+
+    public function addSubCategory()
+    {
+        if (isset($_POST['btn-submitadd'])) {
+            $this->product->addSubCate($_POST['name_subcate'], $_POST['id_category']);
+            $check = 'thêm thành công';
+            $products = $this->product->listStorepro();
+            $subcategory = $this->product->getSubAllCategory();
+            $storedetaiproduct = $this->product->getStoreDetailProduct();
+            $size = $this->product->getSize();
+            $cate = $this->product->getCategory();
+            $countpro = $this->product->getCountStoreDetailProduct();
+            $this->render('Products.listStorepro', compact('check', 'products', 'subcategory', 'storedetaiproduct', 'size', 'countpro', 'cate'));
+        }
+    }
+//Up lên Cửa Hàng:
+    public function upToShop(){
+        $cate = $this->product->getCategory();
+        $subcate= $this->product->getSubAllCategory();
+        $products = $this->product->listStorepro();
+
+        // $cate1 = $this->product->getUpToShop1();
+        // $cate2 = $this->product->getUpToShop2();
+        $this->render('Products.upToShop', compact('cate', 'subcate', 'products'));
+    }
+
+    public function upToShopSc($id){
+        $subcate= $this->product->getSubAllCategory();
+        $cate = $this->product->getCategory();
+        $oneproduct = $this->product->getOneProduct($id);
+        $this->render('Products.upToShopSc', compact('subcate','cate','oneproduct'));
+
+    }
+
+
+
 }
+
+

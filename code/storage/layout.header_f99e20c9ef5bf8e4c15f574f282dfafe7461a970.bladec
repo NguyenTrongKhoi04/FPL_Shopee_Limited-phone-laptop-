@@ -41,7 +41,7 @@
  <div class="bg-white py-2 collapse-inner rounded">
  <h6 class="collapse-header" >Quản lý:</h6>
  <a class="collapse-item" href="listStorepro">View All</a>
- <a class="collapse-item" href="buttons">Create</a>
+ <a class="collapse-item" href="upToShop">Up To Shop</a>
  </div>
  </div>
  </li>

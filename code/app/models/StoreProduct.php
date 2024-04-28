@@ -10,71 +10,98 @@ class StoreProduct extends BaseModel {
         $this->setQuery($sql);
         return $this->loadAllRows();
     }
+    public function getOneProduct($id){
+        $sql = "select * from storepro where id_subcategory = ?";
+        $this->setQuery($sql);
+        return $this->loadAllRows([$id]);
+    }
     public function getStoreDetailProduct(){
         $sql = "select * from StoreDetailProduct";
+        // echo "<pre>"
+        // print_r
+        // echo "<pre>"
+
         $this->setQuery($sql);
         return $this->loadAllRows();
     }
 
+    public function getCountStoreDetailProduct(){
+        $sql = "select count(id) from StoreDetailProduct";
+        $this->setQuery($sql);
+        return $this->loadRow();
+    }
+    public function deleteStoreProduct($id){
+        $sql = "DELETE FROM `storepro` WHERE id = ?";
+        $this->setQuery($sql);
+        return $this->execute([$id]);
+
+    }
     public function getSize(){
         $sql = "select * from size";
         $this->setQuery($sql);
         return $this->loadAllRows();
     }
-
+    
+    public function updateDetailStoreProduct( $id, $image , $price , $size , $count){
+        $sql =  "UPDATE `storedetailproduct` SET image=?,price=?,size=?,count=? WHERE id=?";
+         $this->setQuery($sql);
+         return $this->execute([$image , $price , $size , $count,$id]);
+     }
+     public function updateStoreProduct( $id, $name_pro , $quantity , $datepro , $id_subcategory , $description){
+        $sql =  "UPDATE `storepro` SET name_pro= ?,quantity= ?,datepro= ?,id_subcategory= ?,description= ? WHERE id = ? ";
+         $this->setQuery($sql);
+         return $this->execute([$name_pro , $quantity , $datepro , $id_subcategory , $description,$id]);
+     }
     public function getCategory(){
         $sql = "select * from category";
         $this->setQuery($sql);
         return $this->loadAllRows();
     }
-    public function getSubategory(){
+    public function getSubAllCategory(){
         $sql = "select * from subcategory";
         $this->setQuery($sql);
         return $this->loadAllRows();
     }
     public function getSubcategory($id_category){
-        $sql = "slect * from subcategory where id_category = ?";
+        $sql = "select * from subcategory where id_category = ?";
         $this->setQuery($sql);
         return $this->loadRow($id_category);
     }
 
+    public function addStoreProduct( $name_pro, $quantity, $datepro, $id_subcategory, $description){
+        $sql = "INSERT INTO `storepro`(name_pro, quantity, datepro, id_subcategory, description) VALUES (?,?,?,?,?)";
+        $this->setQuery($sql);
+        return $this->execute([ $name_pro, $quantity, $datepro, $id_subcategory, $description]);
+    }
+
+    public function addSubCate( $name_subcate, $id_category){
+        $sql = "INSERT INTO `subcategory`(name_subcate ,id_category) VALUES (?,?)";
+        $this->setQuery($sql);
+        return $this->execute([ $name_subcate, $id_category]);
+    }
+
+    public function updateProduct($namepro , $quantity , $datepro , $id_subcategory , $description, $id){
+       $sql =  "UPDATE `storepro` SET `name_pro`='[value-2]',`quantity`='[value-3]',`datepro`='[value-4]',`id_subcategory`='[value-5]',`description`='[value-6]' WHERE id=?";
+        $this->setQuery($sql);
+        return $this->execute([$namepro , $quantity , $datepro , $id_subcategory , $description, $id]);
+    }
+
 
     public function getProduct(){
-        $sql = "select * from $this->table";
-        $this->setQuery($sql);
-        return $this->loadAllRows();
+
     }
+    // public function getUpToShop1(){
+    //     $sql = "SELECT * FROM `subcategory` WHERE id_category = 1";
+    //     $this->setQuery($sql);
+    //     return $this->loadAllRows();
+    // }
+
+    // public function getUpToShop2(){
+    //     $sql = "SELECT * FROM `subcategory` WHERE id_category = 2";
+    //     $this->setQuery($sql);
+    //     return $this->loadAllRows();
+    // }
 
 
-
-
-    // xây dựng hàm thêm sản phẩm
-    public function addProduct($id,$tenSp,$gia){
-        //$sql = "INSERT INTO `products`(`id`, `ten_sp`, `gia`) VALUES ('[value-1]','[value-2]','[value-3]')";
-        $sql = "insert into $this->table values (?,?,?)";
-        $this->setQuery($sql);
-        return $this->execute([$id,$tenSp,$gia]);
-    }
-
-    // hàm truyền vào id để lấy ra chi tiết sản phẩm
-    public function getDetailProduct($id){
-        $sql = "select * from $this->table where id = ?";
-        $this->setQuery($sql);
-        return $this->loadRow($id);
-    }
-
-    // xây dựng hàm sửa sản phẩm
-    public function updateProduct($id,$tenSp,$gia){
-        $sql = "update $this->table set ten_sp = ?, gia = ? where id = ?";
-        $this->setQuery($sql);
-        return $this->execute([$tenSp, $gia, $id]);
-    }
-
-    // xây dựng hàm xóa sản phẩm
-    public function deleteProduct($id){
-        $sql = "delete from $this->table where id = ?";
-        $this->setQuery($sql);
-        return $this->execute($id);
-    }
-
+    
 }
