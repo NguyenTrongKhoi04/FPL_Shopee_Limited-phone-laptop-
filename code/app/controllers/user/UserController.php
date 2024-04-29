@@ -6,6 +6,8 @@ use App\Models\User\Product;
 use App\Models\User\Category;
 use App\Models\User\SubCategory;
 use App\Models\User\Account;
+use App\Models\User\Size;
+use App\Models\User\Comment;
 
 class UserController extends BaseController
 {
@@ -13,7 +15,8 @@ class UserController extends BaseController
     public $category;
     public $subCategory;
     public $account;
-
+    public $size;
+    public $comment;
 
     // Tạo magic funcion
     public function __construct()
@@ -22,13 +25,17 @@ class UserController extends BaseController
         $this->category = new Category();
         $this->subCategory = new SubCategory();
         $this->account = new Account();
+        $this->size = new Size();
+        $this->comment = new Comment();
     }
     // lấy sản phẩm, danh mục chỉnh, danh mục phụ cho vào trang product
     public function product()
     {
-        $products = $this->product->getProduct();
+        $products = $this->product->getProduct(10);
         $categorys = $this->category->getCategory();
         $subCategorys = $this->subCategory->getSubCategory();
+        // var_dump($products[0]);
+        // die;
         return $this->render('product', compact('products', 'categorys', 'subCategorys'));
     }
     // END
@@ -139,55 +146,72 @@ class UserController extends BaseController
     // chuyển trang chi tiết sản phẩm
     public function infoPro($id)
     {
-        $products = $this->product->getProduct();
-        return $this->render('infomation_product');
+        $products = $this->product->getOneProduct($id);
+        $comments = $this->comment->getComment($id);
+        $id_category = $products[0]['id_subcategory'];
+        $relatedProduct = $this->product->getRelatedProduct($id, $id_category, 5);
+        // echo "<pre>";
+        // var_dump($relatedProduct);
+        // echo "</pre>";
+        // die;
+        return $this->render('infomation_product', compact('products', 'comments', 'relatedProduct'));
     }
+    // Hàm bình luận sản phẩm
+    // public function addComment($id)
+    // {
+    //     $comment = $_POST['comment'];
+    //     $id_user = $_SESSION['account']['id'];
+    //     var_dump($_SESSION['account']['id']);
+    //     die;
+    //     $id_pro = $_POST['id'];
+    //     $comments = $this->comment->addComment($id_user, $id_pro, $comment);
+    // }
     // chuyển trang giỏ hàng
-    public function cart()
-    {
-        $products = $this->product->getProduct();
-        return $this->render('cart');
-    }
-    // chuyển trang quên mật khẩu
-    public function forgot_pass()
-    {
-        $products = $this->product->getProduct();
-        return $this->render('forgot_password');
-    }
-    // chuyển trang đổi mật khẩu
-    public function change_pass()
-    {
-        $products = $this->product->getProduct();
-        return $this->render('change_password');
-    }
-    // chuyển trang thông tin tài khoản
-    public function infoAccout()
-    {
-        $products = $this->product->getProduct();
-        return $this->render('infomation_account');
-    }
+    // public function cart()
+    // {
+    //     $products = $this->product->getProduct();
+    //     return $this->render('cart');
+    // }
+    // // chuyển trang quên mật khẩu
+    // public function forgot_pass()
+    // {
+    //     $products = $this->product->getProduct();
+    //     return $this->render('forgot_password');
+    // }
+    // // chuyển trang đổi mật khẩu
+    // public function change_pass()
+    // {
+    //     $products = $this->product->getProduct();
+    //     return $this->render('change_password');
+    // }
+    // // chuyển trang thông tin tài khoản
+    // public function infoAccout()
+    // {
+    //     $products = $this->product->getProduct();
+    //     return $this->render('infomation_account');
+    // }
 
 
 
     // chuyển trang đặt hàng
-    public function order()
-    {
-        $products = $this->product->getProduct();
-        return $this->render('order');
-    }
+    // public function order()
+    // {
+    //     $products = $this->product->getProduct();
+    //     return $this->render('order');
+    // }
 
-    // chuyển trang mua hàng
-    public function review_info()
-    {
-        $products = $this->product->getProduct();
-        return $this->render('review_infomation');
-    }
-    // chuyển trang thông tin đặt hàng
-    public function thongTinDatHang()
-    {
-        $products = $this->product->getProduct();
-        return $this->render('thongtindathang');
-    }
+    // // chuyển trang mua hàng
+    // public function review_info()
+    // {
+    //     $products = $this->product->getProduct();
+    //     return $this->render('review_infomation');
+    // }
+    // // chuyển trang thông tin đặt hàng
+    // public function thongTinDatHang()
+    // {
+    //     $products = $this->product->getProduct();
+    //     return $this->render('thongtindathang');
+    // }
     //     public function addProduct()
     //     {
     //         return $this->render('product.add');

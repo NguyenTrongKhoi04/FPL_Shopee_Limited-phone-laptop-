@@ -67,6 +67,18 @@ class BaseModel
         }
         return $result->fetchAll(PDO::FETCH_OBJ);
     }
+    public function loadAllRowsArray($options = array())
+    {
+        if (!$options) {
+            if (!$result = $this->execute())
+                return false;
+        } else {
+            if (!$result = $this->execute($options))
+                return false;
+        }
+        return $result->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 
     //Funtion load 1 data on the table
     //lay 1 du lieu thoi

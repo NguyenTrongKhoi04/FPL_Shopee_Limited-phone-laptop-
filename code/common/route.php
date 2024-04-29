@@ -27,6 +27,7 @@ $router->get('change-pass', [App\Controllers\User\UserController::class, 'change
 $router->get('forgot-pass', [App\Controllers\User\UserController::class, 'forgot_pass']);
 $router->get('info-acccount', [App\Controllers\User\UserController::class, 'infoAccout']);
 $router->get('info-pro/{id}', [App\Controllers\User\UserController::class, 'infoPro']);
+$router->post('add-comment/{id}', [App\Controllers\User\UserController::class, 'addComment']);
 $router->get('login', [App\Controllers\User\UserController::class, 'login']);
 $router->post('login-request', [App\Controllers\User\UserController::class, 'loginRequest']);
 $router->get('logout', [App\Controllers\User\UserController::class, 'logout']);

@@ -1085,6 +1085,8 @@
 }
 
 .home-product-item__img {
+    height: 250px;
+    width: 224px;
     padding-top: 30%;
     background-repeat: no-repeat;
     background-size: contain;
@@ -1102,7 +1104,6 @@
     line-height: 1.8rem;
     height: 3.6rem;
     overflow: hidden;
-    margin: 10px;
 }
 
 .home-product-item__price {
@@ -1325,7 +1326,6 @@ i.home-product-item__like-icon-isset {
 .infor-product__right-price-number {
     font-size: 2rem;
     color: rgb(255, 61, 61);
-    padding-left: 20px;
     cursor: default;
 }
 

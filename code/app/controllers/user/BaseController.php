@@ -12,6 +12,10 @@ class BaseController
         $viewDir = "./app/views/user";
         $storageDir = "./storage";
         $blade = new BladeOne($viewDir, $storageDir, BladeOne::MODE_DEBUG);
+        // echo "<pre>";
+        // var_dump($data);
+        // echo "</pre>";
+        // die;
         echo $blade->run($viewFile, $data);
     }
 }

@@ -5,258 +5,160 @@
         <div class="grid__column-3">
             <div class="infor-product-left">
                 <div class="infor-product-left__item">
-                    <img src="../assets/img_product/sachhay_camnangtuduyphanbien.jpg" alt="" class="infor-product-left__img">
+                    <img src="{{$products['image']}}" id="product-image" alt="" class="w-100 h-75 object-fit-cover">
                 </div>
             </div>
         </div>
         <div class="grid__column-9">
             <div class="infor-product-right">
                 <form action="" method="POST">
-
                     <h3 class="infor-product-right__name">
-                        Tên sản phẩm
+                        {{$products[0]['namepro']}}
                     </h3>
-                    <div class="infor-product__right-price-old">
-                        <h4 class="infor-product__right-price-number">
-                            Giá cũ
+                    <div class="">
+                        <h4 class="infor-product__right-price-number ps-0 ">
+                            Giá : <input type="number" disabled value="{{$products[0]->price}}" class="border-0 bg-white text-danger" id="product-price">
                         </h4>
+                        <div class="form-control my-2 py-5 bg-dark-subtle ">
+                            <h4 class="">
+                                {{$products[0]['description']}}
+                            </h4>
+                        </div>
                     </div>
-                    <div class="infor-product__right-price">
-                        <h4 class="infor-product__right-price-number">
-                            Giá mới
-                        </h4>
-                    </div>
-                    <div class="infor-product__right-quantity">
-                        <span class="infor-product__right-quantity-number">Số lượng:</span>
-                        <input style="padding-left: 8px;" class="" type="number" name="soluongsanpham" value="1" min="1" max="100">
-                        <span class="infor-product__right-sanphamcosan">
-                            Số lượng sản phẩm có sẵn
+                    <div class="align-content-center  d-flex  ">
+                        <span class="infor-product__right-quantity-number h3">Số lượng:</span>
+                        <button type="button" onclick="handleMinus()"><span class="material-symbols-outlined  btn-outline-light  ">
+                                remove
+                            </span></button>
+                        <input type="text" class="mx-1 text-center border-1  " value="1" name="quntity" id="amout">
+                        <button type="button" onclick="handlePlus()"><span class="material-symbols-outlined btn-btn-outline-light  ">
+                                add
+                            </span></button>
+                        <span class="mx-3 h4">
+                            Số lượng sản phẩm có sẵn : {{$products[0]['quantity']}}
                         </span>
                     </div>
+                    <div class="my-3">
+                        <span class="my-3 h3">size: </span>
+                        <select class=" px-3 py-2 m-3" onchange="changeProduct()" id="product-select" aria-label="Default select example">
+                            @foreach($products as $index => $pro)
+                            <option class="h3" value="{{$index}}" data-image="{{$pro['image']}}" data-price="{{$pro['price']}}">
+                                {{$pro['namesize']}}
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="infor-product__right-btn">
-
                         <input type="text" name="giasanpham" hidden value="" id="">
                         <a href="home.php" class="infor-product__right-btn-add" style="text-decoration: none;"><i class="fa-solid fa-cart-plus"></i>
-
                             <a href="home.php" class="infor-product__right-btn-buy infor-product__right-btn-buy-link">Mua
                                 ngay</a>';
-
-
-
                 </form>
             </div>
-
-
         </div>
     </div>
 </div>
 <div class="grid container__ctsp">
-    <div class="container__ctsp-title">
-        <p class="container__ctsp-title-text">Chi tiết sản phẩm</p>
-    </div>
-    <ul class="container__ctsp-list">
-        <li class="container__ctsp-list-item">
-            Danh mục : <span class="container__ctsp-list-item-primary">
-                Tên danh mục
-            </span>
-        </li>
-        <li class="container__ctsp-list-item">
-            Nhà xuất bản : <span class="container__ctsp-list-item-primary">
-                Nhà xuất bản kim đồng
-            </span>
-        </li>
-        <li class="container__ctsp-list-item">
-            Số lượng : <span class="container__ctsp-list-item-primary">
-                2000
-            </span>
-        </li>
-        <li class="container__ctsp-list-item container__ctsp-list-item-mota">
-            Mô tả : <span class="container__ctsp-list-item-primary ">
-                Mô tả sản phẩm
-            </span>
-        </li>
-    </ul>
-</div>
-<div class="grid container__ctsp">
-    <div class="container__ctsp-title">
-        <p class="container__ctsp-title-text">Bình luận</p>
-        <form action="" class="form__comments" method="POST">
-            <input class="form__comments-input" name="content" type="text" placeholder="Nhập bình luận" autocomplete="off" name="" id="">
-            <a href="home.php?act=login" class="btn form__comments-btn">Gửi bình luận</a>
-
-        </form>
+    <div class="container__ctsp-title ">
+        <p class=" h1 align-content-center mx-4">Comment</p>
     </div>
     <ul class="container__ctsp-list-comments">
+        @foreach($comments as $comment)
         <li class="container__ctsp-comment">
             <div class="container__ctsp-comment-user">
                 <div class="container__ctsp-comment-user-img">
-                    <img src="../assets/img_user/anhdep.jpg" alt="" class="container__ctsp-comment-user-image">
+                    <img src="{{BASE_URL.'public/user/assets/img_user/avtgithub.png'}}" alt="" class="container__ctsp-comment-user-image">
                 </div>
                 <div class="container__ctsp-user-name_time">
                     <p class="container__ctsp-comment-user-name">
-                        Tên hiển thị
-                    </p>
-                    <p class="container__ctsp-comment-time">
-                        04/04/2024
+                        {{$comment->username }}
                     </p>
                 </div>
             </div>
             <p class="container__ctsp-comment-user-content">
-                ádsadsadsadsadsaaaaaaaaaaaa
+                {{$comment->comment}}
             </p>
         </li>
+        @endforeach
     </ul>
 </div>
 <div class="grid container__ctsp">
     <div class="container__ctsp-heading">
         <h3 class="container__ctsp-heading">Sản phẩm cùng loại</h3>
     </div>
-    <div class="grid__row">
-        <div class=" flex-same_product">
-            <div class="grid__column-2-4" style="min-width: 224px;">
-                <a href="home.php" class="home-product-item">
-                    <div class="home-product-item__img" style="background-image: url(../assets/img_product/sachhay_camnangtuduyphanbien.jpg);">
+    <div class="home-product">
+        <div class="grid__row">
+            <!-- product column 2-4 phần sản phẩm copy cả grid__column-2-4 -->
+            @foreach($relatedProduct as $relatPro)
+            <div class="grid__column-2-4">
+                <a href="" class="home-product-item">
+                    <div class="home-product-item__img">
+                        <img src="{{$relatPro->image}}" class="w-100 h-100" alt="">
                     </div>
-                    <h4 class="home-product-item__name">
-                        Tên sản phẩm
+                    <h4 class="home-product-item__name h3 my-1 align-content-center  mx-3">
+                        {{$relatPro->namepro}}
                     </h4>
                     <div class="home-product-item__price">
-                        <span class="home-product-item__price-old">
-                            Giá cũ 200
+                        <span class="home-product-item__price-current h4 text-danger">
+                            Size: {{$relatPro -> size}}
                         </span>
-                        <span class="home-product-item__price-current">
-                            Giới mới 100
-                        </span>
-
-                    </div>
-                    <div class="home-product-item__action">
-                        <span class="home-product-item__like home-product-item__liked">
-                            <i class="home-product-item__like-icon-isset fa-solid fa-heart"></i>
-                            <i class="home-product-item__like-icon-empty fa-regular fa-heart"></i>
-                        </span>
-                        <!-- <div class="home-product-item__rating">
-                                <i class="home-product-item__rating-yellow fa-solid fa-star"></i>
-                                <i class="home-product-item__rating-yellow fa-solid fa-star"></i>
-                                <i class="home-product-item__rating-yellow fa-solid fa-star"></i>
-                                <i class="home-product-item__rating-yellow fa-solid fa-star"></i>
-                                <i class=" fa-solid fa-star"></i>
-                            </div> -->
-
                     </div>
                     <div class="home-product-item__origin">
-                        <span class="home-product-item__brand">Số lượng:
-                            20
-                        </span>
-                        <span class="home-product-item__origin-name">
-                            dsadas
+                        <span class="home-product-item__brand h5">Số Lượng:
+                            {{$relatPro -> quantity}}
                         </span>
                     </div>
-
                     <div class="home-product-item__sale-off">
                         <div class="home-product-item__sale-off-percent">
-                            50
+                            {{$relatPro -> valuesale}}%
                         </div>
                         <span class="home-product-item__sale-off-label">Giảm</span>
                     </div>
                 </a>
             </div>
-            <div class="grid__column-2-4" style="min-width: 224px;">
-                <a href="home.php" class="home-product-item">
-                    <div class="home-product-item__img" style="background-image: url(../assets/img_product/sachhay_camnangtuduyphanbien.jpg);">
-                    </div>
-                    <h4 class="home-product-item__name">
-                        Tên sản phẩm
-                    </h4>
-                    <div class="home-product-item__price">
-                        <span class="home-product-item__price-old">
-                            Giá cũ 200
-                        </span>
-                        <span class="home-product-item__price-current">
-                            Giới mới 100
-                        </span>
-
-                    </div>
-                    <div class="home-product-item__action">
-                        <span class="home-product-item__like home-product-item__liked">
-                            <i class="home-product-item__like-icon-isset fa-solid fa-heart"></i>
-                            <i class="home-product-item__like-icon-empty fa-regular fa-heart"></i>
-                        </span>
-                        <!-- <div class="home-product-item__rating">
-                                <i class="home-product-item__rating-yellow fa-solid fa-star"></i>
-                                <i class="home-product-item__rating-yellow fa-solid fa-star"></i>
-                                <i class="home-product-item__rating-yellow fa-solid fa-star"></i>
-                                <i class="home-product-item__rating-yellow fa-solid fa-star"></i>
-                                <i class=" fa-solid fa-star"></i>
-                            </div> -->
-
-                    </div>
-                    <div class="home-product-item__origin">
-                        <span class="home-product-item__brand">Số lượng:
-                            20
-                        </span>
-                        <span class="home-product-item__origin-name">
-                            dsadas
-                        </span>
-                    </div>
-
-                    <div class="home-product-item__sale-off">
-                        <div class="home-product-item__sale-off-percent">
-                            50
-                        </div>
-                        <span class="home-product-item__sale-off-label">Giảm</span>
-                    </div>
-                </a>
-            </div>
-            <div class="grid__column-2-4" style="min-width: 224px;">
-                <a href="home.php" class="home-product-item">
-                    <div class="home-product-item__img" style="background-image: url(../assets/img_product/sachhay_camnangtuduyphanbien.jpg);">
-                    </div>
-                    <h4 class="home-product-item__name">
-                        Tên sản phẩm
-                    </h4>
-                    <div class="home-product-item__price">
-                        <span class="home-product-item__price-old">
-                            Giá cũ 200
-                        </span>
-                        <span class="home-product-item__price-current">
-                            Giới mới 100
-                        </span>
-
-                    </div>
-                    <div class="home-product-item__action">
-                        <span class="home-product-item__like home-product-item__liked">
-                            <i class="home-product-item__like-icon-isset fa-solid fa-heart"></i>
-                            <i class="home-product-item__like-icon-empty fa-regular fa-heart"></i>
-                        </span>
-                        <!-- <div class="home-product-item__rating">
-                                <i class="home-product-item__rating-yellow fa-solid fa-star"></i>
-                                <i class="home-product-item__rating-yellow fa-solid fa-star"></i>
-                                <i class="home-product-item__rating-yellow fa-solid fa-star"></i>
-                                <i class="home-product-item__rating-yellow fa-solid fa-star"></i>
-                                <i class=" fa-solid fa-star"></i>
-                            </div> -->
-
-                    </div>
-                    <div class="home-product-item__origin">
-                        <span class="home-product-item__brand">Số lượng:
-                            20
-                        </span>
-                        <span class="home-product-item__origin-name">
-                            dsadas
-                        </span>
-                    </div>
-
-                    <div class="home-product-item__sale-off">
-                        <div class="home-product-item__sale-off-percent">
-                            50
-                        </div>
-                        <span class="home-product-item__sale-off-label">Giảm</span>
-                    </div>
-                </a>
-            </div>
+            @endforeach
         </div>
     </div>
+</div>
+<script>
+    let amoutElement = document.getElementById('amout')
+    var amount = amoutElement.value
+    let render = (amount) => {
+        amoutElement.value = amount
+    }
+    let handlePlus = () => {
+        amount++;
+        render(amount)
+    }
+    let handleMinus = () => {
+        if (amount > 1) {
+            amount--;
+        }
+        // console.log(amount);
+        render(amount)
+    }
+    amoutElement.addEventListener('input', () => {
+        amount = amoutElement.value
+        amount = parseInt(amount);
+        amount = (isNaN(amount) || amount == 1) ? 1 : amount;
+        render(amount);
+        // console.log(amount);
+    })
+    window.onload = function() {
+        // Trigger change event to update image and price based on default selection
+        changeProduct();
+    };
 
-</div>
-</div>
+    function changeProduct() {
+        var selectBox = document.getElementById("product-select");
+        var selectedIndex = selectBox.selectedIndex;
+        var selectedOption = selectBox.options[selectedIndex];
+        var imageSrc = selectedOption.getAttribute("data-image");
+        var priceValue = selectedOption.getAttribute("data-price");
+
+        // console.log(imageSrc);
+        document.getElementById("product-image").src = imageSrc;
+        document.getElementById("product-price").value = priceValue;
+    }
+</script>
 @endsection

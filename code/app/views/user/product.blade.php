@@ -28,32 +28,26 @@
                         <!-- product column 2-4 phần sản phẩm copy cả grid__column-2-4 -->
                         @foreach($products as $pr)
                         <div class="grid__column-2-4">
-                            <a href="{{route('info-pro/'.$pr->id)}}" class="home-product-item">
+                            <a href="{{route('info-pro/'.$pr->id_pro)}}" class="home-product-item">
                                 <div class="home-product-item__img">
                                     <img src="https://toigingiuvedep.vn/wp-content/uploads/2020/12/anh-phong-canh-thien-nhien-tuyet-dep.jpg" style=" width: 100%;" alt="">
                                 </div>
-                                <h4 class="home-product-item__name">
+                                <h4 class="home-product-item__name h3 my-1 align-content-center  mx-3">
                                     {{$pr->namepro}}
                                 </h4>
                                 <div class="home-product-item__price">
-                                    <span class="home-product-item__price-current">
-                                        Size: {{$pr -> size}}
-                                    </span>
-                                </div>
-                                <div class="home-product-item__action">
-                                    <span class="home-product-item__like home-product-item__liked">
-                                        <i class="home-product-item__like-icon-isset fa-solid fa-heart"></i>
-                                        <i class="home-product-item__like-icon-empty fa-regular fa-heart"></i>
+                                    <span class="home-product-item__price-current h4 text-danger">
+                                        Size: {{$pr->size}}
                                     </span>
                                 </div>
                                 <div class="home-product-item__origin">
-                                    <span class="home-product-item__brand">Số Lượng:
-                                        {{$pr -> quantity}}
+                                    <span class="home-product-item__brand h5">Số Lượng:
+                                        {{$pr->quantity}}
                                     </span>
                                 </div>
                                 <div class="home-product-item__sale-off">
                                     <div class="home-product-item__sale-off-percent">
-                                        {{$pr -> sale}}%
+                                        {{$pr->valuesale}}%
                                     </div>
                                     <span class="home-product-item__sale-off-label">Giảm</span>
                                 </div>
