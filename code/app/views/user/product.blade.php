@@ -30,7 +30,7 @@
                         <div class="grid__column-2-4">
                             <a href="{{route('info-pro/'.$pr->id_pro)}}" class="home-product-item">
                                 <div class="home-product-item__img">
-                                    <img src="https://toigingiuvedep.vn/wp-content/uploads/2020/12/anh-phong-canh-thien-nhien-tuyet-dep.jpg" style=" width: 100%;" alt="">
+                                    <img src="{{$pr->image}}" style=" width: 100%;" alt="">
                                 </div>
                                 <h4 class="home-product-item__name h3 my-1 align-content-center  mx-3">
                                     {{$pr->namepro}}

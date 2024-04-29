@@ -91,8 +91,8 @@
             <!-- product column 2-4 phần sản phẩm copy cả grid__column-2-4 -->
             @foreach($relatedProduct as $relatPro)
             <div class="grid__column-2-4">
-                <a href="" class="home-product-item">
-                    <div class="home-product-item__img">
+                <a href="{{route('info-pro/'.$relatPro->id_pro)}}" class="home-product-item">
+                    <div class="info-product-item__img">
                         <img src="{{$relatPro->image}}" class="w-100 h-100" alt="">
                     </div>
                     <h4 class="home-product-item__name h3 my-1 align-content-center  mx-3">

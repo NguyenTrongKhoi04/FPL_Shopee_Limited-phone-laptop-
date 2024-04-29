@@ -1085,6 +1085,17 @@
 }
 
 .home-product-item__img {
+    padding-top: 30%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    display: block;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+
+}
+
+.info-product-item__img {
     height: 250px;
     width: 224px;
     padding-top: 30%;
