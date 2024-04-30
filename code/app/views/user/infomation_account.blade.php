@@ -1,19 +1,16 @@
 @extends('layout.main')
 @section('content')
 <div class="app__container">
-    <div class="grid grid__information">
-        <div class="information-heading">
-            <p class="information-heading-text">Thông tin cá nhân</p>
+    <div class="grid grid__information bg-success-subtle  ">
+        <div class="information-heading ">
+            <p class="information-heading-text h2">Thông tin cá nhân</p>
         </div>
-        <form action="" class="information grid__row" method="POST" enctype="multipart/form-data">
-            <div class="grid__column-3 information__avt">
+        <form action="{{route('change-info-acccount')}}" class="information grid__row" method="POST" enctype="multipart/form-data">
+            <div class="grid__column-3 information__avt border-0 ">
                 <div class="information-avatar">
                     <div class="information-image">
-                        <img src="../assets/img/avtgithub.png" alt="" class="information-image__img">
+                        <img src="{{BASE_URL.'public/user/assets/img_user/avtgithub.png'}}" alt="" class="information-image__img ">
                     </div>
-                    <span class="btn information-avatar__change">
-                        <input class="btn" name="image" type="file" accept="image/*">
-                    </span>
                 </div>
             </div>
             <div class="grid__column-9">
@@ -21,60 +18,53 @@
                     <li class="list__information-item">
                         <span class="information__name-change">Tên người dùng :</span>
                         <div class="information__input-change">
-                            <input type="text" name="fullname" value="Nguyễn Văn A">
-                            <div class="text_update_validate">
-                                <p>
-                                    Validate
-                                </p>
-                            </div>
+                            <input type="text" name="username" value="{{$account->username}}">
+                        </div>
+                        <div class="text_update_validate">
+                            <p class="text-danger h5 ms-3">
+                                <?= $errors['username'] ?? "" ?>
+                            </p>
                         </div>
                     </li>
                     <li class="list__information-item">
-                        <span class="information__name-change ">Email:</span>
-                        <div class="information__input-change">
-                            <input type="text" readonly name="email" value="Email@gmail.com">
-
+                        <span class="information__name-change ">Gmail:</span>
+                        <div class="information__input-change bg-light ">
+                            <input type="text" disabled value="{{$account->gmail}}">
                         </div>
+                        <input type="hidden" name="gmail" value="{{$account->gmail}}">
                     </li>
                     <li class="list__information-item">
                         <span class="information__name-change">Địa chỉ :</span>
                         <div class="information__input-change">
-                            <input type="text" name="address" value="Hà nội">
-                            <div class="text_update_validate">
-                                <p>
-                                    Validate
-                                </p>
-                            </div>
+                            <input type="text" name="address" value="{{$account->address}}">
+                        </div>
+                        <div class="text_update_validate">
+                            <p class="text-danger h5 ms-3">
+                                <?= $errors['address'] ?? "" ?>
+                            </p>
                         </div>
                     </li>
                     <li class="list__information-item">
-                        <span class="information__name-change">Số điện thoại :</span>
+                        <span class="information__name-change">Mật khẩu hiện tại :</span>
                         <div class="information__input-change">
-                            <input type="text" name="numberPhone" value="09663219321">
-                            <div class="text_update_validate">
-                                <p>
-                                    Validate
-                                </p>
-                            </div>
+                            <input type="text" name="password">
+                        </div>
+                        <div class="text_update_validate">
+                            <p class="text-danger h5 ms-3">
+                                <?= $errors['pass'] ?? "" ?>
+                            </p>
                         </div>
                     </li>
                     <li class="list__information-item">
-                        <span class="information__name-change">Tên tài khoản :</span>
+                        <span class="information__name-change">Mật khẩu muốn đổi :</span>
                         <div class="information__input-change">
-                            <input type="text" class="nameAccount" name="nameAccount" value="Nguyen Van A">
-                            <div class="text_update_validate">
-                                <p>
-                                    Validate
-                                </p>
-                            </div>
+                            <input type="text" class="nameAccount" name="newpassword">
                         </div>
                     </li>
                 </ul>
             </div>
-
             <div class="btn__information-update">
-                <button type="submit" name="update" class="btn btn__information-update-ok">Cập nhật</button>
-                <button type="reset" class="btn btn__information-reset">Reset</button>
+                <button type="submit" name="update" class="btn btn-warning">Cập nhật</button>
             </div>
         </form>
     </div>

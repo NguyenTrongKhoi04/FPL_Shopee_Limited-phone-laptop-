@@ -5,7 +5,7 @@
         <div class="grid__column-3">
             <div class="infor-product-left">
                 <div class="infor-product-left__item">
-                    <img src="{{$products['image']}}" id="product-image" alt="" class="w-100 h-75 object-fit-cover">
+                    <img src="{{$products['image']}}" id="product-image" alt="" class="w-100 h-100 object-fit-cover">
                 </div>
             </div>
         </div>
@@ -38,8 +38,8 @@
                             Số lượng sản phẩm có sẵn : {{$products[0]['quantity']}}
                         </span>
                     </div>
-                    <div class="my-3">
-                        <span class="my-3 h3">size: </span>
+                    <div class="mt-5">
+                        <span class="mt-3 h3">size: </span>
                         <select class=" px-3 py-2 m-3" onchange="changeProduct()" id="product-select" aria-label="Default select example">
                             @foreach($products as $index => $pro)
                             <option class="h3" value="{{$index}}" data-image="{{$pro['image']}}" data-price="{{$pro['price']}}">
@@ -48,11 +48,12 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="infor-product__right-btn">
+                    <div class="d-flex mt-3">
                         <input type="text" name="giasanpham" hidden value="" id="">
-                        <a href="home.php" class="infor-product__right-btn-add" style="text-decoration: none;"><i class="fa-solid fa-cart-plus"></i>
-                            <a href="home.php" class="infor-product__right-btn-buy infor-product__right-btn-buy-link">Mua
-                                ngay</a>';
+                        <span onclick="AddToCart()" class="infor-product__right-btn-add" style="text-decoration: none;"><i class="fa-solid fa-cart-plus"></i></span>
+                        <a href="home.php" class="infor-product__right-btn-buy infor-product__right-btn-buy-link">Mua
+                            ngay</a>';
+                    </div>
                 </form>
             </div>
         </div>
@@ -159,6 +160,10 @@
         // console.log(imageSrc);
         document.getElementById("product-image").src = imageSrc;
         document.getElementById("product-price").value = priceValue;
+    }
+
+    function AddToCart() {
+        alert(123);
     }
 </script>
 @endsection

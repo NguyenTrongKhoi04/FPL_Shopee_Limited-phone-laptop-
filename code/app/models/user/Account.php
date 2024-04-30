@@ -19,4 +19,16 @@ class Account extends BaseModel
         $this->setQuery($sql);
         return $this->execute([$gmail, $password, $username, $birthday, $address]);
     }
+    public function getAccount($id)
+    {
+        $sql = "SELECT * from $this->item where id = '$id'";
+        $this->setQuery($sql);
+        return $this->loadRow();
+    }
+    public function updateAccount($username, $gmail, $address, $password, $id)
+    {
+        $sql = "UPDATE account SET username=?,gmail=?,address=?,password=? where id= ?";
+        $this->setQuery($sql);
+        return $this->execute([$username, $gmail, $address, $password, $id]);
+    }
 }

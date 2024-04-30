@@ -36,6 +36,10 @@ class UserController extends BaseController
         $subCategorys = $this->subCategory->getSubCategory();
         // var_dump($products[0]);
         // die;
+        // echo "<pre>";
+        // var_dump($id_account);
+        // die;
+        // echo "</pre>";
         return $this->render('product', compact('products', 'categorys', 'subCategorys'));
     }
     // END
@@ -166,6 +170,75 @@ class UserController extends BaseController
     //     $id_pro = $_POST['id'];
     //     $comments = $this->comment->addComment($id_user, $id_pro, $comment);
     // }
+    // chuyển trang thông tin tài khoản
+    public function infoAccout($id)
+    {
+        $account = $this->account->getAccount($id);
+        // echo "<pre>";
+        // var_dump($_SESSION['account'][0]);
+        // echo "</pre>";
+        // die;
+        return $this->render('infomation_account', compact('account'));
+    }
+    // đổi thông tin tài khoản
+    public function changeInfoAccount()
+    {
+        if (isset($_POST['update'])) {
+            $id = $_SESSION['account'][0]->id;
+            $username = $_POST['username'];
+            $gmail = $_POST['gmail'];
+            $address = $_POST['address'];
+            $password = $_POST['password'];
+            $newPassword = $_POST['newpassword'];
+            $errors = [];
+            if (empty($password)) {
+                $errors['pass'] = "* Bạn phải nhập password";
+            } else {
+                if ($password != $_SESSION['account'][0]->password) {
+                    $errors['pass'] = "* Bạn phải nhập đúng với mật khẩu";
+                }
+            }
+            if (empty($username)) {
+                $errors['username'] = "* Bạn phải nhập username";
+            }
+            if (empty($address)) {
+                $errors['address'] = "* Bạn phải nhập địa chỉ";
+            }
+            if (count($errors) > 0) {
+                // có lỗi
+                // echo "<pre>";
+                // var_dump($errors);
+                // echo "</pre>";
+                // die;
+                $account = $this->account->getAccount($id);
+                $_SESSION['account'][0] = $account;
+                return $this->render('infomation_account', compact('errors', 'account'));
+            } else {
+                if (!empty($newPassword)) {
+                    if ($password == $_SESSION['account'][0]->password) {
+                        $updateAccount = $this->account->updateAccount($username, $gmail, $address, $newPassword, $id);
+                        $account = $this->account->getAccount($id);
+                        $_SESSION['account'][0] = $account;
+                        // echo "<pre>";
+                        // var_dump($_SESSION['account'][0]);
+                        // echo "</pre>";
+                        // die;
+                        return $this->render('infomation_account', compact('account'));
+                    }
+                }
+                if (empty($newPassword)) {
+                    if ($password == $_SESSION['account'][0]->password) {
+                        // var_dump($password);
+                        // die;
+                        $this->account->updateAccount($username, $gmail, $address, $password, $id);
+                        $account = $this->account->getAccount($id);
+                        $_SESSION['account'][0] = $account;
+                        return $this->render('infomation_account', compact('account'));
+                    }
+                }
+            }
+        }
+    }
     // chuyển trang giỏ hàng
     // public function cart()
     // {
@@ -185,11 +258,7 @@ class UserController extends BaseController
     //     return $this->render('change_password');
     // }
     // // chuyển trang thông tin tài khoản
-    // public function infoAccout()
-    // {
-    //     $products = $this->product->getProduct();
-    //     return $this->render('infomation_account');
-    // }
+
 
 
 

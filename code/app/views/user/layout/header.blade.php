@@ -31,11 +31,8 @@
                         <div class="header__navbar-user-menu">
                             <ul class="header__navbar-user-list-item">
                                 <li class="header__navbar-user-item">
-                                    <a href="home.php">Cập nhật thông
+                                    <a href="{{route('info-acccount/'.$_SESSION['account'][0]->id)}}">Cập nhật thông
                                         tin</a>
-                                </li>
-                                <li class="header__navbar-user-item">
-                                    <a href="home.php?act=doimatkhau">Cài đặt mật khẩu</a>
                                 </li>
                                 <li class="header__navbar-user-item">
                                     <a href="home.php?act=donhang">Đơn mua</a>
@@ -106,13 +103,14 @@
             @if(!isset($_SESSION['cart']))
             <div class="header__cart">
                 <div class="header__cart-wrap">
-                    <i class="header__cart-icon fa-solid fa-cart-shopping"></i>
-                    <span class="header__cart-notice">0</span>
+                    <a href="" class="header__cart-icon fa-solid fa-cart-shopping text-decoration-none "></a>
+                    <span class="header__cart-notice" id="totalProduct">0</span>
                     <!-- No cart: header__cart-list--no-cart -->
-                    <div class="header__cart-list header__cart-list--no-cart">
-                        <img src="{{BASE_URL.'public/user/assets/img/no_cart.png'}}" alt="" class="header__cart-no-cart-img">
+                    <!-- <div class="header__cart-list header__cart-list--no-cart">
+                        <img src="{{BASE_URL.'public/user/assets/img/no_cart.png'}}" alt=""
+                            class="header__cart-no-cart-img">
                         <span class="header__cart-list-no-cart-msg">Chưa có sản phẩm</span>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             @endif
