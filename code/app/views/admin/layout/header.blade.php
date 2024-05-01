@@ -35,13 +35,14 @@
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                 aria-expanded="true" aria-controls="collapseTwo">
                 <i class="fas fa-fw fa-cog"></i>
-                <span>Manage Warehouse</span>
+                <span>Manage </span>
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header" >Quản lý:</h6>
-                    <a class="collapse-item" href="listStorepro">View All</a>
+                    <a class="collapse-item" href="listStorepro">View All Warehouse</a>
                     <a class="collapse-item" href="upToShop">Up To Shop</a>
+                    <a class="collapse-item" href="listAccount">Accounts</a>
                 </div>
             </div>
         </li>

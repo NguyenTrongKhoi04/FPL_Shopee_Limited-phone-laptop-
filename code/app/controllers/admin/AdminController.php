@@ -3,13 +3,16 @@
 namespace App\Controllers\Admin;
 
 use App\Models\StoreProduct;
+use App\Models\Account;
 
 class AdminController extends BaseAdminController
 {
     public $product;
+    public $account;
     public function __construct()
     {
         $this->product = new StoreProduct();
+        $this->account = new Account();
     }
 
     public function index_admin()
@@ -132,43 +135,43 @@ class AdminController extends BaseAdminController
     }
 
     public function addStorepro()
-    {            
-            if (isset($_POST['btn-submit'])) {
-                if ( empty($_POST['name_pro'])) {
-                    $error[] = 'vui long nhap ten';
-                }  if ( empty($_POST['quantity'])) {
-                    $error[] = 'vui long nhap số lượng';
-                }  if ( empty($_POST['id_subcategory'])) {
-                    $error[] = 'vui long chọn loại';
-                }  if ( empty($_POST['description'])) {
-                    $error[] = 'vui long nhap mo ta';
-                }
-                if (count($error) > 0) {
-                    $check = 'xem lại các dữ liệu nhập vào';
-                    $products = $this->product->listStorepro();
-                    $subcategory = $this->product->getSubAllCategory();
-                    $storedetaiproduct = $this->product->getStoreDetailProduct();
-                    $size = $this->product->getSize();
-                    $cate = $this->product->getCategory();
-                    $countpro = $this->product->getCountStoreDetailProduct();
-                    $this->render('Products.listStorepro', compact('check', 'products', 'subcategory', 'storedetaiproduct', 'size', 'countpro', 'cate'));
+    {
+        if (isset($_POST['btn-submit'])) {
+            if (empty($_POST['name_pro'])) {
+                $error[] = 'vui long nhap ten';
+            }
+            if (empty($_POST['quantity'])) {
+                $error[] = 'vui long nhap số lượng';
+            }
+            if (empty($_POST['id_subcategory'])) {
+                $error[] = 'vui long chọn loại';
+            }
+            if (empty($_POST['description'])) {
+                $error[] = 'vui long nhap mo ta';
+            }
+            if (count($error) > 0) {
+                $check = 'xem lại các dữ liệu nhập vào';
+                $products = $this->product->listStorepro();
+                $subcategory = $this->product->getSubAllCategory();
+                $storedetaiproduct = $this->product->getStoreDetailProduct();
+                $size = $this->product->getSize();
+                $cate = $this->product->getCategory();
+                $countpro = $this->product->getCountStoreDetailProduct();
+                $this->render('Products.listStorepro', compact('check', 'products', 'subcategory', 'storedetaiproduct', 'size', 'countpro', 'cate'));
+            } else {
 
-                } else {
-
-                    $datepro = date("Y-m-d");
-                    $this->product->addStoreProduct($_POST['name_pro'], $_POST['quantity'], $datepro, $_POST['id_subcategory'], $_POST['description']);
-                    $check = 'thêm thành công';
-                    $products = $this->product->listStorepro();
-                    $subcategory = $this->product->getSubAllCategory();
-                    $storedetaiproduct = $this->product->getStoreDetailProduct();
-                    $size = $this->product->getSize();
-                    $cate = $this->product->getCategory();
-                    $countpro = $this->product->getCountStoreDetailProduct();
-                    $this->render('Products.listStorepro', compact('check', 'products', 'subcategory', 'storedetaiproduct', 'size', 'countpro', 'cate'));
-                
+                $datepro = date("Y-m-d");
+                $this->product->addStoreProduct($_POST['name_pro'], $_POST['quantity'], $datepro, $_POST['id_subcategory'], $_POST['description']);
+                $check = 'thêm thành công';
+                $products = $this->product->listStorepro();
+                $subcategory = $this->product->getSubAllCategory();
+                $storedetaiproduct = $this->product->getStoreDetailProduct();
+                $size = $this->product->getSize();
+                $cate = $this->product->getCategory();
+                $countpro = $this->product->getCountStoreDetailProduct();
+                $this->render('Products.listStorepro', compact('check', 'products', 'subcategory', 'storedetaiproduct', 'size', 'countpro', 'cate'));
             }
         }
-        
     }
     public function deleteStoreProduct($id)
     {
@@ -197,31 +200,11 @@ class AdminController extends BaseAdminController
             $this->render('Products.listStorepro', compact('check', 'products', 'subcategory', 'storedetaiproduct', 'size', 'countpro', 'cate'));
         }
     }
-// quản lý cate:
-public function deleteSubcate($id){
-    $this->product->deleteSubcate($id);
-    $check = 'xóa thành công dannh mục';
-    $products = $this->product->listStorepro();
-    $subcategory = $this->product->getSubAllCategory();
-    $storedetaiproduct = $this->product->getStoreDetailProduct();
-    $size = $this->product->getSize();
-    $cate = $this->product->getCategory();
-    $countpro = $this->product->getCountStoreDetailProduct();
-    $this->render('Products.listStorepro', compact('check', 'products', 'subcategory', 'storedetaiproduct', 'size', 'countpro', 'cate'));
-}
-
-public function detailSubcate($id){
-    $subcategory = $this->product->getSubAllCategory();
-    $cate = $this->product->getCategory();
-    $oneSub = $this->product->get1Subcategory($id);
-    $this->render('Products.detailSubcate', compact('oneSub','subcategory', 'cate'));
-
-}
-
-public function updateSubcate($id){
-    if (isset($_POST['btn-submit'])) {
-        $this->product->updateSubcate( $id,$_POST['name_subcate'], $_POST['id_category']);
-        $check = 'sửa thành công';
+    // quản lý cate:
+    public function deleteSubcate($id)
+    {
+        $this->product->deleteSubcate($id);
+        $check = 'xóa thành công dannh mục';
         $products = $this->product->listStorepro();
         $subcategory = $this->product->getSubAllCategory();
         $storedetaiproduct = $this->product->getStoreDetailProduct();
@@ -230,15 +213,38 @@ public function updateSubcate($id){
         $countpro = $this->product->getCountStoreDetailProduct();
         $this->render('Products.listStorepro', compact('check', 'products', 'subcategory', 'storedetaiproduct', 'size', 'countpro', 'cate'));
     }
-}
 
-
-
-
-//Up lên Cửa Hàng:
-    public function upToShop(){
+    public function detailSubcate($id)
+    {
+        $subcategory = $this->product->getSubAllCategory();
         $cate = $this->product->getCategory();
-        $subcate= $this->product->getSubAllCategory();
+        $oneSub = $this->product->get1Subcategory($id);
+        $this->render('Products.detailSubcate', compact('oneSub', 'subcategory', 'cate'));
+    }
+
+    public function updateSubcate($id)
+    {
+        if (isset($_POST['btn-submit'])) {
+            $this->product->updateSubcate($id, $_POST['name_subcate'], $_POST['id_category']);
+            $check = 'sửa thành công';
+            $products = $this->product->listStorepro();
+            $subcategory = $this->product->getSubAllCategory();
+            $storedetaiproduct = $this->product->getStoreDetailProduct();
+            $size = $this->product->getSize();
+            $cate = $this->product->getCategory();
+            $countpro = $this->product->getCountStoreDetailProduct();
+            $this->render('Products.listStorepro', compact('check', 'products', 'subcategory', 'storedetaiproduct', 'size', 'countpro', 'cate'));
+        }
+    }
+
+
+
+
+    //Up lên Cửa Hàng:
+    public function upToShop()
+    {
+        $cate = $this->product->getCategory();
+        $subcate = $this->product->getSubAllCategory();
         $products = $this->product->listStorepro();
 
         // $cate1 = $this->product->getUpToShop1();
@@ -246,19 +252,85 @@ public function updateSubcate($id){
         $this->render('Products.upToShop', compact('cate', 'subcate', 'products'));
     }
 
-    public function upToShopSc($id){
-        $subcate= $this->product->getSubAllCategory();
+    public function upToShopSc($id)
+    {
+        $subcate = $this->product->getSubAllCategory();
         $cate = $this->product->getCategory();
         $oneproduct = $this->product->getOneProduct($id);
-        $this->render('Products.upToShopSc', compact('subcate','cate','oneproduct'));
+        $this->render('Products.upToShopSc', compact('subcate', 'cate', 'oneproduct'));
+    }
+    public function doneUpToShop()
+    {
+        if (isset($_POST['btn-submit'])) {
+            $arrayOfObjects = json_decode($_POST['arrayOfArrays'], true);
+
+            // Duyệt qua mảng arrayOfObjects và thực hiện câu lệnh insert cho mỗi đối tượng
+            foreach ($arrayOfObjects as $object) {
+                $id = $object['id'];
+                $name_pro = $object['name_pro'];
+                $quantity = $object['quantity'];
+                $datepro = $object['datepro'];
+                $id_subcategory = $object['id_subcategory'];
+                $description = $object['description'];
+            }
+            $this->product->doneUpToShop($name_pro, $quantity, $datepro, $id_subcategory, $description);
+            $check = "đưa sản phẩm lên kho thành công";
+            $id_subcategory = $object['id_subcategory'];
+            $cate = $this->product->getCategory();
+            $subcate = $this->product->getSubAllCategory();
+            $products = $this->product->listStorepro();
+            $detailPro = $this->product->getDetailStoreProduct($id_subcategory);
+            $this->render('Products.upDetailToShop', compact('check','cate', 'subcate', 'products', 'id_subcategory', 'detailPro'));
+            
+        }
+    }
+
+
+    public function listAccount(){
+        $account = $this->account->listAccount();
+        $this->render('Accounts.listAccount', compact('account'));
+    }
+
+    public function deleteAccount($id){
+        $this->account->deleteAccount($id);
+        $check = "xóa thành công tài khoản";
+        $account = $this->account->listAccount();
+        $this->render('Accounts.listAccount', compact('account', 'check'));
+    }
+
+    public function addAccount(){
+        $error = [];
+        if (isset($_POST['btn-submit'])) {
+            if (empty($_POST['gmail'])) {
+                $error[] = 'vui long nhap email';
+            }
+            if (empty($_POST['username'])) {
+                $error[] = 'vui long nhap username';
+            }
+            if (empty($_POST['password'])) {
+                $error[] = 'vui long chọn loại';
+            }
+            if (empty($_POST['birthday'])) {
+                $error[] = 'vui long nhap mo ta';
+            }
+            if (empty($_POST['address'])) {
+                $error[] = 'vui long nhap mo ta';
+            }
+            if (count($error) > 0) {
+                $check = 'xem lại các dữ liệu nhập vào';
+                $account = $this->account->listAccount();
+                $this->render('Accounts.listAccount', compact('account', 'check'));
+            }
+            else{
+                $createtime = date("Y-m-d h:i:s");
+                $this->account->addAccount($_POST['gmail'], $_POST['username'], $_POST['password'], 1, $createtime, $_POST['birthday'] , $_POST['address'], $_POST['phone']);
+                $check = "thêm thành công";
+                $account = $this->account->listAccount();
+                $this->render('Accounts.listAccount', compact('account', 'check'));
+            }
+        }
+    }
+    public function submitUp(){
 
     }
-    public function addToSopSc(){
-
-    }
-
-
-
 }
-
-

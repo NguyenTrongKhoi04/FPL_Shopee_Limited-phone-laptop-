@@ -164,9 +164,9 @@
                 <td style="">{{$p->datepro}}</td>
                 <td style="width: 500px;text-overflow: ellipsis;">{{$p->description}}</td>
                 <td>
-                    <button class="btn btn-success " style="font-size: 10px;" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{$p->id}}">
+                    <a href="{{route('seeDetail/'.$p->id)}}"> <button class="btn btn-success " style="font-size: 10px;" >
                         See details
-                    </button> <br>
+                    </button> </a> <br>
                     <button class="btn btn-warning" style="font-size: 10px;" data-bs-toggle="modal" data-bs-target="#updateProduct{{$p->id}}">
                         Update
                     </button> <br>

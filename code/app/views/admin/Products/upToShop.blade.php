@@ -1,5 +1,13 @@
 @extends('layout.main')
 @section('content')
+@if(isset($check))
+
+<script>
+    alert('{{$check}}')
+</script>
+
+
+@endif
 <div class="container">
     <h1 class="h3 mb-4 text-gray-800">Đẩy lên cửa hàng</h1>
     <p>chọn loại hàng muốn up:</p>

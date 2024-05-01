@@ -63,11 +63,21 @@ $router->get('deleteSubcate/{id}', [App\Controllers\Admin\AdminController::class
 $router->get('detailSubcate/{id}', [App\Controllers\Admin\AdminController::class, 'detailSubcate']);
 $router->post('updateSubcate/{id}', [App\Controllers\Admin\AdminController::class, 'updateSubcate']);
 
+//Acccount:
+$router->get('listAccount', [App\Controllers\Admin\AdminController::class, 'listAccount']);
+$router->post('addAccount', [App\Controllers\Admin\AdminController::class, 'addAccount']);
+$router->get('deleteAccount/{id}', [App\Controllers\Admin\AdminController::class, 'deleteAccount']);
+
+
+
+
+
 
 //up lên shop:
 $router->get('upToShop', [App\Controllers\Admin\AdminController::class, 'upToShop']);
 $router->get('upToShop/{id}', [App\Controllers\Admin\AdminController::class, 'upToShopSc']);
-$router->post('addUpToShop', [App\Controllers\Admin\AdminController::class, 'addToSopSc']);
+$router->post('doneUpToShop', [App\Controllers\Admin\AdminController::class, 'doneUpToShop']);
+$router->post('submitUp', [App\Controllers\Admin\AdminController::class, 'submitUp']);
 // $router->post('post-product', [App\Controllers\ProductController::class, 'postProduct']);
 // $router->get('detail-product/{id}', [App\Controllers\ProductController::class, 'detail']);
 // $router->post('edit-product/{id}', [App\Controllers\ProductController::class, 'editProduct']);
