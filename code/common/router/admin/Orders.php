@@ -6,5 +6,6 @@ $router->get('listConfirm', [App\Controllers\Admin\OrderController::class, 'list
 $router->get('listTransfer', [App\Controllers\Admin\OrderController::class, 'listTransfer']);
 $router->get('listSuccess', [App\Controllers\Admin\OrderController::class, 'listSuccess']);
 $router->get('listReject', [App\Controllers\Admin\OrderController::class, 'listReject']);
-$router->get('listReturn', [App\Controllers\Admin\OrderController::class, 'listRequestConfirm']);
+$router->get('listReturn', [App\Controllers\Admin\OrderController::class, 'listReturn']);
+
 $router->get('confirmOrder/{id}', [App\Controllers\Admin\OrderController::class, 'detailOrder']);

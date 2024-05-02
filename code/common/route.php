@@ -38,7 +38,6 @@ foreach ($arr_directory_user as $item) {
     }
 };
 
-$router->get('product', [App\Controllers\User\UserController::class, 'index']);
 // $router->get('cart', [App\Controllers\User\UserController::class, 'cart']);
 // $router->get('change-pass', [App\Controllers\User\UserController::class, 'change_pass']);
 // $router->get('forgot-pass', [App\Controllers\User\UserController::class, 'forgot_pass']);

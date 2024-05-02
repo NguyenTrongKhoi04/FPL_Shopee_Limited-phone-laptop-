@@ -4,7 +4,7 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Chi tiết đơn hàng<span style="color: orangered;">
+    <h1 class="h3 mb-2 text-gray-800">Chi tiết đơn hàng đã hủy <span style="color: orangered;">
             (ID đơn: {{$orderDetail[0]->orders_id}})</span></h1>
 
     <!-- DataTales Example -->
@@ -13,11 +13,7 @@
             <!-- <h6 class="m-0 font-weight-bold text-primary"><a href="">linktest </a>DataTables Example</h6> -->
             <div>
 
-                <a href="{{route('listRequestConfirm')}}"><button class="btn btn-secondary">Trờ lại trang xác
-                        nhận</button></a>
-
-                <a href="{{route(''.$orderDetail[0]->orders_id)}}"><button class="btn btn-success">Xác nhận đơn
-                        hàng</button></a>
+                <a href="{{route('listReject')}}"><button class="btn btn-secondary">Trờ lại trang hủy hàng</button></a>
             </div>
             <h4 style="color: orangered;">Tổng tiền đơn hàng: {{$orderDetail[0]->totalorder}}$</a></h5>
         </div>
@@ -32,7 +28,6 @@
                             <th>Ảnh</th>
                             <th>Size</th>
                             <th>Giá</th>
-                            <th>Comment của khách hàng</th>
                             <th>Địa chỉ</th>
                             <th>Phone</th>
                         </tr>
@@ -45,7 +40,6 @@
                             <th>Ảnh</th>
                             <th>Size</th>
                             <th>Giá</th>
-                            <th>Comment của khách hàng</th>
                             <th>Địa chỉ</th>
                             <th>Phone</th>
                         </tr>
@@ -59,7 +53,6 @@
                             <td><img src="{{$i->image}}" width="100px" alt=""></td>
                             <td>{{$i->namesize}}</td>
                             <td>{{$i->price * $i->orderdetail_count}}</td>
-                            <td>{{$i->comment}}</td>
                             <td>{{$i->address}}</td>
                             <td>{{$i->phone}}</td>
                         <tr>

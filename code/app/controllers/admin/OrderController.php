@@ -254,5 +254,40 @@ class OrderController extends BaseAdminController
 
     public function listReturn()
     {
+        $arrField = [
+            "*",
+            "COUNT(orders.status) AS totalrequestconfirm",
+            "orders.id AS order_id",
+            "COUNT(DISTINCT orderdetail.comment) AS countcomment"
+        ];
+
+        $listVoucher = $this->voucher->getVoucher('*');
+        $listShip = $this->ship->getShip('*');
+        $listReasonReturn = $this->reasonReject->getReasonReject('*');
+        $listOrder = $this->order->getOrderSuccess(join(', ', $arrField), 'orders.status = 7 OR orders.status = 8', "orders.id", "time_order");
+
+        $totalOrderRequestConfirm = $this->order->getTotalStatus("7 OR status = 8", 'COUNT(status) AS count');
+        $totalOrderConfirm = $this->order->getTotalStatus(2, 'COUNT(status) AS count');
+        $totalOrderTransfer = $this->order->getTotalStatus(3, 'COUNT(status) AS count');
+        $totalOrderSuccess = $this->order->getTotalStatus(4, 'COUNT(status) AS count');
+        $totalOrderReturn = $this->order->getTotalStatus("7 OR status = 8", 'COUNT(status) AS count');
+        $totalOrderReject = $this->order->getTotalStatus("6 OR status = 9", 'COUNT(status) AS count');
+        $totalAllOrder = $this->order->getTotalStatus(null, 'COUNT(status) AS count');
+
+        return $this->render('order.ListOrderReturn', compact(
+            "listOrder",
+            "listVoucher",
+            "listShip",
+            "listReasonReturn",
+
+            "listVoucher",
+            "totalOrderRequestConfirm",
+            "totalOrderConfirm",
+            "totalOrderSuccess",
+            "totalOrderTransfer",
+            "totalOrderReturn",
+            "totalOrderReject",
+            "totalAllOrder"
+        ));
     }
 }
