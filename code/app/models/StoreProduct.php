@@ -108,10 +108,24 @@ class StoreProduct extends BaseModel {
         return $this->execute([ $name_subcate , $id_category, $id]);
     }
 
-    public function doneUpToShop($namepro, $quantity, $datepro, $id_subcategory, $description){
-        $sql = "INSERT INTO `product`( `namepro`, `quantity`, `datepro`, `id_subcategory`, `description`) VALUES (?,?,?,?,?)";
+
+    public function Test(){
+        $sql = "INSERT INTO `product` (namepro, quantity, datepro, id_subcategory ,description) Value (1,2,3,4,5)";
         $this->setQuery($sql);
-        return $this->execute([$namepro, $quantity, $datepro, $id_subcategory, $description]);
+        return $this->loadID();
+    }
+    public function doneUpToShop($id){
+        $sql = "INSERT INTO `product` (namepro, quantity, datepro, id_subcategory ,description)
+        SELECT name_pro, quantity, datepro, id_subcategory, description
+        FROM storepro WHERE id=?";
+        // var_dump($sql); die;
+        $this->setQuery($sql);
+        return $this->loadID([$id]);
+    }
+    public function doneUpdetai($id_pro, $image, $price, $size, $count){
+        $sql = "INSERT INTO `detailproduct`(id_pro, image, price, size, count) VALUES (?,?,?,?,?)";
+        $this->setQuery($sql);
+        return $this->execute([$id_pro, $image, $price, $size, $count]);
     }
 
     public function getDetailStoreProduct($id_subcategory){

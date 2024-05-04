@@ -255,36 +255,51 @@ class AdminController extends BaseAdminController
     public function upToShopSc($id)
     {
         $subcate = $this->product->getSubAllCategory();
+        $alldetail = $this->product->getStoreDetailProduct();
         $cate = $this->product->getCategory();
         $oneproduct = $this->product->getOneProduct($id);
-        $this->render('Products.upToShopSc', compact('subcate', 'cate', 'oneproduct'));
+        $this->render('Products.upToShopSc', compact('subcate', 'cate', 'oneproduct', 'alldetail'));
     }
-    public function doneUpToShop()
+    public function submitUp()
     {
         if (isset($_POST['btn-submit'])) {
-            $arrayOfObjects = json_decode($_POST['arrayOfArrays'], true);
+            // foreach($_POST as $key=>$value){
+            //     // $newArr = [$_POST[$key][$key],$_POST['id_detail'][$key]];
+            //     // $arr[]= $newArr;
 
-            // Duyệt qua mảng arrayOfObjects và thực hiện câu lệnh insert cho mỗi đối tượng
-            foreach ($arrayOfObjects as $object) {
-                $id = $object['id'];
-                $name_pro = $object['name_pro'];
-                $quantity = $object['quantity'];
-                $datepro = $object['datepro'];
-                $id_subcategory = $object['id_subcategory'];
-                $description = $object['description'];
+            // }
+            echo '<pre>';
+            print_r($_POST);
+            die;
+            $id_pro = $_POST['id_pro'];
+            $id_detail = $_POST['id_detail'];
+            $price = $_POST['price'];
+            $image = $_POST['image'];
+            $size = $_POST['size'];
+            $count = $_POST['quantity'];
+            // for($i = 0 ; $i<= $count; $i++){
+            //     if($id_pro[$i] == $id_pro[$i+1]){
+            //         echo "ninhninh";
+            //     }
+            // }
+            for ($i = 0; $i < count($id_detail); $i++) {
+                $this->product->doneUpToShop($id_pro[$i]);
+            $id1 = $this->product->loadID();
+            $this->product->doneUpdetai($id1, $image[$i], $price[$i], $size[$i], $count[$i]);
             }
-            $this->product->doneUpToShop($name_pro, $quantity, $datepro, $id_subcategory, $description);
             $check = "đưa sản phẩm lên kho thành công";
-            $id_subcategory = $object['id_subcategory'];
-            $cate = $this->product->getCategory();
             $subcate = $this->product->getSubAllCategory();
-            $products = $this->product->listStorepro();
-            $detailPro = $this->product->getDetailStoreProduct($id_subcategory);
-            $this->render('Products.upDetailToShop', compact('check','cate', 'subcate', 'products', 'id_subcategory', 'detailPro'));
+            $alldetail = $this->product->getStoreDetailProduct();
+            $cate = $this->product->getCategory();
+            $oneproduct = $this->product->getOneProduct($id_pro);
+            $this->render('Products.upToShopSc', compact('subcate', 'cate', 'oneproduct', 'alldetail', 'check'));
             
         }
     }
 
+    // public function Test(){
+    //     $this->product->Test();
+    // }
 
     public function listAccount(){
         $account = $this->account->listAccount();
@@ -330,7 +345,5 @@ class AdminController extends BaseAdminController
             }
         }
     }
-    public function submitUp(){
 
-    }
 }
