@@ -23,7 +23,8 @@ function flash($key, $msg, $route)
         case 'errors':
             unset($_SESSION['success']);
             break;
-    }
+    };
+    echo `<script>alert('{$msg}')</script>`;
     header('location:' . BASE_URL . $route . '?msg=' . $key);
     die;
 }

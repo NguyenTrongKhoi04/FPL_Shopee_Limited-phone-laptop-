@@ -21,20 +21,20 @@ $router->get('/', function () {
 });
 
 // TODO: Load All Router
-$arr_directory_admin = scandir('common/router/admin');
-$arr_directory_user = scandir('common/router/user');
+$arr_directory_admin = scandir('common/route/admin');
+$arr_directory_user = scandir('common/route/user');
 // quét một thư mục và trả về một mảng chứa tên của các tệp và thư mục trong đó
 
-// include router admin
+// include route admin
 foreach ($arr_directory_admin as $item) {
-    if ($item != '..' && $item != '.' && file_exists('common/router/admin/' . $item)) {
-        include_once 'common/router/admin/' . $item;
+    if ($item != '..' && $item != '.' && file_exists('common/route/admin/' . $item)) {
+        include_once 'common/route/admin/' . $item;
     }
 };
-// include router user
+// include route user
 foreach ($arr_directory_user as $item) {
-    if ($item != '..' && $item != '.' && file_exists('common/router/user/' . $item)) {
-        include_once 'common/router/user/' . $item;
+    if ($item != '..' && $item != '.' && file_exists('common/route/user/' . $item)) {
+        include_once 'common/route/user/' . $item;
     }
 };
 

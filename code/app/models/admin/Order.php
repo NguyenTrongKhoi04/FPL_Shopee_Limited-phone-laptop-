@@ -47,7 +47,7 @@ class Order extends BaseModel
         $this->setQuery($sql);
         // echo "<pre>";
         // print_r($this->loadAllRows());
-        // echo "</pre>";
+        // echo "</pre>";die;
         return $this->loadAllRows();
     }
 
@@ -101,7 +101,13 @@ class Order extends BaseModel
         // echo "</pre>";die;
         return $this->loadAllRows();
     }
-
+    
+    public function updateStatusOrder($numberStatus, $id){
+        $sql = "UPDATE $this->table SET status = ? WHERE id= ? ";
+        $this->setQuery($sql);
+        return $this->execute([$numberStatus, $id]);
+    }
+    
     /**
      * =============================================================================
      *                                         

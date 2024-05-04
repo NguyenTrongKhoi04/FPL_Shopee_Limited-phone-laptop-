@@ -5,7 +5,7 @@
 
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">Đơn Đang Chuẩn Bị <span
-            style="color: orange;">({{$totalOrderRequestConfirm[0]->count }})</span>
+            style="color: orange;">({{$totalOrderConfirm[0]->count }})</span>
     </h1>
     <p class="mb-4">Xác nhận các đơn hàng được khách hàng đặt</p>
 
@@ -105,8 +105,8 @@
                                         class="btn btn-primary">Chi
                                         tiết
                                         đơn hàng</button></a>
-                                <a href="{{route('confirmOrder/'.$i->order_id)}}">
-                                    <button onclick=" return confirm('Chắc chắn xác nhận đơn hàng')"
+                                <a href="{{route('confirmTransfer/'.$i->order_id)}}">
+                                    <button onclick=" return confirm('Chắc chắn xác nhận vận chuyển')"
                                         class="btn btn-success">Vận chuyển</button></a>
                             </td>
                         <tr>

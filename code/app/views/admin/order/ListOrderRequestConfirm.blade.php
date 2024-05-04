@@ -94,7 +94,7 @@
                                 <a href="{{route('confirmOrder/'.$i->order_id)}}">
                                     <button onclick=" return confirm('Chắc chắn xác nhận đơn hàng')"
                                         class="btn btn-success">Xác nhận</button></a>
-                                <a href="{{route('confirmOrder/'.$i->order_id)}}">
+                                <a href="{{route('confirmCancelOrder/'.$i->order_id)}}">
                                     <button onclick=" return confirm('Chắc chắn từ chối xác nhận')"
                                         class="btn btn-danger">Từ chối</button></a>
                             </td>

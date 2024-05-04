@@ -4,8 +4,8 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Đơn Hủy <span
-            style="color: orange;">({{$totalOrderRequestConfirm[0]->count }})</span>
+    <h1 class="h3 mb-2 text-gray-800">Đơn Hoàn Trả <span
+            style="color: orange;">({{$totalOrderReturn[0]->count }})</span>
     </h1>
     <p class="mb-4">Các đơn hàng dã bị hủy</p>
 
@@ -71,13 +71,15 @@
                             </td>
                             <td>
                                 <a style="text-decoration: underline;"
-                                    href="{{route('orderDetailSuccess/'.$i->order_id)}}">Chi
+                                    href="{{route('orderDetailReturn/'.$i->order_id)}}">Chi
                                     tiết
                                     đơn hàng</a>
                             </td>
                             <td>
                                 <?php if ($i->status == 7) { ?>
-                                <a href=""><button class="btn btn-success">Xác nhận hoàn trả</button></a>
+                                <a href="{{route('confirmReturn/'.$i->order_id)}}">
+                                    <button onclick=" return confirm('Chắc chắn đồng ý hoàn trả')"
+                                        class="btn btn-success">Xác nhận hoàn trả</button></a>
                                 <?php } else {
                                     echo "Đã xác nhận";
                                 } ?>

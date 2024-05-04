@@ -50,13 +50,13 @@ class OrderController extends BaseAdminController
         $listShip = $this->ship->getShip('*');
         $listOrder = $this->order->getOrderRequestConfirm(join(', ', $arrField), 'orders.status = 1 ', "orders.id", "time_order");
 
-        $totalOrderRequestConfirm = $this->order->getTotalStatus(1, 'COUNT(status) AS count');
+        $totalAllOrder = $this->order->getTotalStatus(null, 'COUNT(status) AS count');
         $totalOrderConfirm = $this->order->getTotalStatus(2, 'COUNT(status) AS count');
+        $totalOrderRequestConfirm = $this->order->getTotalStatus(1, 'COUNT(status) AS count');
         $totalOrderTransfer = $this->order->getTotalStatus(3, 'COUNT(status) AS count');
         $totalOrderSuccess = $this->order->getTotalStatus(4, 'COUNT(status) AS count');
-        $totalOrderReturn = $this->order->getTotalStatus(7, 'COUNT(status) AS count');
-        $totalOrderReject = $this->order->getTotalStatus(6, 'COUNT(status) AS count');
-        $totalAllOrder = $this->order->getTotalStatus(null, 'COUNT(status) AS count');
+        $totalOrderReturn = $this->order->getTotalStatus("7 OR status = 8", 'COUNT(status) AS count');
+        $totalOrderReject = $this->order->getTotalStatus("6 OR status = 9", 'COUNT(status) AS count');
 
         return $this->render('order.ListOrderRequestConfirm', compact(
             "listOrder",
@@ -80,13 +80,13 @@ class OrderController extends BaseAdminController
         $listStatus = $this->status->getStatus('*');
         $listAccount = $this->account->getAccount('*');
 
-        $totalOrderRequestConfirm = $this->order->getTotalStatus(1, 'COUNT(status) AS count');
+        $totalAllOrder = $this->order->getTotalStatus(null, 'COUNT(status) AS count');
         $totalOrderConfirm = $this->order->getTotalStatus(2, 'COUNT(status) AS count');
+        $totalOrderRequestConfirm = $this->order->getTotalStatus(1, 'COUNT(status) AS count');
         $totalOrderTransfer = $this->order->getTotalStatus(3, 'COUNT(status) AS count');
         $totalOrderSuccess = $this->order->getTotalStatus(4, 'COUNT(status) AS count');
-        $totalOrderReturn = $this->order->getTotalStatus(7, 'COUNT(status) AS count');
-        $totalOrderReject = $this->order->getTotalStatus(6, 'COUNT(status) AS count');
-        $totalAllOrder = $this->order->getTotalStatus(null, 'COUNT(status) AS count');
+        $totalOrderReturn = $this->order->getTotalStatus("7 OR status = 8", 'COUNT(status) AS count');
+        $totalOrderReject = $this->order->getTotalStatus("6 OR status = 9", 'COUNT(status) AS count');
 
         return $this->render('order.listAllOrder', compact(
             "listAccount",
@@ -113,15 +113,15 @@ class OrderController extends BaseAdminController
 
         $listVoucher = $this->voucher->getVoucher('*');
         $listShip = $this->ship->getShip('*');
-        $listOrder = $this->order->getOrderConfirm(join(', ', $arrField), 'orders.status = 1', "orders.id", "time_order");
+        $listOrder = $this->order->getOrderConfirm(join(', ', $arrField), 'orders.status = 2', "orders.id", "time_order");
 
-        $totalOrderRequestConfirm = $this->order->getTotalStatus(2, 'COUNT(status) AS count');
+        $totalAllOrder = $this->order->getTotalStatus(null, 'COUNT(status) AS count');
         $totalOrderConfirm = $this->order->getTotalStatus(2, 'COUNT(status) AS count');
+        $totalOrderRequestConfirm = $this->order->getTotalStatus(1, 'COUNT(status) AS count');
         $totalOrderTransfer = $this->order->getTotalStatus(3, 'COUNT(status) AS count');
         $totalOrderSuccess = $this->order->getTotalStatus(4, 'COUNT(status) AS count');
-        $totalOrderReturn = $this->order->getTotalStatus(7, 'COUNT(status) AS count');
-        $totalOrderReject = $this->order->getTotalStatus(6, 'COUNT(status) AS count');
-        $totalAllOrder = $this->order->getTotalStatus(null, 'COUNT(status) AS count');
+        $totalOrderReturn = $this->order->getTotalStatus("7 OR status = 8", 'COUNT(status) AS count');
+        $totalOrderReject = $this->order->getTotalStatus("6 OR status = 9", 'COUNT(status) AS count');
 
         return $this->render('order.ListOrderConfirm', compact(
             "listOrder",
@@ -150,16 +150,15 @@ class OrderController extends BaseAdminController
 
         $listVoucher = $this->voucher->getVoucher('*');
         $listShip = $this->ship->getShip('*');
-        $listOrder = $this->order->getOrderTransfer(join(', ', $arrField), 'orders.status = 1', "orders.id", "time_order");
+        $listOrder = $this->order->getOrderTransfer(join(', ', $arrField), 'orders.status = 3', "orders.id", "time_order");
 
-        $totalOrderRequestConfirm = $this->order->getTotalStatus(3, 'COUNT(status) AS count');
+        $totalAllOrder = $this->order->getTotalStatus(null, 'COUNT(status) AS count');
         $totalOrderConfirm = $this->order->getTotalStatus(2, 'COUNT(status) AS count');
+        $totalOrderRequestConfirm = $this->order->getTotalStatus(1, 'COUNT(status) AS count');
         $totalOrderTransfer = $this->order->getTotalStatus(3, 'COUNT(status) AS count');
         $totalOrderSuccess = $this->order->getTotalStatus(4, 'COUNT(status) AS count');
-        $totalOrderReturn = $this->order->getTotalStatus(7, 'COUNT(status) AS count');
-        $totalOrderReject = $this->order->getTotalStatus(6, 'COUNT(status) AS count');
-        $totalAllOrder = $this->order->getTotalStatus(null, 'COUNT(status) AS count');
-
+        $totalOrderReturn = $this->order->getTotalStatus("7 OR status = 8", 'COUNT(status) AS count');
+        $totalOrderReject = $this->order->getTotalStatus("6 OR status = 9", 'COUNT(status) AS count');
         return $this->render('order.ListOrderTransfer', compact(
             "listOrder",
             "listVoucher",
@@ -189,13 +188,13 @@ class OrderController extends BaseAdminController
         $listShip = $this->ship->getShip('*');
         $listOrder = $this->order->getOrderSuccess(join(', ', $arrField), 'orders.status = 4', "orders.id", "time_order");
 
-        $totalOrderRequestConfirm = $this->order->getTotalStatus(4, 'COUNT(status) AS count');
+        $totalAllOrder = $this->order->getTotalStatus(null, 'COUNT(status) AS count');
         $totalOrderConfirm = $this->order->getTotalStatus(2, 'COUNT(status) AS count');
+        $totalOrderRequestConfirm = $this->order->getTotalStatus(1, 'COUNT(status) AS count');
         $totalOrderTransfer = $this->order->getTotalStatus(3, 'COUNT(status) AS count');
         $totalOrderSuccess = $this->order->getTotalStatus(4, 'COUNT(status) AS count');
-        $totalOrderReturn = $this->order->getTotalStatus(7, 'COUNT(status) AS count');
-        $totalOrderReject = $this->order->getTotalStatus(6, 'COUNT(status) AS count');
-        $totalAllOrder = $this->order->getTotalStatus(null, 'COUNT(status) AS count');
+        $totalOrderReturn = $this->order->getTotalStatus("7 OR status = 8", 'COUNT(status) AS count');
+        $totalOrderReject = $this->order->getTotalStatus("6 OR status = 9", 'COUNT(status) AS count');
 
         return $this->render('order.ListOrderSuccess', compact(
             "listOrder",
@@ -227,13 +226,13 @@ class OrderController extends BaseAdminController
         $listReasonReject = $this->reasonReject->getReasonReject('*');
         $listOrder = $this->order->getOrderSuccess(join(', ', $arrField), 'orders.status = 9 OR orders.status = 6', "orders.id", "time_order");
 
-        $totalOrderRequestConfirm = $this->order->getTotalStatus("9 OR status = 6", 'COUNT(status) AS count');
+        $totalAllOrder = $this->order->getTotalStatus(null, 'COUNT(status) AS count');
         $totalOrderConfirm = $this->order->getTotalStatus(2, 'COUNT(status) AS count');
+        $totalOrderRequestConfirm = $this->order->getTotalStatus(1, 'COUNT(status) AS count');
         $totalOrderTransfer = $this->order->getTotalStatus(3, 'COUNT(status) AS count');
         $totalOrderSuccess = $this->order->getTotalStatus(4, 'COUNT(status) AS count');
-        $totalOrderReturn = $this->order->getTotalStatus(7, 'COUNT(status) AS count');
-        $totalOrderReject = $this->order->getTotalStatus(6, 'COUNT(status) AS count');
-        $totalAllOrder = $this->order->getTotalStatus(null, 'COUNT(status) AS count');
+        $totalOrderReturn = $this->order->getTotalStatus("7 OR status = 8", 'COUNT(status) AS count');
+        $totalOrderReject = $this->order->getTotalStatus("6 OR status = 9", 'COUNT(status) AS count');
 
         return $this->render('order.ListOrderReject', compact(
             "listOrder",
@@ -266,13 +265,13 @@ class OrderController extends BaseAdminController
         $listReasonReturn = $this->reasonReject->getReasonReject('*');
         $listOrder = $this->order->getOrderSuccess(join(', ', $arrField), 'orders.status = 7 OR orders.status = 8', "orders.id", "time_order");
 
-        $totalOrderRequestConfirm = $this->order->getTotalStatus("7 OR status = 8", 'COUNT(status) AS count');
+        $totalAllOrder = $this->order->getTotalStatus(null, 'COUNT(status) AS count');
         $totalOrderConfirm = $this->order->getTotalStatus(2, 'COUNT(status) AS count');
+        $totalOrderRequestConfirm = $this->order->getTotalStatus(1, 'COUNT(status) AS count');
         $totalOrderTransfer = $this->order->getTotalStatus(3, 'COUNT(status) AS count');
         $totalOrderSuccess = $this->order->getTotalStatus(4, 'COUNT(status) AS count');
         $totalOrderReturn = $this->order->getTotalStatus("7 OR status = 8", 'COUNT(status) AS count');
         $totalOrderReject = $this->order->getTotalStatus("6 OR status = 9", 'COUNT(status) AS count');
-        $totalAllOrder = $this->order->getTotalStatus(null, 'COUNT(status) AS count');
 
         return $this->render('order.ListOrderReturn', compact(
             "listOrder",
@@ -289,5 +288,36 @@ class OrderController extends BaseAdminController
             "totalOrderReject",
             "totalAllOrder"
         ));
+    }
+
+    public function confirmOrder($id){
+        $check = $this->order->updateStatusOrder(2,$id);
+        if ($check) {
+            flash('success', 'ban da sua thanh cong', 'listRequestConfirm');
+        }
+    }
+    
+    public function confirmCancelOrder($id){
+        $check = $this->order->updateStatusOrder(9,$id);
+       
+        if ($check) {
+            flash('success', 'ban da sua thanh cong', 'listRequestConfirm');
+        }
+    }
+
+    public function confirmTransfer($id)
+    {
+        $check = $this->order->updateStatusOrder(3, $id);
+        if ($check) {
+            flash('success', 'ban da sua thanh cong', 'listConfirm');
+        }
+    }
+    
+    public function confirmReturn($id)
+    {
+        $check = $this->order->updateStatusOrder(8, $id);
+        if ($check) {
+            flash('success', 'ban da sua thanh cong', 'listReturn');
+        }
     }
 }

@@ -5,7 +5,7 @@
 
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">Đơn Hủy <span
-            style="color: orange;">({{$totalOrderRequestConfirm[0]->count }})</span>
+            style="color: orange;">({{$totalOrderReject[0]->count }})</span>
     </h1>
     <p class="mb-4">Các đơn hàng dã bị hủy</p>
 
@@ -29,7 +29,12 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <span class="mx-3"><input type="checkbox" name="" id="cancel-admin-checkbox"
+                        style="transform: scale(1.5);"> Các đơn shop hủy
+                </span>
+                <input type="checkbox" name="" id="cancel-user-checkbox" style="transform: scale(1.5);"> Các đơn
+                khách hàng hủy
+                <table class="table table-bordered mt-3" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -52,7 +57,7 @@
                     </tfoot>
                     <tbody>
                         @foreach($listOrder as $i)
-                        <tr>
+                        <tr data-set="<?= $i->status ?>">
                             <td>{{$i->order_id}}</td>
                             <td>{{$i->username}}</td>
                             <td><?= date('H:i:s d/m/Y', strtotime($i->time_order)) ?></td>
@@ -123,6 +128,23 @@ function updateCountdown(element, targetTime) {
 
     update();
 }
+
+const checkboxItem = function(nameButton, dataset) {
+    document.getElementById(nameButton).addEventListener('change', function() {
+        let rows = document.querySelectorAll(`tr[data-set="${dataset}"]`);
+        console.log(this, dataset);
+        rows.forEach(function(row) {
+            if (row.style.display === 'none') {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+}
+
+checkboxItem('cancel-user-checkbox', 6);
+checkboxItem('cancel-admin-checkbox', 9);
 </script>
 <!-- End of Main Content -->
 @endsection

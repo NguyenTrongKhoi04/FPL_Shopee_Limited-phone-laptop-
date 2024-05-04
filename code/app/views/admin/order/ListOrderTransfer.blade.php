@@ -5,7 +5,7 @@
 
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">Đơn Đang Giao <span
-            style="color: orange;">({{$totalOrderRequestConfirm[0]->count }})</span>
+            style="color: orange;">({{$totalOrderTransfer[0]->count }})</span>
     </h1>
     <p class="mb-4">Xác nhận các đơn hàng được khách hàng đặt</p>
 
