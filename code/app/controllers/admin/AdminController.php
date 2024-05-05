@@ -266,10 +266,8 @@ class AdminController extends BaseAdminController
     public function submitUp()
     {
         if (isset($_POST['btn-submit'])) {
-            // foreach($_POST as $key=>$value){
-            //     // $newArr = [$_POST[$key][$key],$_POST['id_detail'][$key]];
-            //     // $arr[]= $newArr;
-                unset($_POST['btn-submit']);
+            
+            unset($_POST['btn-submit']);
             $arr = [];
 
             $count = count($_POST['id_pro']);
@@ -280,12 +278,8 @@ class AdminController extends BaseAdminController
                 }
                 $arr[] = $subArray;
             }
-            // $this->product->UpProduct(2);
+           
             $arr2 = [...$arr];
-            echo '<pre>';
-            print_r($arr2);
-            // print_r($_POST);            
-            die;
             
             // $id_pro = $_POST['id_pro'];
             // $id_detail = $_POST['id_detail'];
@@ -299,10 +293,10 @@ class AdminController extends BaseAdminController
             //     }
             // }
             foreach($arr as $i){
-                $this->product->doneUpToShop($id_pro[$i]); // TODO: lấy bản sao và insert vào pro sàn
-                $id1 = $this->product->loadID(); // TODO : lấy id mới tạo
-                $this->product->doneUpdetai($id1, $image[$i], $price[$i], $size[$i], $count[$i]);
+                $this->product->UpProduct($i);
             }
+            die;
+            
             for ($i = 0; $i < count($id_detail); $i++) {
             
             }
@@ -310,10 +304,10 @@ class AdminController extends BaseAdminController
             $subcate = $this->product->getSubAllCategory();
             $alldetail = $this->product->getStoreDetailProduct();
             $cate = $this->product->getCategory();
-            // $oneproduct = $this->product->getOneProduct($id_pro);
+            $oneproduct = $this->product->getOneProduct($id_pro);
             
-            // $check = "đưa sản phẩm lên kho thành công";
-            // $this->render('Products.upToShopSc', compact('subcate', 'cate', 'oneproduct', 'alldetail', 'check'));
+            $check = "đưa sản phẩm lên sàn thành công";
+            $this->render('Products.upToShopSc', compact('subcate', 'cate', 'oneproduct', 'alldetail', 'check'));
             
         }
     }

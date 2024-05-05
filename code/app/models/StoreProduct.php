@@ -161,24 +161,72 @@ class StoreProduct extends BaseModel {
      * =============================================================================
      */
 
-    public function UpProduct($id){
+    public function UpProduct($arr=[]){
+    // [0] => id pro
+    // [1] => id detail
+    // [2] => price detailpro
+    // [3] => ảnh
+    // [4] => id size
+    // [5] => số lượng
+    
+        $sqlGetStorePro = "SELECT *
+                    FROM storepro
+                    WHERE id = ?;
+                    ";
+        $this->setQuery($sqlGetStorePro);
+        $name = $this->loadAllRows([$arr[0]]);
+        
+        // check tồn tại trong table product chưa
         $sqlCheck = "SELECT product.*
                     FROM product
-                    INNER JOIN storepro ON product.namepro = storepro.name_pro
-                    WHERE storepro.id = ?;
+                    WHERE namepro = ?;
                     ";
         $this->setQuery($sqlCheck);
-        $this->loadAllRows([$id]);
+        $dataCheck = $this->loadAllRows([$name[0]->name_pro]);
+
+        if($dataCheck == null){
+            //insert into product 
+            $sql = "INSERT INTO `product` (namepro, id_subcategory, description)
+            SELECT name_pro, id_subcategory, description
+            FROM storepro WHERE id = ? ";
+            $this->setQuery($sql);
+            $this->execute([$arr[0]]);
+            $lastID = $this->getLastId();
+
+            // Lấy quantity hiện tại + quantity vừa cho vào 
+            $sql = "UPDATE product SET quantity = quantity + ?, datepro = NOW() WHERE id = ?";
+            $this->setQuery($sql);
+            $this->execute([$arr[5], $lastID]);
+            
+            //insert vào detailproduct
+            $sql = "INSERT INTO detailproduct (`id_pro`, `image`, `price`, `size`, `count`) VALUE (?,?,?,?,?)";
+            $this->setQuery($sql);
+            return $this->execute([$lastID,$arr[3],$arr[2],$arr[4], $arr[5]]);
+        }else{
+            $sql = "UPDATE product SET quantity = quantity + ?, datepro = NOW() WHERE id = ?";
+            $this->setQuery($sql);
+            $this->execute([$arr[5], $dataCheck[0]->id]);
+
+            // check detailpro đó tồn tại hay chưa
+            $sql = "SELECT * FROM detailproduct WHERE size = ? AND id_pro = ?";
+            $this->setQuery($sql);
+            $dataCheckDetail = $this->loadAllRows([$arr[4], $dataCheck[0]->id]);            
+
+            if($dataCheckDetail == null){
+                $sql = "INSERT INTO detailproduct (`id_pro`, `image`, `price`, `size`, `count`) VALUE (?,?,?,?,?)";
+                $this->setQuery($sql);
+                return $this->execute([$dataCheck[0]->id, $arr[3], $arr[2], $arr[4], $arr[5]]);
+            }else{   
+                $sql =  "UPDATE `detailproduct` SET image= ?, price= ?, count= count + ? WHERE id_pro = ? ";
+                $this->setQuery($sql);
+                return $this->execute([$arr[3], $arr[2], $arr[5], $dataCheck[0]->id]);
+            }
+
+        }
         
+        // var_dump($this->loadAllRows([$name[0]->name_pro]));die;
 
 
-        $sql = "INSERT INTO `product` (namepro, id_subcategory ,description)
-        SELECT name_pro, id_subcategory, description
-        FROM storepro WHERE id = $id ";
-
-        $this->setQuery($sql);
-        $this->execute();
-        var_dump($this->loadID());die;
         return $this->loadID();
     }
     
