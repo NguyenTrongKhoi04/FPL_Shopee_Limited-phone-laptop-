@@ -46,7 +46,8 @@ class AdminController extends BaseAdminController
     // {
     //     $products = $this->product->getProduct();
     //     return $this->render('forgot-password');
-    // }
+    // 
+    
     // public function login()
     // {
     //     $products = $this->product->getProduct();

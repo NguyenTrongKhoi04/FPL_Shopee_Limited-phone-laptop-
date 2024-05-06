@@ -49,12 +49,14 @@ class SaleController extends BaseAdminController
             $flagErrors = true;
             $error['valuesale'] = "nhập ngày lớn hơn ngày bắt đầu sale";
         }
-        if($flagErrors == true){
+        if($flagErrors == false){
             $check = $this->sale->addSale("",$namesale, $datesale, $timesale, $valuesale);
             if ($check) {
                 $mes = "Thêm thành công";
                 flash('success', $mes, 'addSale');
             }
+        }else{
+            return $this->render('sale.AddSale',compact("error"));
         }
         return $this->render('sale.AddSale');
     }
