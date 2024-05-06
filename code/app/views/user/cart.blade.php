@@ -1,48 +1,36 @@
+<?php
+if (isset($_SESSION["cart"]) && is_array($_SESSION["cart"])) {
+    echo "<h2>Danh sách sản phẩm trong giỏ hàng:</h2>";
+    echo "<ul>";
+    foreach ($_SESSION["cart"] as $item) {
+        echo "<li>Product ID: " . $item . "</li>";
+    }
+    echo "</ul>";
+} else {
+    echo "Không có sản phẩm nào trong giỏ hàng.";
+}
+?>
 @extends('layout.main')
 @section('content')
 <div class="app__container container__giohang">
     <div class="grid">
         <div class="grid__row app__content">
-            <div class="grid__column-2">
-                <nav class="category">
-                    <h3 class="category__heading">
-                        <i class="category__heading-icon fa-solid fa-list"></i>
-                        Danh mục
-                    </h3>
-                    <ul class="category-list">
-                        <li class="category-item ">
-                            <a href="#" class="catogery-item__link">
-                                Truyện cười
-                            </a>
-                        </li>
-                        <li class="category-item category-item--active">
-                            <a href="#" class="catogery-item__link">
-                                Manga
-                            </a>
-                        </li>
-                        <li class="category-item">
-                            <a href="#" class="catogery-item__link">
-                                Sách
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-            <div class="grid__column-10">
+            @include('layout.category')
+
+            <div class="ms-5 float-end ">
                 <div class="home-filter">
                     <p class="home-filter__giohang">Giỏ hàng</p>
                 </div>
                 <div class="home-card">
+                    @foreach($product as $pro)
                     <ul class="home-card-list">
                         <li class="home-card-item">
                             <input type="checkbox" class="home-card-inp-checkbox" name="checkbox">
                             <div class="home-card-item-img">
-                                <img src="../../../../public/user/assets/img_product/sachhay_daubinhthuongbanvanluonlaphienbangioihan.jpg"
-                                    alt="" class="home-card-item-image">
+                                <img src="{{$pro->image}}" alt="" class="home-card-item-image">
                             </div>
                             <div class="home-card-item-name">
-                                <p class="home-card-item-name-text">Tên sản phẩm áhjgdsjsdgfdk
-                                    hgdsfjhgfdsjhgfdsjh dsfvfjdysgds jhfdsbjfdsuhdsfhjgv</p>
+                                <p class="home-card-item-name-text">Tên sản phẩm</p>
                             </div>
                             <div class="home-card-item-danhmuc">
                                 <p class="home-card-item-danhmuc-text">danh mục</p>
@@ -66,6 +54,7 @@
                                         </div> -->
                         </li>
                     </ul>
+                    @endforeach
                 </div>
                 <div class="home-filter__buyall" style="background-color: var(--white-color);">
                     <div class="home-filter__buyall-control">
@@ -77,8 +66,7 @@
                         </div>
                         <div class="home-card-item-delete">
                             <div class="home-card__muangay">
-                                <button name="muamucdachon" type="submit"
-                                    class="btn btn--primary home-card__btn-muangay">Mua mục đã chọn</button>
+                                <button name="muamucdachon" type="submit" class="btn btn--primary home-card__btn-muangay">Mua mục đã chọn</button>
                             </div>
                         </div>
                     </div>

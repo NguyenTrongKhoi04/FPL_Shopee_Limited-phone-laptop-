@@ -173,13 +173,18 @@ class UserController extends BaseController
     // chuyển trang thông tin tài khoản
     public function infoAccout($id)
     {
+        if($_SESSION['account']){
+            return $this->render('login');
+        }
         $account = $this->account->getAccount($id);
         // echo "<pre>";
         // var_dump($_SESSION['account'][0]);
         // echo "</pre>";
         // die;
         return $this->render('infomation_account', compact('account'));
+        
     }
+
     // đổi thông tin tài khoản
     public function changeInfoAccount()
     {
@@ -240,11 +245,13 @@ class UserController extends BaseController
         }
     }
     // chuyển trang giỏ hàng
-    // public function cart()
-    // {
-    //     $products = $this->product->getProduct();
-    //     return $this->render('cart');
-    // }
+    public function cart()
+    {
+        $product = $this->product->getoneProduct($_SESSION['cart']);
+        $categorys = $this->category->getCategory();
+        $subCategorys = $this->subCategory->getSubCategory();
+        return $this->render('cart', compact('product', 'categorys', 'subCategorys'));
+    }
     // // chuyển trang quên mật khẩu
     // public function forgot_pass()
     // {

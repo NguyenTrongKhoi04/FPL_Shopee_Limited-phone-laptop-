@@ -100,10 +100,10 @@
                     </div>
             </form>
             <!-- cart layout -->
-            @if(!isset($_SESSION['cart']))
+            @if(isset($_SESSION['cart']))
             <div class="header__cart">
                 <div class="header__cart-wrap">
-                    <a href="" class="header__cart-icon fa-solid fa-cart-shopping text-decoration-none "></a>
+                    <a href="{{route('cart')}}" class="header__cart-icon fa-solid fa-cart-shopping text-decoration-none "></a>
                     <span class="header__cart-notice" id="totalProduct">0</span>
                     <!-- No cart: header__cart-list--no-cart -->
                     <!-- <div class="header__cart-list header__cart-list--no-cart">

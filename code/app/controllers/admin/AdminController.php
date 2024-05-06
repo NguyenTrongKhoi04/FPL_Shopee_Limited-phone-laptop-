@@ -14,74 +14,74 @@ class AdminController extends BaseAdminController
 
     public function index_admin()
     {
-        $products = $this->product->getProduct();
+        $products = $this->product->getProducts();
         return $this->render('index');
     }
-    public function err()
-    {
-        $products = $this->product->getProduct();
-        return $this->render('404');
-    }
-    public function blank()
-    {
-        $products = $this->product->getProduct();
-        return $this->render('blank');
-    }
-    public function buttons()
-    {
-        $products = $this->product->getProduct();
-        return $this->render('buttons');
-    }
-    public function cards()
-    {
-        $products = $this->product->getProduct();
-        return $this->render('cards');
-    }
-    public function charts()
-    {
-        $products = $this->product->getProduct();
-        return $this->render('charts');
-    }
-    public function forgot_pass()
-    {
-        $products = $this->product->getProduct();
-        return $this->render('forgot-password');
-    }
-    public function login()
-    {
-        $products = $this->product->getProduct();
-        return $this->render('login');
-    }
-    public function register()
-    {
-        $products = $this->product->getProduct();
-        return $this->render('register');
-    }
-    public function tables()
-    {
-        $products = $this->product->getProduct();
-        return $this->render('tables');
-    }
-    public function until_animation()
-    {
-        $products = $this->product->getProduct();
-        return $this->render('utilities-animation');
-    }
-    public function until_border()
-    {
-        $products = $this->product->getProduct();
-        return $this->render('utilities-border');
-    }
-    public function until_color()
-    {
-        $products = $this->product->getProduct();
-        return $this->render('utilities-color');
-    }
-    public function until_other()
-    {
-        $products = $this->product->getProduct();
-        return $this->render('utilities-other');
-    }
+    // public function err()
+    // {
+    //     $products = $this->product->getProducts();
+    //     return $this->render('404');
+    // }
+    // public function blank()
+    // {
+    //     $products = $this->product->getProducts();
+    //     return $this->render('blank');
+    // }
+    // public function buttons()
+    // {
+    //     $products = $this->product->getProducts();
+    //     return $this->render('buttons');
+    // }
+    // public function cards()
+    // {
+    //     $products = $this->product->getProducts();
+    //     return $this->render('cards');
+    // }
+    // public function charts()
+    // {
+    //     $products = $this->product->getProducts();
+    //     return $this->render('charts');
+    // }
+    // public function forgot_pass()
+    // {
+    //     $products = $this->product->getProducts();
+    //     return $this->render('forgot-password');
+    // }
+    // public function login()
+    // {
+    //     $products = $this->product->getProducts();
+    //     return $this->render('login');
+    // }
+    // public function register()
+    // {
+    //     $products = $this->product->getProducts();
+    //     return $this->render('register');
+    // }
+    // public function tables()
+    // {
+    //     $products = $this->product->getProducts();
+    //     return $this->render('tables');
+    // }
+    // public function until_animation()
+    // {
+    //     $products = $this->product->getProducts();
+    //     return $this->render('utilities-animation');
+    // }
+    // public function until_border()
+    // {
+    //     $products = $this->product->getProducts();
+    //     return $this->render('utilities-border');
+    // }
+    // public function until_color()
+    // {
+    //     $products = $this->product->getProducts();
+    //     return $this->render('utilities-color');
+    // }
+    // public function until_other()
+    // {
+    //     $products = $this->product->getProducts();
+    //     return $this->render('utilities-other');
+    // }
 
     //     public function addProduct()
     //     {
