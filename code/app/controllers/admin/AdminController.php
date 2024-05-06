@@ -285,7 +285,6 @@ class AdminController extends BaseAdminController
                 $this->product->UpProduct($i);
             }
             
-            die;
             /**
              * =============================================================================
              *                                         
@@ -295,11 +294,15 @@ class AdminController extends BaseAdminController
             $subcate = $this->product->getSubAllCategory();
             $alldetail = $this->product->getStoreDetailProduct();
             $cate = $this->product->getCategory();
-            $oneproduct = $this->product->getOneProduct($id_pro);
             
             $check = "đưa sản phẩm lên sàn thành công";
-            $this->render('Products.upToShopSc', compact('subcate', 'cate', 'oneproduct', 'alldetail', 'check'));
-            
+            $cate = $this->product->getCategory();
+            $subcate = $this->product->getSubAllCategory();
+            $products = $this->product->listStorepro();
+    
+            // $cate1 = $this->product->getUpToShop1();
+            // $cate2 = $this->product->getUpToShop2();
+            $this->render('Products.upToShop', compact('cate', 'subcate', 'products', 'check'));            
         }
     }
 
