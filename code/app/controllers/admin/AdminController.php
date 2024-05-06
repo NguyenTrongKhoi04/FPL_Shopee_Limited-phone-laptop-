@@ -279,27 +279,18 @@ class AdminController extends BaseAdminController
                 $arr[] = $subArray;
             }
            
-            $arr2 = [...$arr];
-            
-            // $id_pro = $_POST['id_pro'];
-            // $id_detail = $_POST['id_detail'];
-            // $price = $_POST['price'];
-            // $image = $_POST['image'];
-            // $size = $_POST['size'];
-            // $count = $_POST['quantity'];
-            // for($i = 0 ; $i<= $count; $i++){
-            //     if($id_pro[$i] == $id_pro[$i+1]){
-            //         echo "ninhninh";
-            //     }
-            // }
+            $arr2 = [...$arr];// test data structure
+
             foreach($arr as $i){
                 $this->product->UpProduct($i);
             }
+            
             die;
-            
-            for ($i = 0; $i < count($id_detail); $i++) {
-            
-            }
+            /**
+             * =============================================================================
+             *                                         
+             * =============================================================================
+             */
             
             $subcate = $this->product->getSubAllCategory();
             $alldetail = $this->product->getStoreDetailProduct();
