@@ -14,9 +14,6 @@ class Account extends BaseModel
     {
         $sql = "select $field from $this->table WHERE $where";
         $this->setQuery($sql);
-        // echo "<pre>";
-        // print_r($this->loadAllRows());
-        // echo "</pre>";
         return $this->loadAllRows();
     }
 
@@ -48,7 +45,33 @@ class Account extends BaseModel
         return $this->loadAllRows();
     }
 
+    public function checkAccountGmail($gmail)
+    {
+        $sql = "select * from $this->table WHERE gmail = ?";
+        $this->setQuery($sql);
+        return $this->loadAllRows([$gmail]);
+    }
+    
+    public function checkAccountUsername($username)
+    {
+        $sql = "select * from $this->table WHERE username = ?";
+        $this->setQuery($sql);
+        return $this->loadAllRows([$username]);
+    }
 
+    public function addAccount($id, $gmail, $username, $password, $role, $birthday, $address, $phone)
+    {
+        $sql = "INSERT INTO $this->table VALUES (?, ?, ?, ?, ?, NOW(), ?, ?, ?)";
+        $this->setQuery($sql);
+        return $this->execute([$id, $gmail, $username, $password, $role, $birthday, $address, $phone]);
+    }
+
+    public function stopAccount($id)
+    {
+        $sql = "UPDATE $this->table SET role = 2 WHERE id = ?";
+        $this->setQuery($sql);
+        return $this->execute([$id]);
+    }
 
     /**
      * =============================================================================

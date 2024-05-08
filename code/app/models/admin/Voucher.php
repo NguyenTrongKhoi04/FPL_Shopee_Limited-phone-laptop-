@@ -16,6 +16,13 @@ class Voucher extends BaseModel
         $this->setQuery($sql);
         return $this->loadAllRows();
     }
+    
+    public function checkVoucherName($field, $where)
+    {
+        $sql = "select $field from $this->table WHERE namevoucher= ? ";
+        $this->setQuery($sql);
+        return $this->loadAllRows([$where]);
+    }
 
     public function stopVoucher($id){
         $sql = "UPDATE $this->table SET countvoucher = 0 WHERE id = ?";

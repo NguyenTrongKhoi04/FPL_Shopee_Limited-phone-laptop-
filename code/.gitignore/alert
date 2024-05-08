@@ -1,0 +1,7 @@
+validate add voucher 
+validate stop voucher 
+
+validate add sale 
+validate delete sale 
+
+success trong các trạng thái của order

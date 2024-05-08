@@ -46,9 +46,13 @@ class VoucherController extends BaseAdminController
             $flagErrors = true;
             $error['countvoucher'] = "nhập só lượng lớn hơn 0";
         }
-        if ($flagErrors == false) {
-            $codevoucher = $this->RandomString(20);
-            var_dump($codevoucher);die;
+        if (!$flagErrors == false) {
+            // check tên tồn tại trong db chưa
+            do {
+                $codevoucher = $this->RandomString(20);
+                $checkVoucher = $this->voucher->checkVoucherName(" * ", $codevoucher);
+            } while (!empty($checkVoucher));
+
             $check = $this->voucher->addVoucher("", $codevoucher, $namevoucher, $valuevoucher, $countvoucher);
             if ($check) {
                 $mes = "Thêm thành công";
@@ -62,7 +66,8 @@ class VoucherController extends BaseAdminController
 
     function RandomString($length = 10)
     {
-        $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+{}|:<>?-=[];,./';
+        // $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+{}|:<>?-=[];,./';
+        $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@.';
         $randomString = '';
         $max = strlen($characters) - 1;
 

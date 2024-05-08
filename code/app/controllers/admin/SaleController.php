@@ -65,7 +65,7 @@ class SaleController extends BaseAdminController
     {
         $check = $this->sale->checkSale("Product", $id);
         if($check != null ){
-            $mes = "Xóa thành công vì có sản phẩm đang sale";
+            $mes = "Xóa k thành công vì có sản phẩm đang sale";
             flash('success', $mes, 'listSale');
         }
         $this->sale->deleteSale($id);
