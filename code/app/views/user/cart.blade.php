@@ -1,15 +1,3 @@
-<?php
-if (isset($_SESSION["cart"]) && is_array($_SESSION["cart"])) {
-    echo "<h2>Danh sách sản phẩm trong giỏ hàng:</h2>";
-    echo "<ul>";
-    foreach ($_SESSION["cart"] as $item) {
-        echo "<li>Product ID: " . $item . "</li>";
-    }
-    echo "</ul>";
-} else {
-    echo "Không có sản phẩm nào trong giỏ hàng.";
-}
-?>
 @extends('layout.main')
 @section('content')
 <div class="app__container container__giohang">
@@ -22,39 +10,46 @@ if (isset($_SESSION["cart"]) && is_array($_SESSION["cart"])) {
                     <p class="home-filter__giohang">Giỏ hàng</p>
                 </div>
                 <div class="home-card">
-                    @foreach($product as $pro)
-                    <ul class="home-card-list">
-                        <li class="home-card-item">
-                            <input type="checkbox" class="home-card-inp-checkbox" name="checkbox">
-                            <div class="home-card-item-img">
-                                <img src="{{$pro->image}}" alt="" class="home-card-item-image">
-                            </div>
-                            <div class="home-card-item-name">
-                                <p class="home-card-item-name-text">Tên sản phẩm</p>
-                            </div>
-                            <div class="home-card-item-danhmuc">
-                                <p class="home-card-item-danhmuc-text">danh mục</p>
-                            </div>
-                            <div class="home-card-item-price">
-                                <div class="home-card-item-price-old">
-                                    <p class="home-card-item-price-old-text">19000đ</p>
-                                </div>
-                                <div class="home-card-item-price-new">
-                                    <p class="home-card-item-price-old-text">18000đ</p>
-                                </div>
-                            </div>
-                            <div class="home-card-item-quantity">
-                                <p class="home-card-item-quantity-number">Số lượng:</p>
-                                <input class="home-card-item-quantity-input" min="1" max="10" type="number" value="1">
-                            </div>
-                            <!-- <div class="home-card-item-delete">
-                                            <form action="" class="home-card__muangay">
-                                                <button type="submit" name="muangay" class="home-card__btn-delete">Xóa</button>
-                                            </form>
-                                        </div> -->
-                        </li>
-                    </ul>
-                    @endforeach
+                    <table class="table">
+                        <tr>
+                            <th>Hình ảnh</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Hãng</th>
+                            <th>Giá</th>
+                            <th>Số lượng</th>
+                        </tr>
+
+
+                        @foreach($product as $pro)
+                        <tr>
+                            <td> <img src="{{$pro->image}}" alt="" width="80px">
+                            </td>
+                            <td>
+                                <p>{{$pro->namepro}}</p>
+                            </td>
+                            <td>
+                                <p >{{$pro->name_subcate}}</p>
+                            </td>
+                            <td>
+                                
+                            <del>{{$pro->price}}|</del><p style="color: red ;position: relative; top: -15px;left: 40px;">{{ $pro->price - ($pro->price * $pro->valuesale / 100) }}vnđ</p>
+                            </td>
+                            <td>
+                                <?php foreach ($_SESSION['cart'] as $sessionPro) {
+                                    // print_r($pro->detail_product_id);
+                                    // print_r($sessionPro['id']);
+
+                                    if ($sessionPro['id'] == $pro->detail_product_id) {
+
+                                        echo $sessionPro['quantity'];
+                                    }
+                                };
+                                ?>
+                            </td>
+
+                        </tr>
+                        @endforeach
+                    </table>
                 </div>
                 <div class="home-filter__buyall" style="background-color: var(--white-color);">
                     <div class="home-filter__buyall-control">

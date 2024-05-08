@@ -5,26 +5,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idValue"])) {
     if (!isset($_SESSION["cart"])) {
         $_SESSION["cart"] = array();
     }
-    
+
+    if (!isset($_SESSION["cart"])) {
+        $_SESSION["cart"] = array();
+    }
+
     // Thêm giá trị mới vào mảng session
-    $_SESSION["cart"][] = $_POST["idValue"];
-    
+    $item = array(
+        "id" => $_POST["idValue"],
+        "quantity" => $_POST["quantity"]
+    );
+    $_SESSION["cart"][] = $item;
+
     // Hiển thị thông báo "Thêm vào giỏ hàng thành công"
     echo '<script>alert("Thêm vào giỏ hàng thành công");</script>';
 }
-// if (isset($_SESSION["cart"]) && is_array($_SESSION["cart"])) {
-//     echo "<h2>Danh sách sản phẩm trong giỏ hàng:</h2>";
-//     echo "<ul>";
-//     foreach ($_SESSION["cart"] as $item) {
-//         echo "<li>Product ID: " . $item . "</li>";
-//     }
-//     echo "</ul>";
-// } else {
-//     echo "Không có sản phẩm nào trong giỏ hàng.";
-// }
+if(isset($_SESSION["cart"])) {
+    echo "Dữ liệu trong session 'cart': <br>";
+    echo "<pre>";
+    print_r($_SESSION["cart"]);
+    echo "</pre>";
+} else {
+    echo "Session 'cart' không tồn tại hoặc không có dữ liệu.";
+}
+// session_destroy($_SESSION['cart']);
 ?>
 @extends('layout.main')
-@section('content')
+
+        @section('content')
+
+
+
 <div class="container-nav">
     <a href="{{route('product')}}">Trang Chủ</a>/ <a class="disabled " disabled="disabled" href="">Chi tiết sản phẩm</a>
 </div>
@@ -41,28 +52,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idValue"])) {
         </div>
         <div class="grid__column-9 mt-xxl-5 ">
             <div class="infor-product-right">
+            <h3 style="color: red;" id="salevalue">-{{$products[0]['valuesale']}}%<i class="h1 bi bi-fire"></i></h3>
 
                 <h1 class="infor-product-right__name">{{$products[0]['namepro']}}</h1>
-                <div class="">
+                <div class="priceandsold">
                     <h4 class="infor-product__right-price-number ps-0 ">
-                        Giá : <p id="product-price"></p>
+                        <b id="giatien">
+                           <del style=""> <p style="font-size: 13px;" id="product-price"></p></del> <p id="product-price-sc" style="font-size: 25px; color: red;"> </p>
+                        </b>
                         <!-- Giá : <input type="number" disabled value="{{$products[0]->price}}" class="border-0 bg-white text-danger" id="product-price"> -->
                     </h4>
-                    <div class="infor-product__right-des rounded p-3 mb-5">
-                        <h4 class="">
-                            {{$products[0]['description']}}
-                        </h4>
+                    <div class="infor-product__right-price-number mb-5">
+                        {{$products[0]['quantity']}} Sold 
                     </div>
                 </div>
-
-                <div class="infor-product__right-price-number mb-5">
-                    Số lượng có sẵn : {{$products[0]['quantity']}}
+                <div class="infor-product__right-des rounded p-3 mb-5">
+                    {{$products[0]['description']}}
                 </div>
+
+            <div class="right">
                 <div class="mb-3">
                     <label for="">Size: </label>
                     <select class="form-control w-25  px-3 py-2 m-3" onchange="changeProduct()" id="product-select" aria-label="Default select example">
                         @foreach($products as $index => $pro)
-                        <option class="h3" value="{{$index}}" data-image="{{$pro['image']}}" data-price="{{$pro['price']}}" data-id="{{$pro['detail_product_id']}}">
+                        <option class="h3" value="{{$index}}" data-image="{{$pro['image']}}" data-sale="{{$pro['valuesale']}}" data-price="{{$pro['price']}}" data-id="{{$pro['detail_product_id']}}">
                             {{$pro['namesize']}}
                         </option>
                         @endforeach
@@ -83,16 +96,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idValue"])) {
                     </div>
 
                     <div class="d-flex mt-3">
-                        <input type="text" name="giasanpham" hidden value="" id=""><span onclick="AddToCart()" class="rounded  infor-product__right-btn-add" style="text-decoration: none;"><i class="fa-solid fa-cart-plus"></i></span>
+                        <input type="text" name="giasanpham" hidden value="" id=""><span class="rounded  infor-product__right-btn-add" style="text-decoration: none;"><i  onclick="AddToCart()" class="fa-solid fa-cart-plus"></i></span>
                         <a href="home.php" class="infor-product__right-btn-buy infor-product__right-btn-buy-link">Mua
                             ngay</a>';
                     </div>
                 </div>
                 </form>
             </div>
+            </div>
         </div>
     </div>
 </div>
+<br> <br> <br> <br> <br> <br> <br>
+<div class="grid container__ctsp">
+    <div class="container__ctsp-heading">
+        <h3 class="container__ctsp-heading">Sản phẩm cùng loại</h3>
+    </div>
+    <div class="divsplienquan" id="scroll" style="display: flex;overflow-x:scroll;">
+    @foreach($relatedProduct as $pro)    
+    <a href="{{route('info-pro/'.$pro->id_pro)}}" class="" id="spcungloai">
+    <div class="m-5 rounded ">
+        <img src="{{$pro->image}}" alt="" width="250px" height="300px">
+        <h3>{{$pro->namepro}}</h3>
+        <h6>Sold: {{$pro->quantity}}</h6>
+    </div>
+</a>
+    @endforeach
+    </div>
+</div>
+<style>
+    #scroll::-webkit-scrollbar { 
+  width: 0 !important;
+  display: none; 
+}
+</style>
 <div class="grid container__ctsp">
     <div class="container__ctsp-heading">
         <h3 class="container__ctsp-heading">Comment</h3>
@@ -116,43 +153,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idValue"])) {
         </li>
         @endforeach
     </ul>
-</div>
-<div class="grid container__ctsp">
-    <div class="container__ctsp-heading">
-        <h3 class="container__ctsp-heading">Sản phẩm cùng loại</h3>
-    </div>
-    <div class="home-product">
-        <div class="grid__row">
-            <!-- product column 2-4 phần sản phẩm copy cả grid__column-2-4 -->
-            @foreach($relatedProduct as $relatPro)
-            <div class="grid__column-2-4">
-                <a href="{{route('info-pro/'.$relatPro->id_pro)}}" class="home-product-item">
-                    <div class="info-product-item__img">
-                        <img src="{{$relatPro->image}}" width="200px" alt="">
-                    </div>
-                    <h4 class="home-product-item__name h3 my-1 align-content-center  mx-3">
-                        {{$relatPro->namepro}}
-                    </h4>
-                    <div class="home-product-item__price">
-                        <span class="home-product-item__price-current h4 text-danger">
-                            Size: {{$relatPro -> size}}
-                        </span>
-                    </div>
-                    <div class="home-product-item__origin">
-                        <span class="home-product-item__brand h5">Số Lượng:
-                            {{$relatPro -> quantity}}
-                        </span>
-                    </div>
-                    <div class="home-product-item__sale-off">
-                        <div class=" home-product-item__sale-off-percent">
-                            {{$relatPro -> valuesale}}%
-                        </div><span class="home-product-item__sale-off-label">Giảm</span>
-                    </div>
-                </a>
-            </div>
-            @endforeach
-        </div>
-    </div>
 </div>
 <script>
     let amoutElement = document.getElementById('amout')
@@ -183,6 +183,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idValue"])) {
         changeProduct();
     };
     window.idValue;
+
+
     function changeProduct() {
         var selectBox = document.getElementById("product-select");
         var selectedIndex = selectBox.selectedIndex;
@@ -190,27 +192,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idValue"])) {
         var imageSrc = selectedOption.getAttribute("data-image");
         var priceValue = selectedOption.getAttribute("data-price");
         var idValue = selectedOption.getAttribute("data-id");
+        var sale = selectedOption.getAttribute("data-sale");
         window.idValue = idValue;
         // console.log(imageSrc);
         document.getElementById("product-image").src = imageSrc;
-        document.getElementById("product-price").innerHTML = priceValue + " Vnđ";
+        document.getElementById("product-price").innerHTML = priceValue+"|";
+        document.getElementById("product-price-sc").innerHTML =priceValue - (priceValue * (sale/100))+"Vnđ";
     }
-
     function AddToCart() {
         console.log(window.idValue);
         var idValue = window.idValue;
         var form = document.createElement("form");
-            form.method = "post";
-            form.style.display = "none";
-            document.body.appendChild(form);
+        form.method = "post";
+        form.style.display = "none";
+        document.body.appendChild(form);
 
-            var input = document.createElement("input");
-            input.type = "hidden";
-            input.name = "idValue";
-            input.value = idValue;
-            form.appendChild(input);
+        var quantity = document.getElementById('amout').value;
 
-            form.submit();
+        var form = document.createElement("form");
+        form.method = "post";
+        form.style.display = "none";
+        document.body.appendChild(form);
+
+        var inputId = document.createElement("input");
+        inputId.type = "hidden";
+        inputId.name = "idValue";
+        inputId.value = idValue;
+        form.appendChild(inputId);
+
+        var inputQuantity = document.createElement("input");
+        inputQuantity.type = "hidden";
+        inputQuantity.name = "quantity";
+        inputQuantity.value = quantity;
+        form.appendChild(inputQuantity);
+
+        form.submit();
     }
 </script>
 @endsection

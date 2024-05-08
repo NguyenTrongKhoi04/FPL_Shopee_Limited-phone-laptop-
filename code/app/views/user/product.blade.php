@@ -26,10 +26,10 @@
                     <div class="grid__row justify-content-center mt-xxl-5">
                         <!-- product column 2-4 phần sản phẩm copy cả grid__column-2-4 -->
                         @foreach($products as $pr)
-                        <div class="grid__column-2-4 m-3">
+                        <div class="grid__column-2-4 ms-5">
                             <a href="{{route('info-pro/'.$pr->id_pro)}}" class="home-product-item">
-                                <div class="home-product-item_img mb-5">
-                                    <img src="{{$pr->image}}" class="w-100 " alt="">
+                                <div style="width: 190px; height: 60%;" class="home-product-item_img mb-5">
+                                    <img style="object-fit: cover; width: 200px; height: 250px;" src="{{$pr->image}}" class="w-100 " alt="">
                                 </div>
                                 <h4 class="home-product-item__name h3 my-1 align-content-center  mx-3">
                                     {{$pr->namepro}}

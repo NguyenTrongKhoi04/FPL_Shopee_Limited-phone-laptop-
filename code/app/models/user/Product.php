@@ -48,7 +48,7 @@ class Product extends BaseModel
         $sql = "SELECT * from $this->item 
         join detailproduct on $this->item.id = detailproduct.id_pro
         join sale on $this->item.sale = sale.id
-        where id_subcategory = $id_subcategory and id_pro <> $id_pro limit
+        where id_subcategory = $id_subcategory limit
         " . "$limit";
         // var_dump($sql);
         // die;
@@ -56,7 +56,19 @@ class Product extends BaseModel
         return $this->loadAllRows();
     }
 
-    public function Cart($arr){
+    public function getProductCart()
+    {
+        if (isset($_SESSION["cart"])) {
+            $productIds = array_column($_SESSION["cart"], 'id');
+            $productIdsString = implode(",", $productIds);
+            $sql = "SELECT detailproduct.id AS detail_product_id,
+            detailproduct.*,subcategory.*, product.*,sale.* FROM detailproduct inner join product on (detailproduct.id_pro=product.id) inner join subcategory  on(product.id_subcategory=subcategory.id) inner join sale on(product.sale=sale.id) WHERE detailproduct.id IN ($productIdsString)";
+            $this->setQuery($sql);
+            return $this->loadAllRows();
+        }
+    }
+    public function Cart($arr)
+    {
         $sql = "SELECT * FROM cart WHERE id_pro IN ($arr)";
         $this->setQuery($sql);
         return $this->loadAllRows([$arr]);

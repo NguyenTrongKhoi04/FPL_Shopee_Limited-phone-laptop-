@@ -173,7 +173,7 @@ class UserController extends BaseController
     // chuyển trang thông tin tài khoản
     public function infoAccout($id)
     {
-        if($_SESSION['account']){
+        if(empty($_SESSION['account'])){
             return $this->render('login');
         }
         $account = $this->account->getAccount($id);
@@ -247,7 +247,7 @@ class UserController extends BaseController
     // chuyển trang giỏ hàng
     public function cart()
     {
-        $product = $this->product->getoneProduct($_SESSION['cart']);
+        $product = $this->product->getProductCart();
         $categorys = $this->category->getCategory();
         $subCategorys = $this->subCategory->getSubCategory();
         return $this->render('cart', compact('product', 'categorys', 'subCategorys'));
