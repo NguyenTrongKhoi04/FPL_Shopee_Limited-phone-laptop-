@@ -45,16 +45,18 @@ class Account extends BaseModel
         return $this->loadAllRows();
     }
 
-    public function checkAccountGmail($gmail)
+    public function checkAccountGmail($gmail, $id = null)
     {
-        $sql = "select * from $this->table WHERE gmail = ?";
+        if(!empty($id))$notID = " AND id != $id ";
+        $sql = "select * from $this->table WHERE gmail = ? " . $notID ?? '';
         $this->setQuery($sql);
         return $this->loadAllRows([$gmail]);
     }
     
-    public function checkAccountUsername($username)
+    public function checkAccountUsername($username, $id =null)
     {
-        $sql = "select * from $this->table WHERE username = ?";
+        if (!empty($id)) $notUsername = " AND id != $id ";
+        $sql = "select * from $this->table WHERE username = ? " . $notUsername ?? '';
         $this->setQuery($sql);
         return $this->loadAllRows([$username]);
     }
@@ -65,6 +67,13 @@ class Account extends BaseModel
         $this->setQuery($sql);
         return $this->execute([$id, $gmail, $username, $password, $role, $birthday, $address, $phone]);
     }
+    
+    public function updateOneAccount($id, $gmail, $username, $password, $role, $birthday, $address, $phone)
+    {
+        $sql = "UPDATE $this->table SET gmail = ?, username = ?, password =?, role = ?,  birthday = ?, address = ?, phone = ? WHERE id = ?";
+        $this->setQuery($sql);
+        return $this->execute([$gmail, $username, $password, $role, $birthday, $address, $phone, $id]);
+    }
 
     public function stopAccount($id)
     {
@@ -73,6 +82,12 @@ class Account extends BaseModel
         return $this->execute([$id]);
     }
 
+    public function getOneAccount($field, $id)
+    {
+        $sql = "SELECT $field FROM $this->table WHERE id = ?";
+        $this->setQuery($sql);
+        return $this->loadRow([$id]);
+    }
     /**
      * =============================================================================
      *                                         
