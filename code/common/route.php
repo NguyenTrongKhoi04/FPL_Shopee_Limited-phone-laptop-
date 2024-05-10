@@ -18,7 +18,6 @@ $router->get('/', function () {
     return "trang chủ";
 });
 
-// include router admin
 // TODO: Load All Router
 $arr_directory_admin = scandir('common/route/admin');
 $arr_directory_user = scandir('common/route/user');
@@ -30,15 +29,12 @@ foreach ($arr_directory_admin as $item) {
         include_once 'common/route/admin/' . $item;
     }
 };
-// // include route user
-// foreach ($arr_directory_user as $item) {
-//     if ($item != '..' && $item != '.' && file_exists('common/route/user/' . $item)) {
-//         include_once 'common/route/user/' . $item;
-//     }
-// };
-
-// // admin
-$router->get('index-admin', [App\Controllers\Admin\AdminController::class, 'index_admin']);
+// include route user
+foreach ($arr_directory_user as $item) {
+    if ($item != '..' && $item != '.' && file_exists('common/route/user/' . $item)) {
+        include_once 'common/route/user/' . $item;
+    }
+};
 
 # NB. You can cache the return value from $router->getData() so you don't have to create the routes each request - massive speed gains
 $dispatcher = new Phroute\Phroute\Dispatcher($router->getData());

@@ -1,0 +1,128 @@
+<?php $_shouldextend[1]=1; ?>
+<?php $this->startSection('content'); ?>
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+ <!-- Page Heading -->
+ <h1 class="h3 mb-2 text-gray-800">Đơn Đang Chuẩn Bị <span
+ style="color: orange;">(<?php echo \htmlentities($totalOrderConfirm[0]->count??'', ENT_QUOTES, 'UTF-8', false); ?>)</span>
+ </h1>
+ <p class="mb-4">Xác nhận các đơn hàng được khách hàng đặt</p>
+
+ <!-- DataTales Example -->
+ <div class="card shadow mb-4">
+ <div class="card-header py-3">
+ <a href="<?php echo \htmlentities(route('listAllOrder')??'', ENT_QUOTES, 'UTF-8', false); ?>"><button class="btn btn-secondary">Tất cả
+ (<?php echo \htmlentities($totalAllOrder[0]->count ?? 0??'', ENT_QUOTES, 'UTF-8', false); ?>)</button></a>
+ <a href="<?php echo \htmlentities(route('listRequestConfirm')??'', ENT_QUOTES, 'UTF-8', false); ?>"><button class="btn btn-primary">Đơn chờ xác nhận
+ (<?php echo \htmlentities($totalOrderRequestConfirm[0]->count?? 0??'', ENT_QUOTES, 'UTF-8', false); ?>)</button></a>
+ <a href="<?php echo \htmlentities(route('listConfirm')??'', ENT_QUOTES, 'UTF-8', false); ?>"><button class="btn btn-dark">Đơn đang chuẩn
+ bị (<?php echo \htmlentities($totalOrderConfirm[0]->count ?? 0??'', ENT_QUOTES, 'UTF-8', false); ?>)</button></a>
+ <a href="<?php echo \htmlentities(route('listTransfer')??'', ENT_QUOTES, 'UTF-8', false); ?>"><button class="btn btn-info">Đơn đang giao
+ (<?php echo \htmlentities($totalOrderTransfer[0]->count ?? 0??'', ENT_QUOTES, 'UTF-8', false); ?>)</button></a>
+ <a href="<?php echo \htmlentities(route('listSuccess')??'', ENT_QUOTES, 'UTF-8', false); ?>"><button class="btn btn-success">Đơn hoàn thành
+ (<?php echo \htmlentities($totalOrderSuccess[0]->count ?? 0??'', ENT_QUOTES, 'UTF-8', false); ?>)</button></a>
+ <a href="<?php echo \htmlentities(route('listReject')??'', ENT_QUOTES, 'UTF-8', false); ?>"><button class="btn btn-warning">Đơn hủy
+ (<?php echo \htmlentities($totalOrderReject[0]->count ?? 0??'', ENT_QUOTES, 'UTF-8', false); ?>)</button></a>
+ <a href="<?php echo \htmlentities(route('listReturn')??'', ENT_QUOTES, 'UTF-8', false); ?>"><button class="btn btn-danger">Đơn hoàn trả
+ (<?php echo \htmlentities($totalOrderReturn[0]->count ?? 0??'', ENT_QUOTES, 'UTF-8', false); ?>)</button></a>
+ </div>
+ <div class="card-body">
+ <div class="table-responsive">
+ <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+ <thead>
+ <tr>
+ <th>ID</th>
+ <th>Tài khoản đặt</th>
+ <th>Thời gian xác nhận đơn</th>
+ <th>Tổng tiền đơn</th>
+ <th>Thời gian giao hàng</th>
+ <th>Tên ship</th>
+ <th>Comment đơn hàng</th>
+ <th>Thao tác</th>
+ </tr>
+ </thead>
+ <tfoot>
+ <tr>
+ <th>ID</th>
+ <th>Tài khoản đặt</th>
+ <th>Thời gian xác nhận đơn</th>
+ <th>Tổng tiền đơn</th>
+ <th>Thời gian giao hàng</th>
+ <th>Tên ship</th>
+ <th>Comment đơn hàng</th>
+ <th>Thao tác</th>
+ </tr>
+ </tfoot>
+ <tbody>
+ <?php $__currentLoopData = $listOrder; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $i): $loop = $this->incrementLoopIndices();  ?>
+ <tr>
+ <td><?php echo \htmlentities($i->order_id??'', ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td><?php echo \htmlentities($i->username??'', ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td><?= date('H:i:s d/m/Y', strtotime($i->time_complete)) ?></td>
+ <td class="text-center"><?php echo \htmlentities($i->totalorder??'', ENT_QUOTES, 'UTF-8', false); ?> $</td>
+ <td style="color:orangered;">
+ <?php
+ foreach ($listShip as $v) {
+ if ($v->id == $i->id_ship) {
+ $days = floor($v->timeship / (24 * 60)); // Số ngày
+ $remaining_minutes = $v->timeship % (24 * 60); // Số phút còn lại sau khi loại bỏ số ngày
+
+ $hours = floor($remaining_minutes / 60); // Số giờ
+ $remaining_minutes %= 60; // Số phút còn lại sau khi loại bỏ số giờ
+
+ $result = '';
+
+ if ($days > 0) {
+ $result .= $days . 'd ';
+ }
+ if ($hours > 0) {
+ $result .= $hours . 'h ';
+ }
+ if ($remaining_minutes > 0) {
+ $result .= $remaining_minutes . 'p';
+ }
+
+ echo $result;
+ }
+ }
+ ?>
+ </td>
+ <td class="text-center">
+ <?php
+ foreach ($listShip as $v) {
+ if ($v->id == $i->id_ship) {
+ echo $v->nameship;
+ }
+ }
+ ?>
+ </td>
+ <td class="text-center" <?= ($i->countcomment > 0) ? 'style="color: orange;"' : ''  ?>>
+ <?php echo \htmlentities($i->countcomment??'', ENT_QUOTES, 'UTF-8', false); ?>
+
+ </td>
+ <td>
+ <a href="<?php echo \htmlentities(route('orderDetailConfirm/'.$i->order_id)??'', ENT_QUOTES, 'UTF-8', false); ?>"><button
+ class="btn btn-primary">Chi
+ tiết
+ đơn hàng</button></a>
+ <a href="<?php echo \htmlentities(route('confirmTransfer/'.$i->order_id)??'', ENT_QUOTES, 'UTF-8', false); ?>">
+ <button onclick=" return confirm('Chắc chắn xác nhận vận chuyển')"
+ class="btn btn-success">Vận chuyển</button></a>
+ </td>
+ <tr>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ </tbody>
+ </table>
+ </div>
+ </div>
+ </div>
+
+</div>
+<!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->
+<?php $this->stopSection(); ?>
+<?php if (isset($_shouldextend[1])) { echo $this->runChild('layout.main'); } ?>

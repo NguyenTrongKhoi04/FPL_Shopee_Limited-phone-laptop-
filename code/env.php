@@ -23,8 +23,13 @@ function flash($key, $msg, $route)
         case 'errors':
             unset($_SESSION['success']);
             break;
+<<<<<<< HEAD
     }
     
+=======
+    };
+    echo `<script>alert('{$msg}')</script>`;
+>>>>>>> origin/NguyenTrongKhoi
     header('location:' . BASE_URL . $route . '?msg=' . $key);
     die;
 }

@@ -48,7 +48,7 @@ class BaseModel
         $this->sta->execute();
         return $this->sta;
     }
-
+    
     //Funtion load datas on table
     // lấy nhiều dữ liệu ở trong bảng
     public function loadAllRows($options=array()) {
@@ -74,7 +74,7 @@ class BaseModel
             if(!$result = $this->execute($option))
                 return false;
         }
-        return $result->fetch(PDO::FETCH_OBJ);
+        return $result->fetchAll(PDO::FETCH_OBJ);
     }
 
 

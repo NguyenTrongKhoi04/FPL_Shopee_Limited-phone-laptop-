@@ -4,16 +4,19 @@ namespace App\Models\Admin;
 
 use App\Models\BaseModel;
 
-class Account extends BaseModel
+class Order extends BaseModel
 {
 
-    protected $table = "account";
+    protected $table = "orders";
     // lấy danh sách sản phẩm
 
-    public function getAccount($field, $where = 1)
+    public function getOrder($field, $where = 1, $condition = null)
     {
-        $sql = "select $field from $this->table WHERE $where";
+        $sql = "select $field from $this->table WHERE $where $condition";
         $this->setQuery($sql);
+        // echo "<pre>";
+        // print_r($this->loadAllRows());
+        // echo "</pre>";
         return $this->loadAllRows();
     }
 
@@ -24,10 +27,13 @@ class Account extends BaseModel
         FROM $this->table 
         INNER JOIN account ON orders.id_user = account.id
         LEFT JOIN orderdetail ON orderdetail.id_order = orders.id 
-        WHERE orders.status = 1
+        WHERE $where
         GROUP BY orders.id
         ORDER BY time_order";
         $this->setQuery($sql);
+        // echo "<pre>";
+        // print_r($this->loadAllRows());
+        // echo "</pre>";die;
         return $this->loadAllRows();
     }
 
@@ -41,53 +47,67 @@ class Account extends BaseModel
         $this->setQuery($sql);
         // echo "<pre>";
         // print_r($this->loadAllRows());
-        // echo "</pre>";
+        // echo "</pre>";die;
         return $this->loadAllRows();
     }
 
-    public function checkAccountGmail($gmail, $id = null)
+    public function getOrderConfirm($field, $where = null)
     {
-        if(!empty($id))$notID = " AND id != $id ";
-        $sql = "select * from $this->table WHERE gmail = ? " . $notID ?? '';
+        $sql = "
+        SELECT $field 
+        FROM $this->table 
+        INNER JOIN account ON orders.id_user = account.id
+        LEFT JOIN orderdetail ON orderdetail.id_order = orders.id 
+        WHERE $where
+        GROUP BY orders.id
+        ORDER BY time_order";
         $this->setQuery($sql);
-        return $this->loadAllRows([$gmail]);
+        // echo "<pre>";
+        // print_r($this->loadAllRows());
+        // echo "</pre>";die;
+        return $this->loadAllRows();
+    }
+
+    public function getOrderTransfer($field, $where = null)
+    {
+        $sql = "
+        SELECT $field 
+        FROM $this->table 
+        INNER JOIN account ON orders.id_user = account.id
+        LEFT JOIN orderdetail ON orderdetail.id_order = orders.id 
+        WHERE $where
+        GROUP BY orders.id
+        ORDER BY time_order";
+        $this->setQuery($sql);
+        // echo "<pre>";
+        // print_r($this->loadAllRows());
+        // echo "</pre>";die;
+        return $this->loadAllRows();
+    }
+
+    public function getOrderSuccess($field, $where = null)
+    {
+        $sql = "
+        SELECT $field 
+        FROM $this->table 
+        INNER JOIN account ON orders.id_user = account.id
+        LEFT JOIN orderdetail ON orderdetail.id_order = orders.id 
+        WHERE $where
+        GROUP BY orders.id
+        ORDER BY time_order";
+        $this->setQuery($sql);
+        // echo "<pre>";
+        // print_r($this->loadAllRows());
+        // echo "</pre>";die;
+        return $this->loadAllRows();
     }
     
-    public function checkAccountUsername($username, $id =null)
-    {
-        if (!empty($id)) $notUsername = " AND id != $id ";
-        $sql = "select * from $this->table WHERE username = ? " . $notUsername ?? '';
+    public function updateStatusOrder($numberStatus, $id){
+        $sql = "UPDATE $this->table SET status = ? WHERE id= ? ";
         $this->setQuery($sql);
-        return $this->loadAllRows([$username]);
-    }
-
-    public function addAccount($id, $gmail, $username, $password, $role, $birthday, $address, $phone)
-    {
-        $sql = "INSERT INTO $this->table VALUES (?, ?, ?, ?, ?, NOW(), ?, ?, ?)";
-        $this->setQuery($sql);
-        return $this->execute([$id, $gmail, $username, $password, $role, $birthday, $address, $phone]);
+        return $this->execute([$numberStatus, $id]);
     }
     
-    public function updateOneAccount($id, $gmail, $username, $password, $role, $birthday, $address, $phone)
-    {
-        $sql = "UPDATE $this->table SET gmail = ?, username = ?, password =?, role = ?,  birthday = ?, address = ?, phone = ? WHERE id = ?";
-        $this->setQuery($sql);
-        return $this->execute([$gmail, $username, $password, $role, $birthday, $address, $phone, $id]);
-    }
-
-    public function stopAccount($id)
-    {
-        $sql = "UPDATE $this->table SET role = 2 WHERE id = ?";
-        $this->setQuery($sql);
-        return $this->execute([$id]);
-    }
-
-    public function getOneAccount($field, $id)
-    {
-        $sql = "SELECT $field FROM $this->table WHERE id = ?";
-        $this->setQuery($sql);
-        return $this->loadRow([$id]);
-    }
     /**
      * =============================================================================
      *                                         

@@ -1,18 +1,9 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    echo "<pre>";
-    print_r($_POST);
-    echo "</pre>";
-
-    $arr = [];
-    foreach ($_POST as $key => $value) {
-        $arr[] = [$value];
-    }
-    echo "<pre>";
-    print_r($arr);
-    echo "</pre>";
-    die;
-}
+$obj = [
+    [1, 'https://picsum.photos/50', '1$'],
+    [2, 'https://picsum.photos/100', '22$'],
+    [3, 'https://picsum.photos/200', '345$'],
+];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-    <form method="POST">
+    <<<<<<< HEAD <form method="POST">
         <table border="1">
             <thead>
                 <tr>
@@ -68,7 +59,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </tbody>
         </table>
         <button type="submit">Gửi</button>
-    </form>
+        </form>
+        =======
+        <img id="product-image" src="<?= $obj[0][1] ?>" alt="">
+        <input type="text" id="product-price" value="<?= $obj[0][2] ?>" name="size">
+        <select id="product-select" onchange="changeProduct()">
+            <?php
+        foreach ($obj as $index => $product) {
+            echo "<option value='{$index}' data-image='{$product[1]}' data-price='{$product[2]}'" . ($index == 0 ? " selected" : "") . ">Product {$product[0]}</option>";
+        }
+        ?>
+        </select>
+
+        <script>
+        window.onload = function() {
+            // Trigger change event to update image and price based on default selection
+            changeProduct();
+        };
+
+        function changeProduct() {
+            var selectBox = document.getElementById("product-select");
+            var selectedIndex = selectBox.selectedIndex;
+            var selectedOption = selectBox.options[selectedIndex];
+            var imageSrc = selectedOption.getAttribute("data-image");
+            var priceValue = selectedOption.getAttribute("data-price");
+
+            document.getElementById("product-image").src = imageSrc;
+            document.getElementById("product-price").value = priceValue;
+        }
+        </script>
+        >>>>>>> origin/NguyenTrongKhoi
 </body>
 
 </html>

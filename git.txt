@@ -1,0 +1,15 @@
+/**
+ * git init : khởi tạo thư mục git 
+ * git remote add origin <link repo> : Thêm link repo vào trong git
+ * git clone <link repo> : Kéo dữ liệu từ rêp web về máy
+ * git add . : Thêm toàn bộ sự thay đổi vào git ( "." là lấy tất cả)
+ * git commit -m"<comment>" : xác nhận và thêm comment cho ghi chú lệnh "git add" vừa rồi
+ * git push origin <tên nhánh> : Đẩy dữ liệu lên nhánh ở trên repo web
+ * git pull origin <tên nhánh>: Kéo dữ liệu từ 1 nhánh ở 1 repo sang nhánh khác trong repo
+ * git fetch origin master; git reset --hard origin/master : Lấy phiên bản mới nhất từ nhánh master
+ * git reset --hard <commit cụ thể> : Quay trở về 1 phiên bản trong quá khứ thông qua commit trên repo web
+ * git merge <tên nhánh> : Gộp nhánh được gọi với nhánh hiện tại đang đứng 
+ * git checkout -b <tên nhánh> : tạo nhánh mới 
+ * git checkout <tên nhánh> : chuyển sang nhánh khác làm việc (lưu ý: nhánh hiện tại phải push hết sự thay đổi lên thì mới được sang nhánh khác)
+ * 
+ */

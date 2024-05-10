@@ -43,7 +43,7 @@ class UserController extends BaseController
     }
     public function login()
     {
-        $products = $this->product->getProduct();
+        // $products = $this->product->getProduct();
         return $this->render('login');
     }
     public function order()
