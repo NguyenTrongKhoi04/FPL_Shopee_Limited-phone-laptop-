@@ -1,6 +1,7 @@
 <?php
+namespace App\Models\Admin;
+use App\Models\BaseModel;
 
-namespace App\Models;
 class Product extends BaseModel {
 
     protected $table = "products";
@@ -11,8 +12,6 @@ class Product extends BaseModel {
         $this->setQuery($sql);
         return $this->loadAllRows();
     }
-
-
 
     // xây dựng hàm thêm sản phẩm
     public function addProduct($id,$tenSp,$gia){

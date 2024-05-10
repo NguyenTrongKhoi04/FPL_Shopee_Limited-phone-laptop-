@@ -13,9 +13,5 @@ class BaseAdminController
         $storageDir = "./storage";
         $blade = new BladeOne($viewDir, $storageDir, BladeOne::MODE_DEBUG);
         echo $blade->run($viewFile, $data);
-        // echo '<pre>';
-        // print_r($data);
-        // echo '</pre>';
-        // die;
     }
 }

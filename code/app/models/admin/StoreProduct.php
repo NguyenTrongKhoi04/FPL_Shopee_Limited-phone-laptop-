@@ -1,6 +1,7 @@
 <?php
+namespace App\Models\Admin;
+use App\Models\BaseModel;
 
-namespace App\Models;
 class StoreProduct extends BaseModel {
 
     protected $table = "storepro";

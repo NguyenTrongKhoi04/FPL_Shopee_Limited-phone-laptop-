@@ -30,13 +30,12 @@ foreach ($arr_directory_admin as $item) {
         include_once 'common/route/admin/' . $item;
     }
 };
-// include route user
-foreach ($arr_directory_user as $item) {
-    if ($item != '..' && $item != '.' && file_exists('common/route/user/' . $item)) {
-        include_once 'common/route/user/' . $item;
-    }
-};
-
+// // include route user
+// foreach ($arr_directory_user as $item) {
+//     if ($item != '..' && $item != '.' && file_exists('common/route/user/' . $item)) {
+//         include_once 'common/route/user/' . $item;
+//     }
+// };
 
 // // admin
 $router->get('index-admin', [App\Controllers\Admin\AdminController::class, 'index_admin']);
