@@ -2,16 +2,18 @@
 
 namespace App\Controllers\Admin;
 
-use App\Models\Product;
+use App\Models\StoreProduct;
 
 class AdminController extends BaseAdminController
 {
     public $product;
+    public $account;
     public function __construct()
     {
-        $this->product = new Product();
+        $this->product = new StoreProduct();
     }
 
+<<<<<<< HEAD
     public function index_admin()
     {
         return $this->render('');
@@ -141,4 +143,6 @@ class AdminController extends BaseAdminController
     //             flash('success', 'Xóa thành công', 'list-product');
     //         }
     //     }
+=======
+>>>>>>> BuiDucNinh
 }
