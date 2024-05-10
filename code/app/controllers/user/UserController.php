@@ -6,6 +6,7 @@ use App\Models\User\Product;
 use App\Models\User\Category;
 use App\Models\User\SubCategory;
 use App\Models\User\Account;
+use App\Models\User\Cart;
 use App\Models\User\Size;
 use App\Models\User\Comment;
 
@@ -17,6 +18,7 @@ class UserController extends BaseController
     public $account;
     public $size;
     public $comment;
+    public $cart;
 
     // Tạo magic funcion
     public function __construct()
@@ -27,6 +29,7 @@ class UserController extends BaseController
         $this->account = new Account();
         $this->size = new Size();
         $this->comment = new Comment();
+        $this->cart = new Cart();
     }
     // lấy sản phẩm, danh mục chỉnh, danh mục phụ cho vào trang product
     public function product()
@@ -247,11 +250,56 @@ class UserController extends BaseController
     // chuyển trang giỏ hàng
     public function cart()
     {
+        if(empty($_SESSION['account'])){
         $product = $this->product->getProductCart();
         $categorys = $this->category->getCategory();
         $subCategorys = $this->subCategory->getSubCategory();
         return $this->render('cart', compact('product', 'categorys', 'subCategorys'));
     }
+    else{
+        $id = $_SESSION['account'][0]->id;
+        $cart = $this->cart->cartInLogin($id);
+        $pro = array_column($cart, 'id_pro');
+        $id_pro = implode(",", $pro);
+
+        $product = $this->cart->getProductCart($id_pro);
+        // $count = array_column($cart, 'count');
+        // $quantity = implode(",", $count);
+        $quantity = $this->cart->countCart($id);
+        // echo "<pre>";
+        // print_r($quantity);
+        // die;
+        return $this->render('cart', compact('product', 'quantity'));
+    }
+    }
+
+    //add vào giỏ hàng
+    public function addCart(){
+        $id = $_SESSION['account'][0]->id;
+        foreach($_SESSION['cart'] as $cart){
+            $idpro = $cart['id'];
+            $quantity = $cart['quantity'];
+            unset($_SESSION['cart']);
+            $addcart = $this->cart->addCart($id, $idpro ,$quantity);
+            // render:
+            $id = $_SESSION['account'][0]->id;
+            $cart = $this->cart->cartInLogin($id);
+            $pro = array_column($cart, 'id_pro');
+            $id_pro = implode(",", $pro);
+            $product = $this->cart->getProductCart($id_pro);
+            $quantity = $this->cart->countCart($id);
+            return $this->render('cart', compact('product', 'quantity'));
+        }
+
+    }
+
+
+
+
+
+
+
+
     // // chuyển trang quên mật khẩu
     // public function forgot_pass()
     // {

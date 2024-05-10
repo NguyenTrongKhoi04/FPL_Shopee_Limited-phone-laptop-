@@ -21,7 +21,9 @@
         -webkit-background-size: 300px;
     
     }
-
+#formmua{
+margin-left: 40%;
+}
 .infor-product-left__item{
     box-shadow: 10px , 10px, black ;
     margin-left: -70px;

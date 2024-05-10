@@ -13,22 +13,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idValue"])) {
  // Thêm giá trị mới vào mảng session
  $item = array(
  "id" => $_POST["idValue"],
- "quantity" => $_POST["quantity"]
+ // "id_detail" => $_POST["idDetail"],
+ "quantity" =>intval($_POST["quantity"]) 
  );
- $_SESSION["cart"][] = $item;
 
- // Hiển thị thông báo "Thêm vào giỏ hàng thành công"
+ $flag = false;
+
+ foreach($_SESSION['cart'] as $key=>$cart){ 
+ if($_POST['idValue'] == $cart['id']){
+ $flag =true;
+ // var_dump($cart['quantity'], intval($_POST['quantity']));
+ $_SESSION['cart'][$key]['quantity'] = $cart['quantity'] + intval($_POST['quantity']);
+ // var_dump($_SESSION['cart'][$key]['quantity']);die;
+ }
+ }
+ ($flag) ? null : ($_SESSION["cart"][] = $item);
  echo '<script>alert("Thêm vào giỏ hàng thành công");</script>';
 }
-if(isset($_SESSION["cart"])) {
- echo "Dữ liệu trong session 'cart': <br>";
- echo "<pre>";
- print_r($_SESSION["cart"]);
- echo "</pre>";
-} else {
- echo "Session 'cart' không tồn tại hoặc không có dữ liệu.";
-}
-// session_destroy($_SESSION['cart']);
+// echo "<pre>";
+// print_r($_SESSION["cart"]);
+// echo "</pre>";
+
+// session_destroy();
+
 ?>
 <?php $_shouldextend[1]=1; ?>
 

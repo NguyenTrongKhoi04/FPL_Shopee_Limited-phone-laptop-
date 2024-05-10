@@ -62,7 +62,12 @@ class Product extends BaseModel
             $productIds = array_column($_SESSION["cart"], 'id');
             $productIdsString = implode(",", $productIds);
             $sql = "SELECT detailproduct.id AS detail_product_id,
-            detailproduct.*,subcategory.*, product.*,sale.* FROM detailproduct inner join product on (detailproduct.id_pro=product.id) inner join subcategory  on(product.id_subcategory=subcategory.id) inner join sale on(product.sale=sale.id) WHERE detailproduct.id IN ($productIdsString)";
+            detailproduct.*,subcategory.*, product.*,sale.*, size.* FROM detailproduct 
+            inner join product on (detailproduct.id_pro=product.id) 
+            inner join subcategory  on(product.id_subcategory=subcategory.id) 
+            inner join sale on(product.sale=sale.id) 
+            inner join size on(detailproduct.size=size.id) 
+            WHERE detailproduct.id IN ($productIdsString)";
             $this->setQuery($sql);
             return $this->loadAllRows();
         }

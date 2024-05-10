@@ -1,3 +1,9 @@
+<?php
+if(isset($_SESSION['cart']) && isset($_SESSION['account'])){
+    header("Location: addCart");
+    exit;
+}
+?>
 @extends('layout.main')
 @section('content')
 <div class="app__container">
