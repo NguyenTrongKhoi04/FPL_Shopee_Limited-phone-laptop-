@@ -1,3 +1,9 @@
+<?php
+if(isset($_SESSION['cart']) && isset($_SESSION['account'])){
+    header("Location: addCart");
+    exit;
+}
+?>
 @extends('layout.main')
 @section('content')
 <div class="app__container">
@@ -10,8 +16,7 @@
                     <a href="home.php?act=phobien" class="btn btn-light text-center align-content-center  ">Phổ biến</a>
                     <a href="home.php" class="btn btn-light mx-5  align-content-center ">Mới nhất</a>
                     <!-- <button class="home-filter__btn btn">Bán chạy</button> -->
-                    <div class="select-input">
-                        <span class="select-input__label">Giá</span>
+                    <div class="form-control w-25  select-input">
                         <i class="select-input__icon fas fa-angle-down"></i>
                         <ul class="select-input__list">
                             <li class="select-input__item">
@@ -24,13 +29,13 @@
                     </div>
                 </div>
                 <div class="home-product">
-                    <div class="grid__row">
+                    <div class="grid__row justify-content-center mt-xxl-5">
                         <!-- product column 2-4 phần sản phẩm copy cả grid__column-2-4 -->
                         @foreach($products as $pr)
-                        <div class="grid__column-2-4">
+                        <div class="grid__column-2-4 ms-5">
                             <a href="{{route('info-pro/'.$pr->id_pro)}}" class="home-product-item">
-                                <div class="home-product-item__img">
-                                    <img src="{{$pr->image}}" class="w-100 h-100 " alt="">
+                                <div style="width: 190px; height: 60%;" class="home-product-item_img mb-5">
+                                    <img style="object-fit: cover; width: 200px; height: 250px;" src="{{$pr->image}}" class="w-100 " alt="">
                                 </div>
                                 <h4 class="home-product-item__name h3 my-1 align-content-center  mx-3">
                                     {{$pr->namepro}}

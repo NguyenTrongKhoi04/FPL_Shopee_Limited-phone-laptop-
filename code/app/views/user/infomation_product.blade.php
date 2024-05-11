@@ -1,67 +1,145 @@
+<?php
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idValue"])) {
+    // Kiểm tra xem mảng session đã tồn tại chưa
+    if (!isset($_SESSION["cart"])) {
+        $_SESSION["cart"] = array();
+    }
+
+    if (!isset($_SESSION["cart"])) {
+        $_SESSION["cart"] = array();
+    }
+
+    // Thêm giá trị mới vào mảng session
+    $item = array(
+        "id" => $_POST["idValue"],
+        // "id_detail" => $_POST["idDetail"],
+        "quantity" =>intval($_POST["quantity"]) 
+    );
+
+    $flag = false;
+
+    foreach($_SESSION['cart'] as $key=>$cart){ 
+        if($_POST['idValue'] == $cart['id']){
+            $flag =true;
+            // var_dump($cart['quantity'], intval($_POST['quantity']));
+            $_SESSION['cart'][$key]['quantity'] = $cart['quantity'] + intval($_POST['quantity']);
+        // var_dump($_SESSION['cart'][$key]['quantity']);die;
+    }
+    }
+    ($flag) ? null : ($_SESSION["cart"][] = $item);
+    echo '<script>alert("Thêm vào giỏ hàng thành công");</script>';
+}
+// echo "<pre>";
+// print_r($_SESSION["cart"]);
+// echo "</pre>";
+
+// session_destroy();
+
+?>
 @extends('layout.main')
-@section('content')
+
+        @section('content')
+
+
+
+<div class="container-nav">
+    <a href="{{route('product')}}">Trang Chủ</a>/ <a class="disabled " disabled="disabled" href="">Chi tiết sản phẩm</a>
+</div>
 <div class="app__container ">
     <div class="grid infor-flex" id="inforpd">
         <div class="grid__column-3">
-            <div class="infor-product-left">
-                <div class="infor-product-left__item">
-                    <img src="{{$products['image']}}" id="product-image" alt="" class="w-100 h-100 object-fit-cover">
-                </div>
-            </div>
-        </div>
-        <div class="grid__column-9">
-            <div class="infor-product-right">
-                <form action="" method="POST">
-                    <h3 class="infor-product-right__name">
-                        {{$products[0]['namepro']}}
-                    </h3>
-                    <div class="">
-                        <h4 class="infor-product__right-price-number ps-0 ">
-                            Giá : <input type="number" disabled value="{{$products[0]->price}}" class="border-0 bg-white text-danger" id="product-price">
-                        </h4>
-                        <div class="form-control my-2 py-5 bg-dark-subtle ">
-                            <h4 class="">
-                                {{$products[0]['description']}}
-                            </h4>
-                        </div>
+            <form action="" method="POST" class="rounded p-5 pt-0 start-0 me-5 mt-xxl-5 ">
+
+                <div class="infor-product-left">
+                    <div class="infor-product-left__item">
+                        <img src="{{$products['image']}}" id="product-image" alt="" class="w-100 h-100 object-fit-cover">
                     </div>
+                </div>
+        </div>
+        <div class="grid__column-9 mt-xxl-5 ">
+            <div class="infor-product-right">
+            <h3 style="color: red;" id="salevalue">-{{$products[0]['valuesale']}}%<i class="h1 bi bi-fire"></i></h3>
+
+                <h1 class="infor-product-right__name">{{$products[0]['namepro']}}</h1>
+                <div class="priceandsold">
+                    <h4 class="infor-product__right-price-number ps-0 ">
+                        <b id="giatien">
+                           <del style=""> <p style="font-size: 13px;" id="product-price"></p></del> <p id="product-price-sc" style="font-size: 25px; color: red;"> </p>
+                        </b>
+                        <!-- Giá : <input type="number" disabled value="{{$products[0]->price}}" class="border-0 bg-white text-danger" id="product-price"> -->
+                    </h4>
+                    <div class="infor-product__right-price-number mb-5">
+                        {{$products[0]['quantity']}} Sold 
+                    </div>
+                </div>
+                <div class="infor-product__right-des rounded p-3 mb-5">
+                    {{$products[0]['description']}}
+                </div>
+
+            <div class="right">
+                <div class="mb-3">
+                    <label for="">Size: </label>
+                    <select class="form-control w-25  px-3 py-2 m-3" onchange="changeProduct()" id="product-select" aria-label="Default select example">
+                        @foreach($products as $index => $pro)
+                        <option class="h3" value="{{$index}}" data-image="{{$pro['image']}}" data-sale="{{$pro['valuesale']}}" data-price="{{$pro['price']}}" data-id="{{$pro['detail_product_id']}}">
+                            {{$pro['namesize']}}
+                        </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="float-stat rounded ">
+
                     <div class="align-content-center  d-flex  ">
-                        <span class="infor-product__right-quantity-number h3">Số lượng:</span>
-                        <button type="button" onclick="handleMinus()"><span class="material-symbols-outlined  btn-outline-light  ">
+                        <button type="button" class="material-symbols-outlinedbtn" onclick="handleMinus()"><span class="material-symbols-outlined">
                                 remove
                             </span></button>
-                        <input type="text" class="mx-1 text-center border-1  " value="1" name="quntity" id="amout">
-                        <button type="button" onclick="handlePlus()"><span class="material-symbols-outlined btn-btn-outline-light  ">
+                        <input type="text" class="form-control w-25   mx-1 text-center border-1  " value="1" name="quantity" id="amout">
+                        <button type="button" class="material-symbols-outlinedbtn" onclick="handlePlus()"><span class="material-symbols-outlined">
                                 add
                             </span></button>
-                        <span class="mx-3 h4">
-                            Số lượng sản phẩm có sẵn : {{$products[0]['quantity']}}
-                        </span>
+
                     </div>
-                    <div class="mt-5">
-                        <span class="mt-3 h3">size: </span>
-                        <select class=" px-3 py-2 m-3" onchange="changeProduct()" id="product-select" aria-label="Default select example">
-                            @foreach($products as $index => $pro)
-                            <option class="h3" value="{{$index}}" data-image="{{$pro['image']}}" data-price="{{$pro['price']}}">
-                                {{$pro['namesize']}}
-                            </option>
-                            @endforeach
-                        </select>
-                    </div>
+
                     <div class="d-flex mt-3">
-                        <input type="text" name="giasanpham" hidden value="" id="">
-                        <span onclick="AddToCart()" class="infor-product__right-btn-add" style="text-decoration: none;"><i class="fa-solid fa-cart-plus"></i></span>
+                        <input type="text" name="giasanpham" hidden value="" id=""><span class="rounded  infor-product__right-btn-add" style="text-decoration: none;"><i  onclick="AddToCart()" class="fa-solid fa-cart-plus"></i></span>
                         <a href="home.php" class="infor-product__right-btn-buy infor-product__right-btn-buy-link">Mua
                             ngay</a>';
                     </div>
+                </div>
                 </form>
+            </div>
             </div>
         </div>
     </div>
 </div>
+<br> <br> <br> <br> <br> <br> <br>
 <div class="grid container__ctsp">
-    <div class="container__ctsp-title ">
-        <p class=" h1 align-content-center mx-4">Comment</p>
+    <div class="container__ctsp-heading">
+        <h3 class="container__ctsp-heading">Sản phẩm cùng loại</h3>
+    </div>
+    <div class="divsplienquan" id="scroll" style="display: flex;overflow-x:scroll;">
+    @foreach($relatedProduct as $pro)    
+    <a href="{{route('info-pro/'.$pro->id_pro)}}" class="" id="spcungloai">
+    <div class="m-5 rounded ">
+        <img src="{{$pro->image}}" alt="" width="250px" height="300px">
+        <h3>{{$pro->namepro}}</h3>
+        <h6>Sold: {{$pro->quantity}}</h6>
+    </div>
+</a>
+    @endforeach
+    </div>
+</div>
+<style>
+    #scroll::-webkit-scrollbar { 
+  width: 0 !important;
+  display: none; 
+}
+</style>
+<div class="grid container__ctsp">
+    <div class="container__ctsp-heading">
+        <h3 class="container__ctsp-heading">Comment</h3>
     </div>
     <ul class="container__ctsp-list-comments">
         @foreach($comments as $comment)
@@ -72,7 +150,7 @@
                 </div>
                 <div class="container__ctsp-user-name_time">
                     <p class="container__ctsp-comment-user-name">
-                        {{$comment->username }}
+                        {{$comment->username }}:
                     </p>
                 </div>
             </div>
@@ -82,44 +160,6 @@
         </li>
         @endforeach
     </ul>
-</div>
-<div class="grid container__ctsp">
-    <div class="container__ctsp-heading">
-        <h3 class="container__ctsp-heading">Sản phẩm cùng loại</h3>
-    </div>
-    <div class="home-product">
-        <div class="grid__row">
-            <!-- product column 2-4 phần sản phẩm copy cả grid__column-2-4 -->
-            @foreach($relatedProduct as $relatPro)
-            <div class="grid__column-2-4">
-                <a href="{{route('info-pro/'.$relatPro->id_pro)}}" class="home-product-item">
-                    <div class="info-product-item__img">
-                        <img src="{{$relatPro->image}}" class="w-100 h-100" alt="">
-                    </div>
-                    <h4 class="home-product-item__name h3 my-1 align-content-center  mx-3">
-                        {{$relatPro->namepro}}
-                    </h4>
-                    <div class="home-product-item__price">
-                        <span class="home-product-item__price-current h4 text-danger">
-                            Size: {{$relatPro -> size}}
-                        </span>
-                    </div>
-                    <div class="home-product-item__origin">
-                        <span class="home-product-item__brand h5">Số Lượng:
-                            {{$relatPro -> quantity}}
-                        </span>
-                    </div>
-                    <div class="home-product-item__sale-off">
-                        <div class="home-product-item__sale-off-percent">
-                            {{$relatPro -> valuesale}}%
-                        </div>
-                        <span class="home-product-item__sale-off-label">Giảm</span>
-                    </div>
-                </a>
-            </div>
-            @endforeach
-        </div>
-    </div>
 </div>
 <script>
     let amoutElement = document.getElementById('amout')
@@ -149,6 +189,8 @@
         // Trigger change event to update image and price based on default selection
         changeProduct();
     };
+    window.idValue;
+
 
     function changeProduct() {
         var selectBox = document.getElementById("product-select");
@@ -156,14 +198,42 @@
         var selectedOption = selectBox.options[selectedIndex];
         var imageSrc = selectedOption.getAttribute("data-image");
         var priceValue = selectedOption.getAttribute("data-price");
-
+        var idValue = selectedOption.getAttribute("data-id");
+        var sale = selectedOption.getAttribute("data-sale");
+        window.idValue = idValue;
         // console.log(imageSrc);
         document.getElementById("product-image").src = imageSrc;
-        document.getElementById("product-price").value = priceValue;
+        document.getElementById("product-price").innerHTML = priceValue+"|";
+        document.getElementById("product-price-sc").innerHTML =priceValue - (priceValue * (sale/100))+"Vnđ";
     }
-
     function AddToCart() {
-        alert(123);
+        console.log(window.idValue);
+        var idValue = window.idValue;
+        var form = document.createElement("form");
+        form.method = "post";
+        form.style.display = "none";
+        document.body.appendChild(form);
+
+        var quantity = document.getElementById('amout').value;
+
+        var form = document.createElement("form");
+        form.method = "post";
+        form.style.display = "none";
+        document.body.appendChild(form);
+
+        var inputId = document.createElement("input");
+        inputId.type = "hidden";
+        inputId.name = "idValue";
+        inputId.value = idValue;
+        form.appendChild(inputId);
+
+        var inputQuantity = document.createElement("input");
+        inputQuantity.type = "hidden";
+        inputQuantity.name = "quantity";
+        inputQuantity.value = quantity;
+        form.appendChild(inputQuantity);
+
+        form.submit();
     }
 </script>
 @endsection

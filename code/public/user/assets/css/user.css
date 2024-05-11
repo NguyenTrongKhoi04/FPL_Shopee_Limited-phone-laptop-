@@ -1,0 +1,164 @@
+.infor-product-right__name{
+    margin-left: 0px;
+    margin-bottom: 20px;
+    background: #323432 -webkit-gradient(linear, left top, right top,
+
+    from(#505250), to(#373838), color-stop(0.5, #ffffff)) 0 0 no-repeat;
+    
+        color: rgba(255, 255, 255, 0.1);
+        font-size: 50px;
+    
+        font-weight: bold;
+    
+        position: relative;
+    
+    
+    
+        -webkit-animation: shine 2s infinite;
+    
+        -webkit-background-clip: text;
+    
+        -webkit-background-size: 300px;
+    
+    }
+#formmua{
+margin-left: 40%;
+}
+.infor-product-left__item{
+    box-shadow: 10px , 10px, black ;
+    margin-left: -70px;
+    margin-top: 50px;
+    width: 480px;
+    height: 400px;
+}
+.infor-product-left__item img{
+    box-shadow: 10px , 10px, black ;
+}
+.infor-product__right-price-number{
+    margin-left: 10px;
+    color: rgb(114, 113, 113);
+    font-size: 10px;
+}
+.priceandsold{
+    display: flex;
+}
+.app__container{
+    background-color: #fafafa;
+}
+.infor-product__right-des{
+    color: rgb(244, 215, 173);
+
+    font-size: 12px;
+    background-color: rgb(252, 252, 252);
+}
+.float-stat{
+    margin-top: 10px;
+    width: 400px;
+    text-align: center;
+    padding: 5px;
+
+}
+.infor-product__right-btn-add{
+    background-color: white;
+    width: 70px;
+    height: 30px;
+}
+.infor-product__right-btn-buy-link{
+    background-color: white;
+    border: 0.5px solid rgb(248, 189, 189);
+    color: black;
+    width: 70px;
+    height: 30px;
+}
+.object-fit-cover{
+    border-radius: 10px;
+    width: 1000px;
+}
+a.disabled {
+    text-decoration: none;
+    pointer-events: none;
+    cursor: default;
+  }
+.container-nav{
+    margin-top: 10px;
+    margin-left: 200px;
+}
+.home-product-item_img{
+    height: 100px;
+}
+.container-nav a{
+    color: black;
+}
+.container__ctsp-comment-user-content{
+    margin-left: 100px;
+    margin-top: -30px;
+}
+#spcungloai{
+    text-decoration: none;
+    color: #323432;
+}
+#giatien{
+    display: flex;
+    justify-content: center;
+}
+#product-price{
+    position: relative;
+    top: 11px;
+}
+#salevalue{
+    position: relative;
+    top: 55px;
+    left: 430px;
+}
+#spcungloai:hover{
+    transform: scale(1.03);
+    transition: ease-in-out 0.5s;
+}
+.right{
+    border: 0.5px solid rgb(248, 189, 189);
+    width: 190px;
+    border-radius: 10px;
+}
+.material-symbols-outlined {
+    font-size: 6px;
+    width: 25px;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0); /* Màu chữ */
+    border: 0.5px solid rgb(248, 189, 189);
+    cursor: pointer; /* Hiển thị con trỏ khi di chuột vào button */
+    border-radius: 2px; /* Bo tròn góc */
+    margin: 5px; /* Khoảng cách giữa các button */
+}
+.infor-product-left__itemimg{
+    width: 100%;
+}
+#amout{
+    width: 70px;
+    height: 25px;
+}
+.material-symbols-outlined:hover {
+color: black;
+}
+.material-symbols-outlinedbtn{
+    background-color: rgb(255, 255, 255);
+    border: none;
+    width: 35px;
+
+}
+    
+    @-webkit-keyframes shine {
+    
+        0% {
+    
+            background-position: top left;
+    
+        }
+    
+        100% {
+    
+            background-position: top right;
+    
+        }
+    
+}
+
