@@ -1,12 +1,12 @@
 <?php
 
-const DBNAME = "sopee";
+const DBNAME = "shopee_limited";
 const DBUSER = "root";
 const DBPASS = "";
 const DBHOST = "127.0.0.1";
 const DBCHARSET = "utf8";
 
-const BASE_URL = "http://localhost/shopee_Limited/code/";
+const BASE_URL = "http://localhost:81/FPL_Shopee_Limited(phone,laptop)/code/";
 
 function route($url)
 {

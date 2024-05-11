@@ -1,19 +1,21 @@
 @extends('layout.main')
 @section('content')
-<div class="app__container">
-    <div class="grid grid__information bg-success-subtle  ">
-        <div class="information-heading ">
+<div class="app__container" style="background-color: white;">
+    <div class="grid grid__information border border-1">
+        <div class="text-center">
             <p class="information-heading-text h2">Thông tin cá nhân</p>
         </div>
-        <form action="{{route('change-info-acccount')}}" class="information grid__row" method="POST" enctype="multipart/form-data">
-            <div class="grid__column-3 information__avt border-0 ">
+        <form action="{{route('change-info-acccount')}}" class="information grid__row" method="POST"
+            enctype="multipart/form-data">
+            <!-- <div class="grid__column-3 information__avt border-0 ">
                 <div class="information-avatar">
                     <div class="information-image">
-                        <img src="{{BASE_URL.'public/user/assets/img_user/avtgithub.png'}}" alt="" class="information-image__img ">
+                        <img src="{{BASE_URL.'public/user/assets/img_user/avtgithub.png'}}" alt=""
+                            class="information-image__img ">
                     </div>
                 </div>
-            </div>
-            <div class="grid__column-9">
+            </div> -->
+            <div class="grid__column-1">
                 <ul class="list__information">
                     <li class="list__information-item">
                         <span class="information__name-change">Tên người dùng :</span>
@@ -64,7 +66,7 @@
                 </ul>
             </div>
             <div class="btn__information-update">
-                <button type="submit" name="update" class="btn btn-warning">Cập nhật</button>
+                <button type="submit" name="update" class="btn btn-warning">Lưu</button>
             </div>
         </form>
     </div>

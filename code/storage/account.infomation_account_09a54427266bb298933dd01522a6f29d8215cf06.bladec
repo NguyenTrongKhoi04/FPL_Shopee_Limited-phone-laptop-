@@ -1,0 +1,9 @@
+<?php $_shouldextend[1]=1; ?>
+<?php $this->startSection('content'); ?>
+<div class="app__container" style="background-color: white;">
+ <div class="mx-auto text-center w-75 bg-danger">
+ <h1>Thông tin cá nhân </h1>
+ </div>
+</div>
+<?php $this->stopSection(); ?>
+<?php if (isset($_shouldextend[1])) { echo $this->runChild('layout.main'); } ?>
