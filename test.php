@@ -15,7 +15,57 @@ $obj = [
 </head>
 
 <body>
+<<<<<<< HEAD
     <<<<<<< HEAD <img id="product-image" src="<?= $obj[0][1] ?>" alt="">
+=======
+    <<<<<<< HEAD <form method="POST">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID Pro</th>
+                    <th>ID Detail</th>
+                    <th>Name</th>
+                    <th>Giá</th>
+                    <th>size</th>
+                    <th>số lượng</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        1
+                        <input type="hidden" value="2" name="idpro[]">
+                    </td>
+                    <td>
+                        12
+                        <input type="hidden" value="12" name="iddetail[]">
+                    </td>
+                    <td>Name</td>
+                    <td>Giá</td>
+                    <td>size</td>
+                    <td><input type="number" name="count[]"></td>
+                </tr>
+                <tr>
+                    <td>
+                        2
+                        <input type="hidden" value="2" name="idpro[]">
+                    </td>
+                    <td>
+                        13
+                        <input type="hidden" value="13" name="iddetail[]">
+                    </td>
+                    <td>Name</td>
+                    <td>Giá</td>
+                    <td>size</td>
+                    <td><input type="number" name="count[]"></td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="submit">Gửi</button>
+        </form>
+        =======
+        <img id="product-image" src="<?= $obj[0][1] ?>" alt="">
+>>>>>>> a4066fd1cedfc9d8cc0806965d6e33b435a16676
         <input type="text" id="product-price" value="<?= $obj[0][2] ?>" name="size">
         <select id="product-select" onchange="changeProduct()">
             <?php
@@ -42,6 +92,7 @@ $obj = [
             document.getElementById("product-price").value = priceValue;
         }
         </script>
+<<<<<<< HEAD
         =======
         <form method="POST">
             <table border="1">
@@ -89,6 +140,9 @@ $obj = [
             <button type="submit">Gửi</button>
         </form>
         >>>>>>> BuiDucNinh
+=======
+        >>>>>>> origin/NguyenTrongKhoi
+>>>>>>> a4066fd1cedfc9d8cc0806965d6e33b435a16676
 </body>
 
 </html>
