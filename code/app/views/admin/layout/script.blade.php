@@ -5,3 +5,4 @@
 <script src="{{ BASE_URL.'public/admin/vendor/chart.js/Chart.min.js' }}"></script>
 <script src="{{ BASE_URL.'public/admin/js/demo/chart-area-demo.js' }}"></script>
 <script src="{{ BASE_URL.'public/admin/js/demo/chart-pie-demo.js' }}"></script>
+<script src="{{ BASE_URL.'public/admin/js/demo/dataTables.bootstrap4.min.js' }}"></script>
