@@ -18,6 +18,7 @@ class Cart extends BaseModel
         return $this->loadAllRows();
     }
 
+    
     public function getProductCart($id_pro)
     {
             $sql = "SELECT detailproduct.id AS detail_product_id,
@@ -26,7 +27,11 @@ class Cart extends BaseModel
             return $this->loadAllRows();
     }
 
-    
+    // public function getcountCartone($id){
+    //     $sql = "select * from cart where id_acc = $id";
+    //     $sql
+    // }
+
     public function countCart($id_acc){
         $sql = "select * from cart where id_acc = ?";
         $this->setQuery($sql);

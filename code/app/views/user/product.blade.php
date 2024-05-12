@@ -3,9 +3,15 @@ if(isset($_SESSION['cart']) && isset($_SESSION['account'])){
     header("Location: addCart");
     exit;
 }
+
 ?>
 @extends('layout.main')
 @section('content')
+@if(isset($check))
+    <script>
+        alert("{{ $check }}");
+    </script>
+@endif
 <div class="app__container">
     <div class="grid">
         <div class="grid__row app__content">

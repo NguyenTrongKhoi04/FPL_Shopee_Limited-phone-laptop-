@@ -26,7 +26,6 @@ class BaseModel
     public function getData($query, $getAll = true)
     {
         //  $conn = getConnect();
-
         $stmt = $this->pdo->prepare($query);
         $stmt->execute();
         if ($getAll) {
@@ -42,8 +41,17 @@ class BaseModel
 
     //Function execute the query
     // hàm này sẽ làm hàm chạy câu truy vấn
+    
     public function execute($options = array())
-    {
+    {   
+        // session_destroy();
+        if(isset($_SESSION['cart'])) {
+            $countCart = count($_SESSION['cart']);
+            $_SESSION['countCart'] = $countCart;
+        }
+        else{
+            $_SESSION['countCart'] = 0;
+        }
         $this->sta = $this->pdo->prepare($this->sql);
         if ($options) {  //If have $options then system will be tranmission parameters
             for ($i = 0; $i < count($options); $i++) {

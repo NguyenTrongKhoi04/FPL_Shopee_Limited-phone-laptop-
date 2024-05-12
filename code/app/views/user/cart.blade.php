@@ -15,10 +15,10 @@
                     <th>Giá</th>
                     <th>Số lượng</th>
                 </tr>
-
                 @foreach($product as $keyPro =>$pro)
                 <tr>
-                    <td> <input type="checkbox" name="selectProduct" class="selectProduct"> </td>
+                    <td> <input type="checkbox" value=""  name="selectProduct[]" class="selectProduct"> 
+                </td>
                     <td> <img src="{{$pro->image}}" alt="" width="80px"> </td>
                     <td>
                         <p>{{$pro->namepro}}</p>

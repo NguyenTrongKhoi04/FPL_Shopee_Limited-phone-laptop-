@@ -103,7 +103,7 @@
             <div class="header__cart">
                 <div class="header__cart-wrap">
                     <a href="{{route('cart')}}" class="header__cart-icon fa-solid fa-cart-shopping text-decoration-none "></a>
-                    <span class="header__cart-notice" id="totalProduct">5</span>
+                    <span class="header__cart-notice" id="totalProduct"><?= ($_SESSION['countCart']) ? : "" ?></span>
                     <!-- No cart: header__cart-list--no-cart -->
                     <!-- <div class="header__cart-list header__cart-list--no-cart">
                         <img src="{{BASE_URL.'public/user/assets/img/no_cart.png'}}" alt=""
