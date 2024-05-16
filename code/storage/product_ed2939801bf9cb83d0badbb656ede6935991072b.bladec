@@ -82,13 +82,13 @@ $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
  <ul class="pagination home-product__pagination">
  <li class="pagination-item">
  <?php if($currentPage > 1): ?>
- <a style="font-size: 25px; text-decoration: none;" href="?page=<?php echo \htmlentities($currentPage - 1??'', ENT_QUOTES, 'UTF-8', false); ?>"> < </a>
+ <a style="font-size: 25px; text-decoration: none ;margin: 20px" href="?page=<?php echo \htmlentities($currentPage - 1??'', ENT_QUOTES, 'UTF-8', false); ?>"> < </a>
  <?php endif; ?>
  </li>
  <li class="pagination-item">
  <?= $currentPage ?>
  </li>
- <?php if($currentPage < $totalPage): ?> <a style="font-size: 25px; text-decoration: none;" href="?page=<?php echo \htmlentities($currentPage + 1??'', ENT_QUOTES, 'UTF-8', false); ?>"> > </a>
+ <?php if($currentPage < $totalPage): ?> <a style="font-size: 25px; text-decoration: none; margin: 20px" href="?page=<?php echo \htmlentities($currentPage + 1??'', ENT_QUOTES, 'UTF-8', false); ?>"> > </a>
  <?php endif; ?>
  </ul>
  </form>

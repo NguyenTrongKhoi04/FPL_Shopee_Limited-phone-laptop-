@@ -122,7 +122,7 @@ class Product extends BaseModel
 
     public function productPagination($page){
         if($page >1){
-            $count = $page*10-10;
+            $count = ($page*10)-(($page-1)*10);
         }
         else{
             $count = 1;

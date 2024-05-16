@@ -78,13 +78,13 @@ $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
                     <ul class="pagination home-product__pagination">
                         <li class="pagination-item">
                             @if ($currentPage > 1)
-                            <a style="font-size: 25px; text-decoration: none;" href="?page={{ $currentPage - 1 }}"> < </a>
+                            <a style="font-size: 25px; text-decoration: none ;margin: 20px" href="?page={{ $currentPage - 1 }}"> < </a>
                             @endif
                         </li>
                         <li class="pagination-item">
                             <?= $currentPage ?>
                         </li>
-                        @if ($currentPage < $totalPage) <a style="font-size: 25px; text-decoration: none;" href="?page={{ $currentPage + 1 }}"> > </a>
+                        @if ($currentPage < $totalPage) <a style="font-size: 25px; text-decoration: none; margin: 20px" href="?page={{ $currentPage + 1 }}"> > </a>
                             @endif
                     </ul>
                 </form>
