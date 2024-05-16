@@ -11,14 +11,11 @@ class Cart extends BaseModel
         $this->setQuery($sql);
         return $this->execute([$id_acc , $id_pro, $count]);
     }
-
     public function cartInLogin($id_acc){
         $sql = "select * from `cart` where id_acc = $id_acc";
         $this->setQuery($sql);
         return $this->loadAllRows();
     }
-
-    
     public function getProductCart($id_pro)
     {
             $sql = "SELECT detailproduct.id AS detail_product_id,
@@ -26,15 +23,15 @@ class Cart extends BaseModel
             $this->setQuery($sql);
             return $this->loadAllRows();
     }
-
-    // public function getcountCartone($id){
-    //     $sql = "select * from cart where id_acc = $id";
-    //     $sql
-    // }
-
     public function countCart($id_acc){
         $sql = "select * from cart where id_acc = ?";
         $this->setQuery($sql);
         return $this->loadAllRows([$id_acc]);
+    }
+    public function deleteCart($arr){
+        $inValues = implode(',', $arr);
+        $sql = "DELETE FROM `cart` WHERE id IN ($inValues)";
+        $this->setQuery($sql);
+        return $this->execute();
     }
 }

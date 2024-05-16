@@ -1,16 +1,23 @@
 <?php
-if(isset($_SESSION['cart']) && isset($_SESSION['account'])){
+
+
+
+
+if (isset($_SESSION['cart']) && isset($_SESSION['account'])) {
     header("Location: addCart");
     exit;
 }
+
+
+$currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
 
 ?>
 @extends('layout.main')
 @section('content')
 @if(isset($check))
-    <script>
-        alert("{{ $check }}");
-    </script>
+<script>
+    alert("{{ $check }}");
+</script>
 @endif
 <div class="app__container">
     <div class="grid">
@@ -67,25 +74,25 @@ if(isset($_SESSION['cart']) && isset($_SESSION['account'])){
                         @endforeach
                     </div>
                 </div>
-                <ul class="pagination home-product__pagination">
-                    <li class="pagination-item">
-                        <a href="home.php" class="pagination-item__link">
-                            <i class="pagination-item__icon fas fa-angle-left"></i>
-                        </a>
-                    </li>
-                    <li class="pagination-item">
-                        <a href="home.php" class="pagination-item__link ">
-                            5
-                        </a>
-                    </li>
-                    <li class="pagination-item">
-                        <a href="home.php" class="pagination-item__link">
-                            <i class="pagination-item__icon fas fa-angle-right"></i>
-                        </a>
-                    </li>
-                </ul>
+                <form id="paginationForm" method="post" action="">
+                    <ul class="pagination home-product__pagination">
+                        <li class="pagination-item">
+                            @if ($currentPage > 1)
+                            <a style="font-size: 25px; text-decoration: none;" href="?page={{ $currentPage - 1 }}"> < </a>
+                            @endif
+                        </li>
+                        <li class="pagination-item">
+                            <?= $currentPage ?>
+                        </li>
+                        @if ($currentPage < $totalPage) <a style="font-size: 25px; text-decoration: none;" href="?page={{ $currentPage + 1 }}"> > </a>
+                            @endif
+                    </ul>
+                </form>
             </div>
         </div>
     </div>
 </div>
+
+
+
 @endsection

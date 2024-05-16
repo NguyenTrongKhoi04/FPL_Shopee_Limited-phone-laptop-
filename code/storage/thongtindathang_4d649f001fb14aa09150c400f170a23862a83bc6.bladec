@@ -1,7 +1,7 @@
 <?php $_shouldextend[1]=1; ?>
 <?php $this->startSection('content'); ?>
 <div class="main-content">
- <div class="card-body">
+ <div class="card-body container ">
  <h4 class="card-title text-center h1 my-5">Thông tin đặt hàng</h4>
  <div class="card-body">
  <form action="index.php" method="post" enctype="multipart/form-data">
