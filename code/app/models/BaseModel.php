@@ -67,6 +67,7 @@ class BaseModel
         }
         return $result->fetchAll(PDO::FETCH_OBJ);
     }
+
     public function loadAllRowsArray($options = array())
     {
         if (!$options) {

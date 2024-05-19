@@ -2,7 +2,7 @@
 $router->get('product', [App\Controllers\User\UserController::class, 'product']);
 $router->get('cart', [App\Controllers\User\UserController::class, 'cart']);
 $router->get('addCart', [App\Controllers\User\UserController::class, 'addCart']);
-$router->get('change-pass', [App\Controllers\User\UserController::class, 'change_pass']);
+
 $router->get('forgot-pass', [App\Controllers\User\UserController::class, 'forgot_pass']);
 
 

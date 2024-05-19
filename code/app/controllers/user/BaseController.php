@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Controllers\User;
+
 use eftec\bladeone\BladeOne;
+
 class BaseController
 {
 

@@ -25,10 +25,40 @@ class Account extends BaseModel
         $this->setQuery($sql);
         return $this->loadRow();
     }
-    public function updateAccount($username, $gmail, $address, $password, $id)
+    public function updateAccount($username, $gmail, $birthday, $address, $phone,  $id)
     {
-        $sql = "UPDATE account SET username=?,gmail=?,address=?,password=? where id= ?";
+        $sql = "UPDATE account SET username=?, gmail=?, birthday =?, address=?, phone = ?  where id= ?";
         $this->setQuery($sql);
-        return $this->execute([$username, $gmail, $address, $password, $id]);
+        return $this->execute([$username, $gmail, $birthday, $address, $phone,  $id]);
+    }
+
+    public function checkAccountGmail($gmail, $id = null)
+    {
+        if (!empty($id)) $notID = " AND id != $id ";
+        $sql = "select * from $this->item WHERE gmail = ? " . $notID ?? '';
+        $this->setQuery($sql);
+        return $this->loadAllRows([$gmail]);
+    }
+
+    public function checkAccountUsername($username, $id = null)
+    {
+        if (!empty($id)) $notUsername = " AND id != $id ";
+        $sql = "select * from $this->item WHERE username = ? " . $notUsername ?? '';
+        $this->setQuery($sql);
+        return $this->loadAllRows([$username]);
+    }
+
+    public function updateAccountPassword($password, $id)
+    {
+        $sql = "UPDATE account SET password = ?  where id = ?";
+        $this->setQuery($sql);
+        return $this->execute([$password, $id]);
+    }
+
+    public function checkAccountPassword($id, $password)
+    {
+        $sql = "select * from $this->item WHERE password = ? AND id = ?";
+        $this->setQuery($sql);
+        return $this->loadAllRows([$password, $id]);
     }
 }

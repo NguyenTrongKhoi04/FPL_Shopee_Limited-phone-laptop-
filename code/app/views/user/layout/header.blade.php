@@ -22,7 +22,8 @@
                     </li>
                     @if(isset($_SESSION['account']))
                     <li class="header__navbar-item header__navbar-user">
-                        <img src="{{BASE_URL.'public/user/assets/img_user/avtgithub.png'}}" alt="" class="header__navbar-user-img">
+                        <img src="{{BASE_URL.'public/user/assets/img_user/avtgithub.png'}}" alt=""
+                            class="header__navbar-user-img">
                         <span class="header__navbar-user-name ">
                             {{
                                 $_SESSION['account'][0]->username
@@ -35,7 +36,7 @@
                                         tin</a>
                                 </li>
                                 <li class="header__navbar-user-item">
-                                    <a href="home.php?act=donhang">Đơn mua</a>
+                                    <a href="{{route('listbill/')}}">Đơn mua</a>
                                 </li>
                                 <li class="header__navbar-user-item header__navbar-user-item-separative">
                                     <a href="{{route('logout/')}}">Đăng xuất</a>
@@ -45,7 +46,8 @@
                     </li>
                     @else
                     <li class="header__navbar-item ">
-                        <a href="{{route('register/')}}" class="header__navbar-item-link header__navbar-item--strong header__navbar-item-separate">Đăng
+                        <a href="{{route('register/')}}"
+                            class="header__navbar-item-link header__navbar-item--strong header__navbar-item-separate">Đăng
                             ký</a>
                     </li>
                     <li class="header__navbar-item">
@@ -60,12 +62,14 @@
                 <div class="header-with-search">
                     <div class="header__logo">
                         <a href="{{route('product')}}" class="header__logo-link">
-                            <img class="header__logo-img" src="{{BASE_URL.'public/user/assets/img/Logo_poly.png'}}" alt="">
+                            <img class="header__logo-img" src="{{BASE_URL.'public/user/assets/img/Logo_poly.png'}}"
+                                alt="">
                         </a>
                     </div>
                     <div class="header__search">
                         <div class="header__search-input-wrap">
-                            <input type="text" name="search" placeholder="Nhập để tìm kiếm sản phẩm" class="header__search-input">
+                            <input type="text" name="search" placeholder="Nhập để tìm kiếm sản phẩm"
+                                class="header__search-input">
                             <!-- search history -->
                             <!-- <div class="header__search-history">
                                 <h3 class="header__search-history-heading">Lịch sử tìm kiếm</h3>
@@ -102,7 +106,8 @@
             <!-- cart layout -->
             <div class="header__cart">
                 <div class="header__cart-wrap">
-                    <a href="{{route('cart')}}" class="header__cart-icon fa-solid fa-cart-shopping text-decoration-none "></a>
+                    <a href="{{route('cart')}}"
+                        class="header__cart-icon fa-solid fa-cart-shopping text-decoration-none "></a>
                     <span class="header__cart-notice" id="totalProduct">5</span>
                     <!-- No cart: header__cart-list--no-cart -->
                     <!-- <div class="header__cart-list header__cart-list--no-cart">
