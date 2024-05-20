@@ -29,7 +29,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idValue"])) {
     }
     ($flag) ? null : ($_SESSION["cart"][] = $item);
     echo '<script>alert("Thêm vào giỏ hàng thành công");</script>';
+ 
+    if(isset($_SESSION['account'])){
+        header('location: ../addCart');       
+    }
 }
+
 // echo "<pre>";
 // print_r($_SESSION["cart"]);
 // echo "</pre>";

@@ -7,7 +7,7 @@ class BaseController
 
     protected function render($viewFile, $data = [])
     {
-        $countCart = "";
+
         $viewDir = "./app/views/user";
         $storageDir = "./storage";
         $blade = new BladeOne($viewDir, $storageDir, BladeOne::MODE_DEBUG);

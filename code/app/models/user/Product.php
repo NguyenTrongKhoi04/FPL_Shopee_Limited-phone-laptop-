@@ -113,4 +113,22 @@ class Product extends BaseModel
         $this->setQuery($sql);
         return $this->execute($id);
     }
+
+    public function pagination(){
+        $sql = "SELECT COUNT(*) AS total FROM product";
+        $this->setQuery($sql);
+        return $this->loadRow();
+    }
+
+    public function productPagination($page){
+        if($page >1){
+            $count = ($page*10)-(($page-1)*10);
+        }
+        else{
+            $count = 1;
+        }
+        $sql = "SELECT * FROM detailproduct d inner join product p on(d.id_pro=p.id) inner join sale s on(s.id=p.sale) LIMIT 10 OFFSET $count";
+        $this->setQuery($sql);
+        return $this->loadAllRows();
+    }
 }

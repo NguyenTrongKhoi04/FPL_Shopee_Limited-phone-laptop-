@@ -150,19 +150,19 @@ class UserController extends BaseController
     }
     //END
     // Chi tiết sản phẩm
-    // chuyển trang chi tiết sản phẩm
-    public function infoPro($id)
-    {
-        $products = $this->product->getOneProduct($id);
-        $comments = $this->comment->getComment($id);
-        $id_category = $products[0]['id_subcategory'];
-        $relatedProduct = $this->product->getRelatedProduct($id, $id_category, 5);
-        // echo "<pre>";
-        // var_dump($relatedProduct);
-        // echo "</pre>";
-        // die;
-        return $this->render('infomation_product', compact('products', 'comments', 'relatedProduct'));
-    }
+        // chuyển trang chi tiết sản phẩm
+        public function infoPro($id)
+        {
+            $products = $this->product->getOneProduct($id);
+            $comments = $this->comment->getComment($id);
+            $id_category = $products[0]['id_subcategory'];
+            $relatedProduct = $this->product->getRelatedProduct($id, $id_category, 5);
+            // echo "<pre>";
+            // var_dump($relatedProduct);
+            // echo "</pre>";
+            // die;
+            return $this->render('infomation_product', compact('products', 'comments', 'relatedProduct'));
+        }
     // Hàm bình luận sản phẩm
     // public function addComment($id)
     // {
@@ -250,27 +250,43 @@ class UserController extends BaseController
     // chuyển trang giỏ hàng
     public function cart()
     {
+
         if(empty($_SESSION['account'])){
+            if(empty($_SESSION['cart'])){
+                $products = $this->product->getProduct(10);
+                $categorys = $this->category->getCategory();
+                $subCategorys = $this->subCategory->getSubCategory();
+                $check = "Chưa có sản phẩm nào trong giỏ hàng";
+                return $this->render('product', compact('products', 'categorys', 'subCategorys', 'check'));
+            }
+            else{
         $product = $this->product->getProductCart();
         $categorys = $this->category->getCategory();
         $subCategorys = $this->subCategory->getSubCategory();
-        return $this->render('cart', compact('product', 'categorys', 'subCategorys'));
+        return $this->render('cart', compact('product', 'categorys', 'subCategorys')); }
     }
     else{
+        $id_acc = $_SESSION['account'][0]->id;
+        $getcount = $this->cart->cartInLogin($id_acc);
+        $_SESSION['countCart'] = count($getcount);
+        if($_SESSION['countCart'] == 0){
+            $products = $this->product->getProduct(10);
+            $categorys = $this->category->getCategory();
+            $subCategorys = $this->subCategory->getSubCategory();
+            $check = "Chưa có sản phẩm nào trong giỏ hàng";
+            return $this->render('product', compact('products', 'categorys', 'subCategorys', 'check'));
+        }
         $id = $_SESSION['account'][0]->id;
         $cart = $this->cart->cartInLogin($id);
         $pro = array_column($cart, 'id_pro');
         $id_pro = implode(",", $pro);
 
         $product = $this->cart->getProductCart($id_pro);
-        // $count = array_column($cart, 'count');
-        // $quantity = implode(",", $count);
         $quantity = $this->cart->countCart($id);
-        // echo "<pre>";
-        // print_r($quantity);
-        // die;
-        return $this->render('cart', compact('product', 'quantity'));
+
+        return $this->render('cart', compact('product', 'quantity',));
     }
+        
     }
 
     //add vào giỏ hàng

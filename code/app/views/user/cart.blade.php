@@ -1,75 +1,97 @@
+<!-- <?php
+print_r($_SESSION['cart']);
+?> -->
+@if(isset($check))
+<script>
+    alert(<?= $check ?>)
+</script>
+
+@endif
 @extends('layout.main')
 @section('content')
 <div class="app__container container__giohang">
-    <div class="grid">
-        <div class="grid__row app__content">
+    <div class="">
+        <div class="container  app__content">
 
-            <h1 class="home-filter__giohang">Giỏ hàng</h1>
-            <table class="table">
-                <tr>
-                    <th><input type="checkbox" name="selectAll" id="selectAll">Chọn tất cả</th>
-                    <th>Hình ảnh</th>
-                    <th>Tên sản phẩm</th>
-                    <th>Hãng</th>
-                    <th>Phân loại</th>
-                    <th>Giá</th>
-                    <th>Số lượng</th>
-                </tr>
+                <div class="d-flex mb-3">
+                    <h1 style="font-size: 35px;" class="home-filter__giohang">Giỏ hàng</h1>
+                </div>
+            <form action="{{route('deleteCart')}}" id="formSelectProduct" method="post">
+                <table class="table">
+                    <tr>
+                        <th><input type="checkbox" name="selectAll" id="selectAll">Chọn tất cả</th>
+                        <th>Hình ảnh</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Hãng</th>
+                        <th>Phân loại</th>
+                        <th>Giá</th>
+                        <th>Số lượng</th>
+                    </tr>
 
-                @foreach($product as $keyPro =>$pro)
-                <tr>
-                    <td> <input type="checkbox" name="selectProduct" class="selectProduct"> </td>
-                    <td> <img src="{{$pro->image}}" alt="" width="80px"> </td>
-                    <td>
-                        <p>{{$pro->namepro}}</p>
-                    </td>
-                    <td>
-                        <p>{{$pro->name_subcate}}</p>
-                    </td>
-                    <td>
-                        <p>{{$pro->namesize}}</p>
-                    </td>
-                    <td>
-                        <del>{{$pro->price}}|</del>
-                        <p style="color: red; position: relative; top: -15px; left: 40px;">{{ $pro->price - ($pro->price * $pro->valuesale / 100) }}vnđ</p>
-                    </td>
-                    <td>
-                        @if(isset($_SESSION['cart']))
-                        @foreach ($_SESSION['cart'] as $sessionPro)
-                        @if ($sessionPro['id'] == $pro->detail_product_id)
-                        <input type="number" class='quantity' value="{{ $sessionPro['quantity']}}">
-                        @endif
-                        @endforeach
-                        @endif
-                        @if(isset($_SESSION['account']))
-                        @php
-                        echo "<input type='number' class='quantity' value='{$quantity[$keyPro]->count}'>"
-                        @endphp
-                        @endif
-                    </td>
-                </tr>
-                @endforeach
-            </table>
+                    @foreach($product as $keyPro =>$pro)
+                    <tr>
+                        <td>
+                            @if(isset($_SESSION['cart']))
+                            <input type="checkbox" value="{{ $pro->detail_product_id }}" name="selectedProduct[]" class="selectProduct">
+                            @else
+                            <input type="checkbox" value="<?= $quantity[$keyPro]->id ?>" name="selectedProduct[]" class="selectProduct">
+                            @endif
+                        </td>
+                        <td> <img src="{{$pro->image}}" alt="" width="80px"> </td>
+                        <td>
+                            <p>{{$pro->namepro}}</p>
+                        </td>
+                        <td>
+                            <p>{{$pro->name_subcate}}</p>
+                        </td>
+                        <td>
+                            <p>{{$pro->namesize}}</p>
+                        </td>
+                        <td>
+                            <del>{{$pro->price}}|</del>
+                            <p style="color: red; position: relative; top: -15px; left: 40px;">{{ $pro->price - ($pro->price * $pro->valuesale / 100) }}vnđ</p>
+                        </td>
+                        <td>
+                            @if(isset($_SESSION['cart']))
+                            @foreach ($_SESSION['cart'] as $sessionPro)
+                            @if ($sessionPro['id'] == $pro->detail_product_id)
+                            <input type="number" class='quantity' value="{{ $sessionPro['quantity']}}">
+                            @endif
+                            @endforeach
+                            @endif
+                            @if(isset($_SESSION['account']))
+                            @php
+                            echo "<input type='number' class='quantity' value='{$quantity[$keyPro]->count}'>";
+                            echo "<input type='hidden' name='id_session' value=''>";
+                            @endphp
+                            @endif
+                        </td>
+                    </tr>
+                    @endforeach
 
-            <div class="home-filter__buyall" id="formmua" style="background-color: var(--white-color);">
-                <div class="home-filter__buyall-control">
-                    <div class="home-card-item-delete">
-                        <div class="home-card__muangay">
-                            <button name="xoamucdachon" type="submit" class="btn home-card__btn-muangay">Xóa mục đã chọn</button>
+                </table>
+
+                <div class="home-filter__buyall" id="formmua" style="background-color: var(--white-color);">
+                    <div class="home-filter__buyall-control">
+                        <div class="home-card-item-delete">
+                            <div class="home-card__muangay">
+                                <button name="xoamucdachon" type="submit" class="btn home-card__btn-muangay">Xóa mục đã chọn</button>
+                            </div>
+                        </div>
+                        <div class="home-card-item-delete">
+                            <div class="home-card__muangay">
+                                <button name="muamucdachon" onclick="" type="submit" class="btn btn--primary home-card__btn-muangay">Mua mục đã chọn</button>
+                            </div>
                         </div>
                     </div>
-                    <div class="home-card-item-delete">
-                        <div class="home-card__muangay">
-                            <button name="muamucdachon" onclick="checkAccount()" type="submit" class="btn btn--primary home-card__btn-muangay">Mua mục đã chọn</button>
-                        </div>
+                    <!-- ========================================== -->
+                    <div class="" style="background-color: var(--white-color); ">
+                        <span class="home-filter__buyall-tongtien-text">Tổng tiền : </span>
+                        <input class="home-filter__buyall-tongtien" style="width: 150px;" type="text" name="totalPrice" value="0" readonly id="totalPrice">
+                        <button name="buyAll" type="submit" class="btn home-filter__btn-buyall btn--primary">Mua tất cả</button>
                     </div>
                 </div>
-                <form action="" class="" style="background-color: var(--white-color); ">
-                    <span class="home-filter__buyall-tongtien-text">Tổng tiền : </span>
-                    <input class="home-filter__buyall-tongtien" style="width: 150px;" type="text" name="totalPrice" value="0" readonly id="totalPrice">
-                    <button onclick="checkAccount()" type="button" class="btn home-filter__btn-buyall btn--primary">Mua tất cả</button>
-                </form>
-            </div>
+            </form>
         </div>
     </div>
 </div>
@@ -127,7 +149,10 @@
         if (!accountExists) {
             window.location.href = "login";
         } else {
-            window.location.href = "addCart";
+            const checkboxes = document.querySelectorAll('.selectProduct:checked');
+            const selectedProducts = Array.from(checkboxes).map(checkbox => checkbox.value);
+            document.getElementById('selectedProducts').value = JSON.stringify(selectedProducts);
+            document.getElementById('formSelectProduct').submit();
         }
     }
 </script>
