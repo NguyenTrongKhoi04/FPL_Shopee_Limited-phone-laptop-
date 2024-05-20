@@ -48,7 +48,7 @@ class CartController extends BaseController
                 $product = $this->product->getProductCart();
                 $categorys = $this->category->getCategory();
                 $subCategorys = $this->subCategory->getSubCategory();
-                return $this->render('cart', compact('product', 'categorys', 'subCategorys'));
+                return $this->render('cart.cart', compact('product', 'categorys', 'subCategorys'));
             }
         } else {
             $id_acc = $_SESSION['account'][0]->id;
@@ -69,7 +69,7 @@ class CartController extends BaseController
             $product = $this->cart->getProductCart($id_pro);
             $quantity = $this->cart->countCart($id);
 
-            return $this->render('cart', compact('product', 'quantity',));
+            return $this->render('cart.cart', compact('product', 'quantity',));
         }
     }
 
@@ -89,7 +89,7 @@ class CartController extends BaseController
             $id_pro = implode(",", $pro);
             $product = $this->cart->getProductCart($id_pro);
             $quantity = $this->cart->countCart($id);
-            return $this->render('cart', compact('product', 'quantity'));
+            return $this->render('cart.cart', compact('product', 'quantity'));
         }
     }
 
@@ -120,7 +120,7 @@ class CartController extends BaseController
                 $product = $this->cart->getProductCart($id_pro);
                 $quantity = $this->cart->countCart($id);
 
-                return $this->render('cart', compact('product', 'quantity', 'check'));
+                return $this->render('cart.cart', compact('product', 'quantity', 'check'));
             } else {
                 //CHƯA XÓA ĐƯỢC Ở SESSION   
                 $selectedProducts = $_POST['selectedProduct'];
@@ -153,7 +153,7 @@ class CartController extends BaseController
             $quantity = $this->cart->countCart($id);
             $totalPrice = $_POST['totalPrice'];
             $_SESSION['totalPrice'] = $totalPrice;
-            return $this->render('thongtindathang', compact('product', 'quantity', 'totalPrice', 'account' , 'ship'));
+            return $this->render('cart.thongtindathang', compact('product', 'quantity', 'totalPrice', 'account' , 'ship'));
         }
         if(isset($_POST['checkVoucher'])){
             $id = $_SESSION['account'][0]->id;
@@ -178,7 +178,7 @@ class CartController extends BaseController
                 $quantity = $this->cart->countCart($id);
                 $totalPrice = (float) str_replace([".", " vnđ"], "", $_SESSION['totalPrice']);
                 $ship = $this->cart->getAllShip();
-                return $this->render('thongtindathang', compact('product', 'quantity', 'totalPrice' , 'voucher', 'account' , 'ship' , 'id_voucher'));
+                return $this->render('cart.thongtindathang', compact('product', 'quantity', 'totalPrice' , 'voucher', 'account' , 'ship' , 'id_voucher'));
             }
             else{
                 $id = $_SESSION['account'][0]->id;
@@ -194,7 +194,7 @@ class CartController extends BaseController
                 $totalPrice = $_SESSION['totalPrice'];
                 $text = "voucher không tồn tại hoặc đã hết lượt sử dụng";
                 $ship = $this->cart->getAllShip();
-                return $this->render('thongtindathang', compact('product', 'quantity', 'totalPrice' , 'text', 'account', 'ship'));
+                return $this->render('cart.thongtindathang', compact('product', 'quantity', 'totalPrice' , 'text', 'account', 'ship'));
             }
         }
         else{
@@ -217,6 +217,11 @@ class CartController extends BaseController
             }
             $totalPrice = $_SESSION['totalPrice'];
             if(isset($_POST['dathang'])){
+                $arrVoucher =$this->checkVoucher($_POST['voucher'],"không có voucher này");
+                // 
+                echo "<script>alert('voucher này không tồn tại')</script>";
+                flash('','',);
+                print_r($_POST);die;
                 $id = $_SESSION['account'][0]->id;
                 $address = $_SESSION['account'][0]->address;
                 $phone = $_SESSION['account'][0]->phone;
@@ -234,7 +239,9 @@ class CartController extends BaseController
                         $totalPriceNumber = (int) $totalPriceString;
                         $getTimeOrder = date('Y-m-d H:i:s');
                         $id_acc = $_SESSION['account'][0]->id;
-                        $lastID = $this->cart->insertOrders($totalPriceNumber, $_POST['voucher'] , $getTimeOrder , $id_acc , $_POST['ship']);
+                        $id_voucher = $this->cart->checkVoucher($_POST['voucher']) ?? '';
+
+                        $lastID = $this->cart->insertOrders($totalPriceNumber, $id_voucher->id ?? '' , $getTimeOrder , $id_acc , $_POST['ship']);
                         foreach($_SESSION['postProduct'] as $key=>$odd){
                             $this->cart->insertOderDetail($lastID , $_SESSION['id_detailpro'] , $_POST['quantity'][$key] , $_POST['note'][$key] , $address , $phone);
                             foreach($ProArray as $key=>$for){
@@ -247,14 +254,14 @@ class CartController extends BaseController
                         // session_unset('postProduct');
                         // session_unset('countCart');
                         
-                        // tru voucher
-                        $this->cart->truVoucher($_POST['voucher']);
+                        // tru vouche
+                        $this->cart->truVoucher($_POST['voucher'] ?? '');
                         break;
                     }
                     else{
                         $checkFalse = [];
                         $checkFalse = "sản phẩm đã hết vui lòng chọn sản phẩm khác";
-                        return $this->render('thongtindathang', compact('product', 'quantity', 'totalPrice', 'account', 'checkFalse', 'ship'));
+                        return $this->render('cart.thongtindathang', compact('product', 'quantity', 'totalPrice', 'account', 'checkFalse', 'ship'));
                     }
                 }
 
@@ -266,7 +273,7 @@ class CartController extends BaseController
                 
 
             }
-            return $this->render('thongtindathang', compact('product', 'quantity', 'totalPrice', 'account', 'ship'));
+            return $this->render('cart.thongtindathang', compact('product', 'quantity', 'totalPrice', 'account', 'ship'));
         }
 
         
@@ -284,10 +291,22 @@ class CartController extends BaseController
             $product = $this->product->getProductCart();
             $categorys = $this->category->getCategory();
             $subCategorys = $this->subCategory->getSubCategory();
-            return $this->render('cart', compact('product', 'categorys', 'subCategorys'));
+            return $this->render('cart.cart', compact('product', 'categorys', 'subCategorys'));
         }
 
 
     }
 
+    public function checkVoucher($voucher, $mes){
+        $checkVoucher = false;
+        if($voucher == null || $this->cart->checkVoucher($voucher)){
+            $checkVoucher = true;
+        }
+            return [
+                'text' => $mes,
+                'checkVoucher'=> $checkVoucher
+            ];
+
+    }
 }
+
