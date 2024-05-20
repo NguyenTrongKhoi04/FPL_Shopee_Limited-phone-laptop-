@@ -96,7 +96,8 @@ class Cart extends BaseModel
         return $this->execute([$id_order , $id_pro , $count , $comment , $address, $phone]);
     }
 
-    public function truVoucher($voucher){
+    public function truVoucher($voucher = null){
+        if($voucher == null) return;
         $sql = "UPDATE `voucher` SET `countvoucher`= countvoucher - 1 WHERE codevoucher = $voucher";
         $this->setQuery($sql);
         return $this->execute();
