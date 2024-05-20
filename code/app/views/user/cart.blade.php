@@ -10,10 +10,12 @@ print_r($_SESSION['cart']);
 @extends('layout.main')
 @section('content')
 <div class="app__container container__giohang">
-    <div class="grid">
-        <div class="grid__row app__content">
+    <div class="">
+        <div class="container  app__content">
 
-            <h1 class="home-filter__giohang">Giỏ hàng</h1>
+                <div class="d-flex mb-3">
+                    <h1 style="font-size: 35px;" class="home-filter__giohang">Giỏ hàng</h1>
+                </div>
             <form action="{{route('deleteCart')}}" id="formSelectProduct" method="post">
                 <table class="table">
                     <tr>
@@ -78,7 +80,7 @@ print_r($_SESSION['cart']);
                         </div>
                         <div class="home-card-item-delete">
                             <div class="home-card__muangay">
-                                <button name="muamucdachon" onclick="checkAccount()" type="submit" class="btn btn--primary home-card__btn-muangay">Mua mục đã chọn</button>
+                                <button name="muamucdachon" onclick="" type="submit" class="btn btn--primary home-card__btn-muangay">Mua mục đã chọn</button>
                             </div>
                         </div>
                     </div>
@@ -86,7 +88,7 @@ print_r($_SESSION['cart']);
                     <div class="" style="background-color: var(--white-color); ">
                         <span class="home-filter__buyall-tongtien-text">Tổng tiền : </span>
                         <input class="home-filter__buyall-tongtien" style="width: 150px;" type="text" name="totalPrice" value="0" readonly id="totalPrice">
-                        <button onclick="checkAccount()" type="button" class="btn home-filter__btn-buyall btn--primary">Mua tất cả</button>
+                        <button name="buyAll" type="submit" class="btn home-filter__btn-buyall btn--primary">Mua tất cả</button>
                     </div>
                 </div>
             </form>
