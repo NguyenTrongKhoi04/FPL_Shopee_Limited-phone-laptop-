@@ -40,9 +40,9 @@
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header" >Quản lý:</h6>
-                    <a class="collapse-item" href="listStorepro">View All Warehouse</a>
-                    <a class="collapse-item" href="upToShop">Up To Shop</a>
-                    <a class="collapse-item" href="listAccount">Accounts</a>
+                    <a class="collapse-item" href="<?= BASE_URL ?>listStorepro">View All Warehouse</a>
+                    <a class="collapse-item" href="<?= BASE_URL ?>upToShop">Up To Shop</a>
+                    <a class="collapse-item" href="<?= BASE_URL ?>listAllOrder">Orders</a>
                 </div>
             </div>
         </li>
@@ -52,16 +52,15 @@
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                 aria-expanded="true" aria-controls="collapseUtilities">
                 <i class="fas fa-fw fa-wrench"></i>
-                <span>Utilities</span>
+                <span>Other</span>
             </a>
             <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                 data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Custom Utilities:</h6>
-                    <a class="collapse-item" href="utilities-color">Colors</a>
-                    <a class="collapse-item" href="utilities-border">Borders</a>
-                    <a class="collapse-item" href="utilities-animation">Animations</a>
-                    <a class="collapse-item" href="utilities-other">Other</a>
+                    <a class="collapse-item" href="<?= BASE_URL ?>listAccount">Accounts</a>
+                    <a class="collapse-item" href="<?= BASE_URL ?>listVoucher">Voucher</a>
+                    <a class="collapse-item" href="<?= BASE_URL ?>listShip">Ship</a>
+                    <a class="collapse-item" href="<?= BASE_URL ?>listSale">Sale</a>
                 </div>
             </div>
         </li>

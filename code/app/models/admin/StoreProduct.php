@@ -43,10 +43,10 @@ class StoreProduct extends BaseModel {
         return $this->loadAllRows();
     }
     
-    public function updateDetailStoreProduct( $id, $image , $price , $size , $count){
-        $sql =  "UPDATE `storedetailproduct` SET image=?,price=?,size=?,count=? WHERE id=?";
+    public function updateDetailStoreProduct( $id, $image , $price , $size ){
+        $sql =  "UPDATE `storedetailproduct` SET image=?,price=?,size=? WHERE id=?";
          $this->setQuery($sql);
-         return $this->execute([$image , $price , $size , $count,$id]);
+         return $this->execute([$image , $price , $size ,$id]);
      }
      public function updateStoreProduct( $id, $name_pro , $quantity , $datepro , $id_subcategory , $description){
         $sql =  "UPDATE `storepro` SET name_pro= ?,quantity= ?,datepro= ?,id_subcategory= ?,description= ? WHERE id = ? ";
@@ -130,7 +130,7 @@ class StoreProduct extends BaseModel {
     }
 
     public function getDetailStoreProduct($id_subcategory){
-        $sql = "select * from storedetailproduct s inner join storepro p on(s.id_pro=p.id) where p.id_subcategory = ?";
+        $sql = "select  * from storedetailproduct s inner join storepro p on(s.id_pro=p.id) where p.id_subcategory = ?";
         $this->setQuery($sql);
         return $this->loadAllRows([$id_subcategory]);
     }
@@ -155,6 +155,46 @@ class StoreProduct extends BaseModel {
     //     return $this->loadAllRows();
     // }
 
+
+    public function checkTTStoreProduct($name_pro){
+        $sql = "select * from storepro where name_pro = '$name_pro'";
+        $this->setQuery($sql);
+        return $this->loadAllRows();
+    }
+
+    public function seeDetailStore($id_pro){
+        $sql = "SELECT s.id AS id_detail, s.*, si.*, p.* 
+        FROM storedetailproduct s   
+        INNER JOIN storepro p ON s.id_pro = p.id   
+        INNER JOIN `size` si ON si.id = s.size   
+        WHERE s.id_pro = $id_pro";
+        $this->setQuery($sql);
+        return $this->loadAllRows();
+    }
+
+    public function size(){
+        $sql = "select * from size ";
+        $this->setQuery($sql);
+        return $this->loadAllRows();
+    }
+
+    public function deleteStoreDetailProduct($id){
+        $sql = "delete from storedetailproduct where id = $id";
+        $this->setQuery($sql);
+        return $this->execute();
+    }
+
+
+    public function insertStoreDetailProduct($id_pro , $image , $price , $size){
+        $sql = "INSERT INTO storedetailproduct(id_pro, image, price, size) VALUES (?,?,?,?)";
+        $this->setQuery($sql);
+        return $this->execute([$id_pro , $image , $price , $size]);
+
+
+}
+    // public function updateDetailStoreProduct(){
+
+    // }
 
     /**
      * =============================================================================

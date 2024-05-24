@@ -44,6 +44,7 @@ class StoreProductController extends BaseAdminController
 
     public function addStorepro()
     {
+        $error = [];
         if (isset($_POST['btn-submit'])) {
             if (empty($_POST['name_pro'])) {
                 $error[] = 'vui long nhap ten';
@@ -67,7 +68,19 @@ class StoreProductController extends BaseAdminController
                 $countpro = $this->product->getCountStoreDetailProduct();
                 $this->render('Products.listStorepro', compact('check', 'products', 'subcategory', 'storedetaiproduct', 'size', 'countpro', 'cate'));
             } else {
+                $checkTT = $this->product->checkTTStoreProduct($_POST['name_pro']);
+                if($checkTT){
+                    $check = "sản phẩm đã tồn tại";
+                    $products = $this->product->listStorepro();
+                    $subcategory = $this->product->getSubAllCategory();
+                    $storedetaiproduct = $this->product->getStoreDetailProduct();
+                    $size = $this->product->getSize();
+                    $cate = $this->product->getCategory();
+                    $countpro = $this->product->getCountStoreDetailProduct();
+                    $this->render('Products.listStorepro', compact('check', 'products', 'subcategory', 'storedetaiproduct', 'size', 'countpro', 'cate'));
 
+                }
+                else{
                 $datepro = date("Y-m-d");
                 $this->product->addStoreProduct($_POST['name_pro'], $_POST['quantity'], $datepro, $_POST['id_subcategory'], $_POST['description']);
                 $check = 'thêm thành công';
@@ -78,6 +91,7 @@ class StoreProductController extends BaseAdminController
                 $cate = $this->product->getCategory();
                 $countpro = $this->product->getCountStoreDetailProduct();
                 $this->render('Products.listStorepro', compact('check', 'products', 'subcategory', 'storedetaiproduct', 'size', 'countpro', 'cate'));
+            }
             }
         }
     }
