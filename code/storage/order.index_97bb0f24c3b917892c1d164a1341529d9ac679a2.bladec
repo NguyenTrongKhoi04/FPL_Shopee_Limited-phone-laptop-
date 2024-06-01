@@ -34,7 +34,7 @@
  </tr>
  <tr>
  <td>SĐT khách hàng:</td>
- <td><input type="number" name="phone" value="<?= $post['phone'] ?? '' ?>"><span style="color: red;">
+ <td><input type="tel" name="phone" value="<?= $post['phone'] ?? '' ?>"><span style="color: red;">
  <?= $error['phone'] ?? '' ?></span></td>
  </tr>
  <tr>

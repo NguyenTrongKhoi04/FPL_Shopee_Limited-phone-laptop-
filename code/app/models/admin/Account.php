@@ -47,13 +47,13 @@ class Account extends BaseModel
 
     public function checkAccountGmail($gmail, $id = null)
     {
-        if(!empty($id))$notID = " AND id != $id ";
+        if (!empty($id)) $notID = " AND id != $id ";
         $sql = "select * from $this->table WHERE gmail = ? " . $notID ?? '';
         $this->setQuery($sql);
         return $this->loadAllRows([$gmail]);
     }
-    
-    public function checkAccountUsername($username, $id =null)
+
+    public function checkAccountUsername($username, $id = null)
     {
         if (!empty($id)) $notUsername = " AND id != $id ";
         $sql = "select * from $this->table WHERE username = ? " . $notUsername ?? '';
@@ -67,7 +67,7 @@ class Account extends BaseModel
         $this->setQuery($sql);
         return $this->execute([$id, $gmail, $username, $password, $role, $birthday, $address, $phone]);
     }
-    
+
     public function updateOneAccount($id, $gmail, $username, $password, $role, $birthday, $address, $phone)
     {
         $sql = "UPDATE $this->table SET gmail = ?, username = ?, password =?, role = ?,  birthday = ?, address = ?, phone = ? WHERE id = ?";

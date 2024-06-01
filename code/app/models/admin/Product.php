@@ -33,6 +33,15 @@ class Product extends BaseModel
         return $this->execute([$id, $tenSp, $gia]);
     }
 
+    public function getProductValueSale($id, $field)
+    {
+        $sql = "select $field from $this->table 
+        INNER JOIN sale ON product.sale = sale.id
+        where product.id = ?";
+        $this->setQuery($sql);
+        return $this->loadAllRows([$id]);
+    }
+
     // hàm truyền vào id để lấy ra chi tiết sản phẩm
     public function getDetailProduct($id)
     {
@@ -62,5 +71,12 @@ class Product extends BaseModel
         $sql = "select * from detailproduct where id_pro = ?";
         $this->setQuery($sql);
         return $this->loadAllRows([$id]);
+    }
+
+    public function getDetailById($id)
+    {
+        $sql = "select * from detailproduct where id = ?";
+        $this->setQuery($sql);
+        return $this->loadRow([$id]);
     }
 }

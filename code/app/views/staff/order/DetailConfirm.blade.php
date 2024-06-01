@@ -17,13 +17,13 @@
                         <div class="d-flex">
                             <input type="hidden" name="id_product" value="<?= $post['id_product'] ?>">
                             <div class="me-2">Size (GB)</div>
-                            <select name="id_size" id="id_size">
+                            <select name="id_detail" id="id_size">
                                 <?php foreach ($detailProduct as $i) { ?>
                                     <option value="{{$i->id}}">{{$i->size}}</option>
                                 <?php } ?>
                             </select>
                             <div>
-                                <input type="number" class="ms-3" name="count" id="count-input" placeholder="Nhập số lượng mua">
+                                <input type="number" class="ms-3" value="1" name="count" id="count-input" placeholder="Nhập số lượng mua">
                                 <span><?= $error['count'] ?? '' ?></span>
                             </div>
                         </div>
@@ -51,6 +51,9 @@
                 </div>
                 <div>
                     <textarea class="form-control border" name="comment" placeholder="Nhập chú thích đơn hàng"></textarea>
+                </div>
+                <div class="mt-2">
+                    <input type="text" placeholder="Nhập mã voucher (nếu có)" name="codevoucher" class="form-control">
                 </div>
                 <h4 class="mt-4">Thông tin khách hàng</h4>
                 <div class="table-responsive">
