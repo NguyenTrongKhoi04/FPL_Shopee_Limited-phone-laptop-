@@ -19,7 +19,8 @@ class VoucherController extends BaseAdminController
         return $this->render('voucher.ListVoucher', compact("allVoucher"));
     }
 
-    public function addVoucherUI(){
+    public function addVoucherUI()
+    {
         return $this->render('voucher.AddVoucher');
     }
 

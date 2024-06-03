@@ -47,8 +47,8 @@ class Account extends BaseModel
 
     public function checkAccountGmail($gmail, $id = null)
     {
-        if (!empty($id)) $notID = " AND id != $id ";
-        $sql = "select * from $this->table WHERE gmail = ? " . $notID ?? '';
+        $notID = !empty($id) ? " AND id != ?" : "";
+        $sql = "select * from $this->table WHERE gmail = ? " . $notID ?? ' ';
         $this->setQuery($sql);
         return $this->loadAllRows([$gmail]);
     }

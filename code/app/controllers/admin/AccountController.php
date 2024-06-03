@@ -7,15 +7,16 @@ use App\Models\Admin\Account;
 class AccountController extends BaseAdminController
 {
     private $acc;
-    
+
     public function __construct()
     {
         $this->acc = new Account();
     }
 
-    public function listAccount(){
+    public function listAccount()
+    {
         $allAcc = $this->acc->getAccount(' * ');
-        
+
         return $this->render('account.ListAccount', compact("allAcc"));
     }
 
@@ -23,7 +24,7 @@ class AccountController extends BaseAdminController
     {
         return $this->render('account.AddAccount');
     }
-    
+
     public function addAccount()
     {
         extract($_POST);
@@ -33,21 +34,21 @@ class AccountController extends BaseAdminController
         // die;
         $flagErrors = false;
         $error = [];
-        if($gmail == null){
+        if ($gmail == null) {
             $flagErrors = true;
             $error['gmail'] = "không được để trống gmail";
         }
-        
-        if(empty($error['gmail']) && !filter_var($gmail, FILTER_VALIDATE_EMAIL)){
+
+        if (empty($error['gmail']) && !filter_var($gmail, FILTER_VALIDATE_EMAIL)) {
             $flagErrors = true;
             $error['gmail'] = "nhập đúng định dạng gmail";
         }
 
-        if(empty($error['gmail']) && !empty($this->acc->checkAccountGmail($gmail))){
+        if (empty($error['gmail']) && !empty($this->acc->checkAccountGmail($gmail))) {
             $flagErrors = true;
             $error['gmail'] = "Gmail này đã tồn tại";
         }
-        
+
         if ($username == null) {
             $flagErrors = true;
             $error['username'] = "không được để trống username";
@@ -62,39 +63,41 @@ class AccountController extends BaseAdminController
             $flagErrors = true;
             $error['password'] = "không được để trống password";
         }
-        
-        if($role != 1 && $role != 0){
+
+        if ($role != 1 && $role != 0) {
             $flagErrors = true;
-            $error['role'] = "sai dữ liệu role";    
+            $error['role'] = "sai dữ liệu role";
         }
-        
-        if( !empty($phone) &&!preg_match('/^0\d{9}$/', $phone)){
+
+        if (!empty($phone) && !preg_match('/^0\d{9}$/', $phone)) {
             $flagErrors = true;
-            $error['phone'] = "sai định dạng só diện thoại";    
+            $error['phone'] = "sai định dạng só diện thoại";
         }
-        
-        if( !empty($birthday) && (strtotime($birthday) >= strtotime(time()))){
+
+        if (!empty($birthday) && (strtotime($birthday) >= strtotime(time()))) {
             $flagErrors = true;
-            $error['birthday'] = "chọn lại ngày sinh";    
+            $error['birthday'] = "chọn lại ngày sinh";
         }
-        
-        if($flagErrors == false){
+
+        if ($flagErrors == false) {
             $check = $this->acc->addAccount("", $gmail, $username, $password, $role, $birthday, $address, $phone);
             if ($check) {
                 $mes = "Thêm thành công";
                 flash('success', $mes, 'addAccount');
             }
         }
-            return $this->render('account.AddAccount',compact("error"));
-        }
+        return $this->render('account.AddAccount', compact("error"));
+    }
 
-        
-    public function updateAccountUI($id){
-        $oneAccount = $this->acc->getOneAccount(' * ',$id);
-        return $this->render('account.UpdateAccount',compact('oneAccount'));
-    }   
-    
-    public function updateAccount($id){
+
+    public function updateAccountUI($id)
+    {
+        $oneAccount = $this->acc->getOneAccount(' * ', $id);
+        return $this->render('account.UpdateAccount', compact('oneAccount'));
+    }
+
+    public function updateAccount($id)
+    {
         extract($_POST);
         //        echo"<pre>";
         // print_r($_POST);
@@ -122,7 +125,7 @@ class AccountController extends BaseAdminController
             $error['username'] = "không được để trống username";
         }
 
-        if (empty($error['username']) && !empty($this->acc->checkAccountUsername($username,$id))) {
+        if (empty($error['username']) && !empty($this->acc->checkAccountUsername($username, $id))) {
             $flagErrors = true;
             $error['username'] = "Username này đã tồn tại";
         }
@@ -142,7 +145,7 @@ class AccountController extends BaseAdminController
             $error['phone'] = "sai định dạng só diện thoại";
         }
 
-        if($birthday == null){
+        if ($birthday == null) {
             $flagErrors = true;
             $error['birthday'] = "Không được để trống ngày sinh";
         }
@@ -163,7 +166,7 @@ class AccountController extends BaseAdminController
         // echo "<pre>";
         // print_r($error);die;
         $oneAccount = $this->acc->getOneAccount(' * ', $id);
-        return $this->render('account.UpdateAccount', compact("error","oneAccount"));
+        return $this->render('account.UpdateAccount', compact("error", "oneAccount"));
     }
 
     public function stopAccount($id)
@@ -171,6 +174,4 @@ class AccountController extends BaseAdminController
         $this->acc->stopAccount($id);
         flash('success', 'ban da dừng hoạt động account thanh cong', 'listAccount');
     }
-    
-
 }

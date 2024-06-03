@@ -15,9 +15,10 @@
                         <h4>Chọn Sản phẩm</h4>
                         <select name="id_product" class="js-select2">
                             <?php foreach ($products as $i) { ?>
-                                <option value="{{$i->id}}" <?= isset($post['id_product']) && ($i->id == $post['id_product']) ? "selected" : '' ?>>
-                                    {{$i->namepro}}
-                                </option>
+                            <option value="{{$i->id}}"
+                                <?= isset($post['id_product']) && ($i->id == $post['id_product']) ? "selected" : '' ?>>
+                                {{$i->namepro}}
+                            </option>
                             <?php } ?>
                         </select>
                     </table>
@@ -28,27 +29,31 @@
                         <tbody>
                             <tr>
                                 <td>Gmail khách hàng:</td>
-                                <td><input type="text" name="gmail" value="<?= $post['gmail'] ?? '' ?>"><span style="color: red;">
-                                        <?= $error['gmail'] ?? '' ?></span></td>
+                                <td><input type="text" name="gmail" value="<?= $post['gmail'] ?? '' ?>"><span
+                                        style="color: red;">
+                                        <?= $errors['gmail'] ?? '' ?></span></td>
                             </tr>
                             <tr>
                                 <td>SĐT khách hàng:</td>
-                                <td><input type="tel" name="phone" value="<?= $post['phone'] ?? '' ?>"><span style="color: red;">
-                                        <?= $error['phone'] ?? '' ?></span></td>
+                                <td><input type="tel" name="phone" value="<?= $post['phone'] ?? '' ?>"><span
+                                        style="color: red;">
+                                        <?= $errors['phone'] ?? '' ?></span></td>
                             </tr>
                             <tr>
                                 <td>Địa chỉ:</td>
-                                <td><input type="text" name="address" value="<?= $post['address'] ?? '' ?>"><span style="color: red;">
-                                        <?= $error['phone'] ?? '' ?></span></td>
+                                <td><input type="text" name="address" value="<?= $post['address'] ?? '' ?>"><span
+                                        style="color: red;">
+                                        <?= $errors['address'] ?? '' ?></span></td>
                             </tr>
                             <tr>
                                 <td>Ship:</td>
                                 <td>
                                     <select name="id_ship">
                                         <?php foreach ($ship as $i) { ?>
-                                            <option value="{{$i->id}}" <?= isset($post['id_product']) && ($i->id == $post['id_ship']) ? "selected" : '' ?>>
-                                                {{$i->nameship}}
-                                            </option>
+                                        <option value="{{$i->id}}"
+                                            <?= isset($post['id_product']) && ($i->id == $post['id_ship']) ? "selected" : '' ?>>
+                                            {{$i->nameship}}
+                                        </option>
                                         <?php } ?>
                                     </select>
                                 </td>
@@ -70,9 +75,9 @@
     </div>
 </form>
 <script type="text/javascript">
-    $(document).ready(function() {
-        $('.js-select2').select2();
-    });
+$(document).ready(function() {
+    $('.js-select2').select2();
+});
 </script>
 <!-- End of Main Content -->
 @endsection
