@@ -74,6 +74,10 @@ margin-left: 40%;
     border-radius: 10px;
     width: 1000px;
 }
+.submitcart :hover{
+    background-color: red;
+    color: aqua;
+}
 a.disabled {
     text-decoration: none;
     pointer-events: none;

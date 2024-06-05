@@ -103,10 +103,26 @@ class Cart extends BaseModel
         return $this->execute();
     }
 
-    //insert vào order và order detail
-    // tôi đã làm xong phần check xem còn đủ sản phẩm không, 
-    // còn thiếu:
-    // +, ship
-    // +, innser vaof order vaf oderdetail, theem vaò od xong phải lấy được ra last id sau đó dùng id đó để tạo ra oddetal!d
+    public function deleteCartAfterBuy($id_acc){
+        $sql = "delete from cart where id_acc = $id_acc ";
+        $this->setQuery($sql);
+        return $this->execute();
+    }
+
+
+
+//để tạm ở đây:
+public function subIndexStaff($namepro){
+        $sql = "select * from product where namepro = '$namepro'";
+        $this->setQuery($sql);
+        return $this->loadAllRows();
+}
+
+
 
 }
+
+
+
+
+

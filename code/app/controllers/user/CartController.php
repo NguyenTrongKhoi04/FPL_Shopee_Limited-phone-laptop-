@@ -80,6 +80,7 @@ class CartController extends BaseController
         foreach ($_SESSION['cart'] as $cart) {
             $idpro = $cart['id'];
             $quantity = $cart['quantity'];
+
             unset($_SESSION['cart']);
             $addcart = $this->cart->addCart($id, $idpro, $quantity);
             // render:
@@ -96,7 +97,7 @@ class CartController extends BaseController
 
     public function deleteCart()
     {
-
+        //nếu bấm vào nút xóa:
         if (isset($_POST['xoamucdachon'])) {
             if (isset($_SESSION['account'])) {
                 $selectedProducts = $_POST['selectedProduct'];
@@ -122,11 +123,7 @@ class CartController extends BaseController
 
                 return $this->render('cart.cart', compact('product', 'quantity', 'check'));
             } else {
-                //CHƯA XÓA ĐƯỢC Ở SESSION   
                 $selectedProducts = $_POST['selectedProduct'];
-
-                // echo "<pre>";
-                // print_r($_SESSION['cart']);
                 foreach ($_SESSION['cart'] as $key => $value) {
                     foreach ($selectedProducts as $sl) {
                         if ($value['id'] == $sl) {
@@ -136,92 +133,59 @@ class CartController extends BaseController
                 }
             }
         }
-        if(isset($_POST['buyAll'])){
+        //ấn vào mua mục đã chọn:
+        if (isset($_POST['muamucdachon'])) {
             $id = $_SESSION['account'][0]->id;
             $account = $this->account->getAccount($id);
             $cart = $this->cart->getConfirmCart($_POST['selectedProduct']);
             $_SESSION['postProduct'] = $_POST['selectedProduct'];
-
-
             $id = $_SESSION['account'][0]->id;
-            $cart = $this->cart->cartInLogin($id);
             $pro = array_column($cart, 'id_pro');
             $id_pro = implode(",", $pro);
             $_SESSION['id_detailpro'] = $id_pro;
             $ship = $this->cart->getAllShip();
             $product = $this->cart->getProductCart($id_pro);
             $quantity = $this->cart->countCart($id);
+            $_SESSION['quantity'] = $quantity;
             $totalPrice = $_POST['totalPrice'];
             $_SESSION['totalPrice'] = $totalPrice;
-            return $this->render('cart.thongtindathang', compact('product', 'quantity', 'totalPrice', 'account' , 'ship'));
+            $trueQuantity = $_POST['quantity'];
+            return $this->render('cart.thongtindathang', compact('product', 'quantity', 'totalPrice', 'account', 'ship', 'trueQuantity'));
         }
-        if(isset($_POST['checkVoucher'])){
-            $id = $_SESSION['account'][0]->id;
-            $account = $this->account->getAccount($id);
-            $voucherPost = $_POST['voucher'];
-            $checkVoucher = $this->cart->checkVoucher($voucherPost);
-            // echo '<pre>';
-            // print_r($checkVoucher);
-            // die;
-            $_SESSION['checkVoucher'] = $checkVoucher->id ?? '';
 
-            if($checkVoucher){
-                $voucher = $checkVoucher->valuevoucher;
-                $id_voucher = $checkVoucher->id;
-                $cart = $this->cart->getConfirmCart($_SESSION['postProduct']);
-                $id = $_SESSION['account'][0]->id;
-                $cart = $this->cart->cartInLogin($id);
-                $pro = array_column($cart, 'id_pro');
-                $id_pro = implode(",", $pro);
-                $_SESSION['id_detailpro'] = $id_pro;
-                $product = $this->cart->getProductCart($id_pro);
-                $quantity = $this->cart->countCart($id);
-                $totalPrice = (float) str_replace([".", " vnđ"], "", $_SESSION['totalPrice']);
-                $ship = $this->cart->getAllShip();
-                return $this->render('cart.thongtindathang', compact('product', 'quantity', 'totalPrice' , 'voucher', 'account' , 'ship' , 'id_voucher'));
-            }
-            else{
-                $id = $_SESSION['account'][0]->id;
-                $account = $this->account->getAccount($id);
-                $cart = $this->cart->getConfirmCart($_SESSION['postProduct']);
-                $id = $_SESSION['account'][0]->id;
-                $cart = $this->cart->cartInLogin($id);
-                $pro = array_column($cart, 'id_pro');
-                $id_pro = implode(",", $pro);
-                $_SESSION['id_detailpro'] = $id_pro;
-                $product = $this->cart->getProductCart($id_pro);
-                $quantity = $this->cart->countCart($id);
-                $totalPrice = $_SESSION['totalPrice'];
-                $text = "voucher không tồn tại hoặc đã hết lượt sử dụng";
-                $ship = $this->cart->getAllShip();
-                return $this->render('cart.thongtindathang', compact('product', 'quantity', 'totalPrice' , 'text', 'account', 'ship'));
-            }
-        }
-        else{
+
+        //trang thông tin đặt hàng:
+        else {
+
+            //lấy các dữ liệu trong trang nếu có ấn vào xác nhận mua thì sẽ dùng để insert
             $id = $_SESSION['account'][0]->id;
             $account = $this->account->getAccount($id);
             $cart = $this->cart->getConfirmCart($_SESSION['postProduct']);
             $id = $_SESSION['account'][0]->id;
             $cart = $this->cart->cartInLogin($id);
-            $pro = array_column($cart, 'id_pro');
-            $id_pro = implode(",", $pro);
-            $_SESSION['id_detailpro'] = $id_pro;
-            $product = $this->cart->getProductCart($id_pro);
+            $product = $this->cart->getProductCart($_SESSION['id_detailpro']);
             $quantity = $this->cart->countCart($id);
             $countArray = [];
-            $ProArrayy= [];
-            
+            $ProArrayy = [];
+
             foreach ($quantity as $object) {
                 $countArray[] = $object->count;
                 $ProArray[] = $object->id_pro;
             }
             $totalPrice = $_SESSION['totalPrice'];
-            if(isset($_POST['dathang'])){
-                $arrVoucher =$this->checkVoucher($_POST['voucher'],"không có voucher này");
-                // 
-                echo "<script>alert('voucher này không tồn tại')</script>";
-                flash('','',);
-                print_r($_POST);die;
+            if (isset($_POST['dathang'])) {
+                if ($_POST['voucher'] != "") {
+                    $checkVoucher = $this->cart->checkVoucher($_POST['voucher']);
+                    if ($checkVoucher) {
+                        $voucher = $checkVoucher->valuevoucher;
+                    } else {
+                        $check = 'voucher không tông tại hoặc đã hết';
+                        $products = $this->product->getProduct(10);
+                        $categorys = $this->category->getCategory();
+                        $subCategorys = $this->subCategory->getSubCategory();
+                        return $this->render('product', compact('products', 'categorys', 'subCategorys', 'check'));
+                    }
+                }
                 $id = $_SESSION['account'][0]->id;
                 $address = $_SESSION['account'][0]->address;
                 $phone = $_SESSION['account'][0]->phone;
@@ -229,84 +193,129 @@ class CartController extends BaseController
                 $pro = array_column($cart, 'id_pro');
                 $checkSpConLai = $this->cart->CheckProInShop($pro);
                 $ship = $this->cart->getAllShip();
-                foreach($checkSpConLai as $key=>$check){
-                    if($check >= $_POST['quantity'][$key]){
+                foreach ($checkSpConLai as $key => $check) {
+                    if ($check >= $_POST['quantity'][$key]) {
                         //Xử lý insert:
                         //tính tiền:
                         $totalPriceString = $_POST['totalPrice'];
                         $totalPriceString = str_replace(".", "", $totalPriceString); // loại bỏ dấu chấm
                         $totalPriceString = str_replace(" vnđ", "", $totalPriceString); // loại bỏ " vnđ"
-                        $totalPriceNumber = (int) $totalPriceString;
+                        if (isset($voucher)) {
+                            $totalPriceNumber = (int) $totalPriceString - $voucher;
+                        } else {
+                            $totalPriceNumber = (int) $totalPriceString;
+                        }
                         $getTimeOrder = date('Y-m-d H:i:s');
                         $id_acc = $_SESSION['account'][0]->id;
                         $id_voucher = $this->cart->checkVoucher($_POST['voucher']) ?? '';
-
-                        $lastID = $this->cart->insertOrders($totalPriceNumber, $id_voucher->id ?? '' , $getTimeOrder , $id_acc , $_POST['ship']);
-                        foreach($_SESSION['postProduct'] as $key=>$odd){
-                            $this->cart->insertOderDetail($lastID , $_SESSION['id_detailpro'] , $_POST['quantity'][$key] , $_POST['note'][$key] , $address , $phone);
-                            foreach($ProArray as $key=>$for){
+                        // if(preg_match('/^0\d{9}$/', intval($_POST['phone']))) {
+                        //     echo "Đúng";
+                        //     die;
+                        // }
+                        
+                        //insert 2 bảng order:
+                        $lastID = $this->cart->insertOrders($totalPriceNumber, $id_voucher->id ?? '', $getTimeOrder, $id_acc, $_POST['ship']);
+                        foreach ($_SESSION['postProduct'] as $key => $odd) {
+                            $this->cart->insertOderDetail($lastID, $_SESSION['id_detailpro'], $_POST['quantity'][$key], $_POST['note'][$key], $_POST['address'], $_POST['phone']);
+                            foreach ($ProArray as $key => $for) {
                                 $this->cart->checkSpBuy($for, $countArray[$key]);
                             }
                         }
-                        // session_unset('totalPrice');
-                        // session_unset('checkVoucher');
-                        // session_unset('id_detailpro');
-                        // session_unset('postProduct');
-                        // session_unset('countCart');
-                        
-                        // tru vouche
+
+                        //xóa các session không cần thiết và xóa cart sau khi đặt thành công:
+                        $this->cart->deleteCartAfterBuy($id_acc);
+                        // giảm voucher sau khi đặt hàng:
                         $this->cart->truVoucher($_POST['voucher'] ?? '');
+
+                        unset($_SESSION['totalPrice']);
+                        unset($_SESSION['checkVoucher']);
+                        unset($_SESSION['id_detailpro']);
+                        unset($_SESSION['postProduct']);
+                        //sau khi insert thành công, chuyển sang trang inđex:
+                        $check = 'đặt hàng thành công';
+                        $products = $this->product->getProduct(10);
+                        $categorys = $this->category->getCategory();
+                        $subCategorys = $this->subCategory->getSubCategory();
+                        return $this->render('product', compact('products', 'categorys', 'subCategorys', 'check'));
+
                         break;
-                    }
-                    else{
+                    } else {
                         $checkFalse = [];
                         $checkFalse = "sản phẩm đã hết vui lòng chọn sản phẩm khác";
-                        return $this->render('cart.thongtindathang', compact('product', 'quantity', 'totalPrice', 'account', 'checkFalse', 'ship'));
+                        echo $checkFalse;
+                        die;
+                        // return $this->render('cart.thongtindathang', compact('product', 'quantity', 'totalPrice', 'account', 'checkFalse', 'ship'));
                     }
                 }
-
-
-                // $this->cart->quantityVoucher($_SESSION['checkVoucher']);
-
-                //xong phần trừ số lượng sản phẩm khi đã mua
-                //đặt hàng ỏ đây:
-                
-
             }
             return $this->render('cart.thongtindathang', compact('product', 'quantity', 'totalPrice', 'account', 'ship'));
         }
 
-        
 
-
-
-
+        //check có sản phẩm nào trong giỏ hàng chưa, nếu chưa có chuyển sang index:
         if (empty($_SESSION['cart'])) {
             $products = $this->product->getProduct(10);
             $categorys = $this->category->getCategory();
             $subCategorys = $this->subCategory->getSubCategory();
             $check = "Chưa có sản phẩm nào trong giỏ hàng";
             return $this->render('product', compact('products', 'categorys', 'subCategorys', 'check'));
-        } else {
+        }
+        //nếu có sản phẩm trong giỏ hàng thì được phép vào giỏ hàng:
+        else {
             $product = $this->product->getProductCart();
             $categorys = $this->category->getCategory();
             $subCategorys = $this->subCategory->getSubCategory();
             return $this->render('cart.cart', compact('product', 'categorys', 'subCategorys'));
         }
-
-
     }
 
-    public function checkVoucher($voucher, $mes){
-        $checkVoucher = false;
-        if($voucher == null || $this->cart->checkVoucher($voucher)){
-            $checkVoucher = true;
-        }
-            return [
-                'text' => $mes,
-                'checkVoucher'=> $checkVoucher
-            ];
+    // public function checkVoucher($voucher, $mes)
+    // {
+    //     $checkVoucher = false;
+    //     if ($voucher == null || $this->cart->checkVoucher($voucher)) {
+    //         $checkVoucher = true;
+    //     }
+    //     return [
+    //         'text' => $mes,
+    //         'checkVoucher' => $checkVoucher
+    //     ];
+    // }
 
+    public function insertSession()
+    {
+        if (isset($_POST['submit'])) {
+
+            if (isset($_SESSION['cart'])) {
+                foreach ($_SESSION['cart'] as $key => $cart) {
+                    print_r($cart['id'][$key]);
+
+                    $cart['id'][$key] == $_POST['option'];
+                    $cart['quantity'][$key] = $cart['quantity'][$key] + $_POST['quantity'];
+                }
+            }
+            if (empty($_SESSION["cart"])) {
+                $_SESSION["cart"] = array();
+            }
+            $item = array(
+                "id" => intval($_POST["option"]),
+                "quantity" => intval($_POST["quantity"])
+            );
+
+            $flag = false;
+
+            foreach ($_SESSION['cart'] as $key => $cart) {
+                if ($_POST['option'] == $cart['id']) {
+                    $flag = true;
+                    $_SESSION['cart'][$key]['quantity'] = $cart['quantity'] + intval($_POST['quantity']);
+                }
+            }
+            ($flag) ? null : ($_SESSION["cart"][] = $item);
+            echo '<script>alert("Thêm vào giỏ hàng thành công");</script>';
+            header('location: cart');
+
+            if (isset($_SESSION['account'])) {
+                header('location: addCart');
+            }
+        }
     }
 }
-

@@ -1,49 +1,4 @@
-<?php
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idValue"])) {
-    // Kiểm tra xem mảng session đã tồn tại chưa
-    if (!isset($_SESSION["cart"])) {
-        $_SESSION["cart"] = array();
-    }
-
-    if (!isset($_SESSION["cart"])) {
-        $_SESSION["cart"] = array();
-    }
-
-    // Thêm giá trị mới vào mảng session
-    $item = array(
-        "id" => $_POST["idValue"],
-        // "id_detail" => $_POST["idDetail"],
-        "quantity" =>intval($_POST["quantity"]) 
-    );
-
-    $flag = false;
-
-    foreach($_SESSION['cart'] as $key=>$cart){ 
-        if($_POST['idValue'] == $cart['id']){
-            $flag =true;
-            // var_dump($cart['quantity'], intval($_POST['quantity']));
-            $_SESSION['cart'][$key]['quantity'] = $cart['quantity'] + intval($_POST['quantity']);
-        // var_dump($_SESSION['cart'][$key]['quantity']);die;
-    }
-    }
-    ($flag) ? null : ($_SESSION["cart"][] = $item);
-    echo '<script>alert("Thêm vào giỏ hàng thành công");</script>';
- 
-    if(isset($_SESSION['account'])){
-        header('location: ../addCart');       
-    }
-}
-
-// echo "<pre>";
-// print_r($_SESSION["cart"]);
-// echo "</pre>";
-
-// session_destroy();
-
-?>
 @extends('layout.main')
-
         @section('content')
 
 
@@ -54,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idValue"])) {
 <div class="app__container ">
     <div class="grid infor-flex" id="inforpd">
         <div class="grid__column-3">
-            <form action="" method="POST" class="rounded p-5 pt-0 start-0 me-5 mt-xxl-5 ">
+            <form action="{{route('insertSession')}}" method="POST" class="rounded p-5 pt-0 start-0 me-5 mt-xxl-5 ">
 
                 <div class="infor-product-left">
                     <div class="infor-product-left__item">
@@ -85,9 +40,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idValue"])) {
             <div class="right">
                 <div class="mb-3">
                     <label for="">Size: </label>
-                    <select class="form-control w-25  px-3 py-2 m-3" onchange="changeProduct()" id="product-select" aria-label="Default select example">
+                    <select name="option" class="form-control w-25  px-3 py-2 m-3" onchange="changeProduct()" id="product-select" aria-label="Default select example">
                         @foreach($products as $index => $pro)
-                        <option class="h3" value="{{$index}}" data-image="{{$pro['image']}}" data-sale="{{$pro['valuesale']}}" data-price="{{$pro['price']}}" data-id="{{$pro['detail_product_id']}}">
+                        <option class="h3" value="{{$pro['detail_product_id']}}" data-image="{{$pro['image']}}" data-sale="{{$pro['valuesale']}}" data-price="{{$pro['price']}}" data-id="{{$pro['detail_product_id']}}">
                             {{$pro['namesize']}}
                         </option>
                         @endforeach
@@ -108,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idValue"])) {
                     </div>
 
                     <div class="d-flex mt-3">
-                        <input type="text" name="giasanpham" hidden value="" id=""><span class="rounded  infor-product__right-btn-add" style="text-decoration: none;"><i  onclick="AddToCart()" class="fa-solid fa-cart-plus"></i></span>
+                        <input type="text" name="giasanpham" hidden value="" ><span class="rounded  infor-product__right-btn-add" style="text-decoration: none;"><button style="border: none; background-color: white; " type="submit" class="submitcart" name="submit">Cart</button></span>
                         <a href="home.php" class="infor-product__right-btn-buy infor-product__right-btn-buy-link">Mua
                             ngay</a>';
                     </div>
@@ -191,7 +146,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idValue"])) {
         // console.log(amount);
     })
     window.onload = function() {
-        // Trigger change event to update image and price based on default selection
         changeProduct();
     };
     window.idValue;
@@ -211,34 +165,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idValue"])) {
         document.getElementById("product-price").innerHTML = priceValue+"|";
         document.getElementById("product-price-sc").innerHTML =priceValue - (priceValue * (sale/100))+"Vnđ";
     }
-    function AddToCart() {
-        console.log(window.idValue);
-        var idValue = window.idValue;
-        var form = document.createElement("form");
-        form.method = "post";
-        form.style.display = "none";
-        document.body.appendChild(form);
 
-        var quantity = document.getElementById('amout').value;
-
-        var form = document.createElement("form");
-        form.method = "post";
-        form.style.display = "none";
-        document.body.appendChild(form);
-
-        var inputId = document.createElement("input");
-        inputId.type = "hidden";
-        inputId.name = "idValue";
-        inputId.value = idValue;
-        form.appendChild(inputId);
-
-        var inputQuantity = document.createElement("input");
-        inputQuantity.type = "hidden";
-        inputQuantity.name = "quantity";
-        inputQuantity.value = quantity;
-        form.appendChild(inputQuantity);
-
-        form.submit();
-    }
 </script>
 @endsection

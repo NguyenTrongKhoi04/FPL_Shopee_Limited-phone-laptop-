@@ -14,6 +14,7 @@ $router->filter('auth', function () {
     }
 });
 // TODO: Load All Router
+$arr_directory_staff= scandir('common/route/staff');
 $arr_directory_admin = scandir('common/route/admin');
 $arr_directory_user = scandir('common/route/user');
 // quét một thư mục và trả về một mảng chứa tên của các tệp và thư mục trong đó
@@ -28,6 +29,11 @@ foreach ($arr_directory_admin as $item) {
 foreach ($arr_directory_user as $item) {
     if ($item != '..' && $item != '.' && file_exists('common/route/user/' . $item)) {
         include_once 'common/route/user/' . $item;
+    }
+};
+foreach ($arr_directory_staff as $item) {
+    if ($item != '..' && $item != '.' && file_exists('common/route/staff/' . $item)) {
+        include_once 'common/route/staff/' . $item;
     }
 };
 // khu vực cần quan tâm -----------

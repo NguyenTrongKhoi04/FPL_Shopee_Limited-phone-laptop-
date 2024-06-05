@@ -3,14 +3,11 @@
 <div class="main-content">
     <div class="card-body container ">
         <h4 class="card-title text-center h1 my-5">Thông tin đặt hàng</h4>
-
         <div class="comtainer row">
             <div class="col-6">
                 <h5>Sản phẩm đã chọn</h5>
                 <form action="" method="post">
                 <table class="table">
-
-
                     @foreach($product as $keyPro =>$pro)
                     <tr>
                         <td> <img src="{{$pro->image}}" alt="" width="50px"> </td>
@@ -28,7 +25,7 @@
                         </td>
                         <td>
                             @php
-                            echo "<input type='number' name='quantity[]' value='{$quantity[$keyPro]->count}'>";
+                            echo "<input type='number' name='quantity[]' value='{$trueQuantity[$keyPro]}'>";
                             echo "<input type='hidden' name='idprone' >";
                             @endphp
                         </td>
@@ -42,7 +39,6 @@
                     <div class="form-group my-3">
                         Sử dụng voucher:
                         <input class="form-control w-50 " type="text" name="voucher" id=""> <br>
-                        <button type="submit" class="btn btn-primary " name="checkVoucher"> áp dụng </button>
                     </div>
                     @if(isset($voucher))
                     <p style="color: red;">áp dụng thành công, voucher giảm <?= $voucher ?>%</p>
@@ -80,15 +76,11 @@
                     <div class="col-md-6 ">
                         <div class="form-group my-3">
                             Địa chỉ:
-                            <span class="form-control">
-                                {{$account->address}}
-                            </span>
+                            <input type="text" name="address"  class="form-control" value="{{$account->address}}" >
                         </div>
                         <div class="form-group my-3">
                             Số điện thoại:
-                            <span class="form-control">
-                                {{$account->phone}}
-                            </span>
+                               <input type="text" name="phone" class="form-control" value=" {{$account->phone}}" >
                         </div>
 
                     </div>

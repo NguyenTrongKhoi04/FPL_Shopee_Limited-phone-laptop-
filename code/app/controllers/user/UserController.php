@@ -72,7 +72,8 @@ class UserController extends BaseController
                 // echo "</pre>";
                 if ($checkAccount[0]->role == 1) {
                     flash('success', 'Đăng nhập admin thành công', 'index-admin');
-                } else {
+                }
+                else {
                     flash('success', 'Đăng nhập người dùng thành công', 'product');
                 }
             } else {
@@ -157,10 +158,6 @@ class UserController extends BaseController
             $comments = $this->comment->getComment($id);
             $id_category = $products[0]['id_subcategory'];
             $relatedProduct = $this->product->getRelatedProduct($id, $id_category, 5);
-            // echo "<pre>";
-            // var_dump($relatedProduct);
-            // echo "</pre>";
-            // die;
             return $this->render('infomation_product', compact('products', 'comments', 'relatedProduct'));
         }
     // Hàm bình luận sản phẩm
@@ -174,7 +171,7 @@ class UserController extends BaseController
     //     $comments = $this->comment->addComment($id_user, $id_pro, $comment);
     // }
     // chuyển trang thông tin tài khoản
-    public function infoAccout($id)
+    public function infoAccount($id)
     {
         if(empty($_SESSION['account'])){
             return $this->render('login');
@@ -409,4 +406,22 @@ class UserController extends BaseController
     //             flash('success', 'Xóa thành công', 'list-product');
     //         }
     //     }
+
+
+
+
+
+
+    //Staff:
+    public function IndexStaff(){
+
+        return $this->render('staff.indexstaff');
+    }
+
+    public function subIndexStaff(){
+        if(isset($_POST['submit'])){
+            $productStaff =  $this->cart->subIndexStaff($_POST['name_pro']);
+        }
+        return $this->render('staff.indexstaff' , compact('productStaff'));
+    }
 }

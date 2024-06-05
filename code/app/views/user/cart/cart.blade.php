@@ -34,7 +34,7 @@ print_r($_SESSION['cart']);
                             @if(isset($_SESSION['cart']))
                             <input type="checkbox" value="{{ $pro->detail_product_id }}" name="selectedProduct[]" class="selectProduct">
                             @else
-                            <input type="checkbox" value="<?= $quantity[$keyPro]->id ?>" name="selectedProduct[]" class="selectProduct">
+                            <input type="checkbox" value="<?= $quantity[$keyPro]->id ?>" name="selectedProduct[]" class="selectProduct"  data-productid="{{ $pro->detail_product_id }}">
                             @endif
                         </td>
                         <td> <img src="{{$pro->image}}" alt="" width="80px"> </td>
@@ -55,14 +55,13 @@ print_r($_SESSION['cart']);
                             @if(isset($_SESSION['cart']))
                             @foreach ($_SESSION['cart'] as $sessionPro)
                             @if ($sessionPro['id'] == $pro->detail_product_id)
-                            <input type="number" class='quantity' value="{{ $sessionPro['quantity']}}">
+                            <input type="number" class='quantity[]' value="{{ $sessionPro['quantity']}}">
                             @endif
                             @endforeach
                             @endif
                             @if(isset($_SESSION['account']))
                             @php
-                            echo "<input type='number' class='quantity' value='{$quantity[$keyPro]->count}'>";
-                            echo "<input type='hidden' name='id_session' value=''>";
+                            echo "<input type='number' data-id='{$pro->detail_product_id}' class='data-id' value='{$quantity[$keyPro]->count}'>"; 
                             @endphp
                             @endif
                         </td>
@@ -80,7 +79,7 @@ print_r($_SESSION['cart']);
                         </div>
                         <div class="home-card-item-delete">
                             <div class="home-card__muangay">
-                                <button name="muamucdachon" onclick="" type="submit" class="btn btn--primary home-card__btn-muangay">Mua mục đã chọn</button>
+                                <button name="muatatca" onclick="" type="submit" class="btn btn--primary home-card__btn-muangay">Mua Tất Cả</button>
                             </div>
                         </div>
                     </div>
@@ -88,7 +87,7 @@ print_r($_SESSION['cart']);
                     <div class="" style="background-color: var(--white-color); ">
                         <span class="home-filter__buyall-tongtien-text">Tổng tiền : </span>
                         <input class="home-filter__buyall-tongtien" style="width: 150px;" type="text" name="totalPrice" value="0" readonly id="totalPrice">
-                        <button name="buyAll" type="submit" class="btn home-filter__btn-buyall btn--primary">Mua tất cả</button>
+                        <button name="muamucdachon" type="submit" class="btn home-filter__btn-buyall btn--primary">Mua Mục Đã Chọn</button>
                     </div>
                 </div>
             </form>
@@ -97,6 +96,8 @@ print_r($_SESSION['cart']);
 </div>
 
 <script>
+
+
     document.addEventListener('DOMContentLoaded', function() {
         const selectAllCheckbox = document.getElementById('selectAll');
         const checkboxes = document.querySelectorAll('.selectProduct');
@@ -108,7 +109,29 @@ print_r($_SESSION['cart']);
             });
             calculateTotalPrice();
         });
-
+        //check quantity:    var checkboxes = document.querySelectorAll('.selectProduct');   
+    checkboxes.forEach(function(checkbox) {   
+        checkbox.addEventListener('change', function() {   
+            var productId = this.dataset.productid;   
+            var parentElement = this.closest('tr'); // Truy cập đến phần tử cha là tr   
+            var dataIdElement = parentElement.querySelector('.data-id'); // Truy cập đến phần tử chứa data-id   
+ 
+            if (dataIdElement) { // Kiểm tra xem phần tử chứa data-id có tồn tại không 
+                var dataId = dataIdElement.dataset.id; // Lấy giá trị data-id từ phần tử chứa data-id   
+                console.log(dataId); // Hiển thị giá trị data-id trong console   
+ 
+                var quantityInput = parentElement.querySelector('.data-id');   
+ 
+                if (this.checked) {   
+                    quantityInput.setAttribute('name', `quantity[]`);   
+                } else {   
+                    quantityInput.removeAttribute('name');   
+                }   
+            } else { 
+                console.log('Không tìm thấy phần tử chứa data-id'); 
+            } 
+        });   
+    });  
         checkboxes.forEach(function(checkbox) {
             checkbox.addEventListener('change', calculateTotalPrice);
         });
@@ -122,7 +145,7 @@ print_r($_SESSION['cart']);
                     let priceText = priceCell.querySelector('p').innerText;
                     let price = parseFloat(priceText.replace('vnđ', '').replace(/,/g, ''));
                     totalPrice += price;
-                    let quantityInput = checkbox.closest('tr').querySelector('.quantity');
+                    let quantityInput = checkbox.closest('tr').querySelector('.data-id');
                     if (quantityInput) {
                         let quantity = parseFloat(quantityInput.value);
                         totalQuantity += quantity;
