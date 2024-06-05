@@ -21,7 +21,9 @@ $router->get('/', function () {
 // include router admin
 // TODO: Load All Router
 $arr_directory_admin = scandir('common/route/admin');
-// $arr_directory_user = scandir('common/route/user');
+$arr_directory_staff = scandir('common/route/staff');
+$arr_directory_user = scandir('common/route/user');
+
 // quét một thư mục và trả về một mảng chứa tên của các tệp và thư mục trong đó
 
 // include route admin
@@ -30,12 +32,27 @@ foreach ($arr_directory_admin as $item) {
         include_once 'common/route/admin/' . $item;
     }
 };
+<<<<<<< HEAD
 // // include route user
 // foreach ($arr_directory_user as $item) {
 //     if ($item != '..' && $item != '.' && file_exists('common/route/user/' . $item)) {
 //         include_once 'common/route/user/' . $item;
 //     }
 // };
+=======
+// include route staff
+foreach ($arr_directory_staff as $item) {
+    if ($item != '..' && $item != '.' && file_exists('common/route/staff/' . $item)) {
+        include_once 'common/route/staff/' . $item;
+    }
+};
+// include route user
+foreach ($arr_directory_user as $item) {
+    if ($item != '..' && $item != '.' && file_exists('common/route/user/' . $item)) {
+        include_once 'common/route/user/' . $item;
+    }
+};
+>>>>>>> f316c6999f0a3914b8e55253b054958256824a17
 
 # NB. You can cache the return value from $router->getData() so you don't have to create the routes each request - massive speed gains
 $dispatcher = new Phroute\Phroute\Dispatcher($router->getData());
