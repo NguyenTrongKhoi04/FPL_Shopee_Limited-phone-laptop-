@@ -50,6 +50,8 @@ class UserController extends BaseController
     // chuyển trang đăng nhập
     public function login()
     {
+
+        // $products = $this->product->getProduct();
         return $this->render('login');
     }
     // kiểm tra thông tin đăng nhập

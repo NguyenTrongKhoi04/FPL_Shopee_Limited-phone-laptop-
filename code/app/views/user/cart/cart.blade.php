@@ -32,9 +32,9 @@ print_r($_SESSION['cart']);
                     <tr>
                         <td>
                             @if(isset($_SESSION['cart']))
-                            <input type="checkbox" value="{{ $pro->detail_product_id }}" name="selectedProduct[]" class="selectProduct">
+                            <input type="checkbox" value="{{ $pro->detail_product_id }}" name="selectedProduct[]" class="selectProduct" data-price="{{ $pro->price - ($pro->price * $pro->valuesale / 100) }}">
                             @else
-                            <input type="checkbox" value="<?= $quantity[$keyPro]->id ?>" name="selectedProduct[]" class="selectProduct"  data-productid="{{ $pro->detail_product_id }}">
+                            <input type="checkbox" value="<?= $quantity[$keyPro]->id ?>" name="selectedProduct[]" class="selectProduct"  data-productid="{{ $pro->detail_product_id }}" data-price="{{ $pro->price - ($pro->price * $pro->valuesale / 100) }}">
                             @endif
                         </td>
                         <td> <img src="{{$pro->image}}" alt="" width="80px"> </td>
@@ -79,7 +79,7 @@ print_r($_SESSION['cart']);
                         </div>
                         <div class="home-card-item-delete">
                             <div class="home-card__muangay">
-                                <button name="muatatca" onclick="" type="submit" class="btn btn--primary home-card__btn-muangay">Mua Tất Cả</button>
+                                <button name="muamucdachon" id="buyAllButton" type="submit" class="btn btn--primary home-card__btn-muangay">Mua Tất Cả</button>
                             </div>
                         </div>
                     </div>
@@ -96,7 +96,97 @@ print_r($_SESSION['cart']);
 </div>
 
 <script>
+       function updateTotalPrice() {
+            let totalPrice = 0;
+            document.querySelectorAll('.selectProduct:checked').forEach(function(checkedBox) {
+                totalPrice += parseFloat(checkedBox.dataset.price);
+            });
+            document.getElementById('totalPrice').value = totalPrice + 'vnđ';
+        }
 
+        document.getElementById('selectAll').addEventListener('change', function() {
+            let checkboxes = document.querySelectorAll('.selectProduct');
+            checkboxes.forEach(function(checkbox) {
+                checkbox.checked = document.getElementById('selectAll').checked;
+                checkbox.dispatchEvent(new Event('change'));
+            });
+        });
+
+        document.querySelectorAll('.selectProduct').forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                var productId = this.dataset.productid;
+                var parentElement = this.closest('tr'); // Truy cập đến phần tử cha là tr
+                var dataIdElement = parentElement.querySelector('.data-id'); // Truy cập đến phần tử chứa data-id
+
+                if (dataIdElement) { // Kiểm tra xem phần tử chứa data-id có tồn tại không
+                    var dataId = dataIdElement.dataset.id; // Lấy giá trị data-id từ phần tử chứa data-id
+                    console.log(dataId); // Hiển thị giá trị data-id trong console
+
+                    var quantityInput = parentElement.querySelector('.data-id');
+
+                    if (this.checked) {
+                        quantityInput.setAttribute('name', `quantity[]`);
+                    } else {
+                        quantityInput.removeAttribute('name');
+                    }
+                }
+
+                updateTotalPrice();
+            });
+        });
+
+        document.getElementById('buyAllButton').addEventListener('click', function() {
+            // Check all checkboxes
+            document.getElementById('selectAll').checked = true;
+            let checkboxes = document.querySelectorAll('.selectProduct');
+            checkboxes.forEach(function(checkbox) {
+                checkbox.checked = true;
+                checkbox.dispatchEvent(new Event('change'));
+            });
+
+            // Create hidden inputs for each selected checkbox
+            let form = document.getElementById('formSelectProduct');
+            checkboxes.forEach(function(checkbox) {
+                if (checkbox.checked) {
+                    let hiddenInput = document.createElement('input');
+                    hiddenInput.type = 'hidden';
+                    hiddenInput.name = 'selectedProductId[]';
+                    hiddenInput.value = checkbox.dataset.productid;
+                    form.appendChild(hiddenInput);
+                }
+            });
+
+            // Submit the form
+            form.submit();
+        });
+
+        document.getElementById('buySelectedButton').addEventListener('click', function() {
+            let checkboxes = document.querySelectorAll('.selectProduct:checked');
+            let form = document.getElementById('formSelectProduct');
+
+            // Remove any previously added hidden inputs
+            let hiddenInputs = form.querySelectorAll('input[type="hidden"]');
+            hiddenInputs.forEach(function(input) {
+                input.remove();
+            });
+
+            // Create hidden inputs for each selected checkbox
+            checkboxes.forEach(function(checkbox) {
+                let hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = 'selectedProductId[]';
+                hiddenInput.value = checkbox.dataset.productid;
+                form.appendChild(hiddenInput);
+            });
+
+            // Submit the form
+            form.submit();
+        });
+
+
+
+
+    
 
     document.addEventListener('DOMContentLoaded', function() {
         const selectAllCheckbox = document.getElementById('selectAll');
@@ -109,7 +199,7 @@ print_r($_SESSION['cart']);
             });
             calculateTotalPrice();
         });
-        //check quantity:    var checkboxes = document.querySelectorAll('.selectProduct');   
+        //check quantity:    
     checkboxes.forEach(function(checkbox) {   
         checkbox.addEventListener('change', function() {   
             var productId = this.dataset.productid;   
@@ -127,9 +217,7 @@ print_r($_SESSION['cart']);
                 } else {   
                     quantityInput.removeAttribute('name');   
                 }   
-            } else { 
-                console.log('Không tìm thấy phần tử chứa data-id'); 
-            } 
+            }
         });   
     });  
         checkboxes.forEach(function(checkbox) {

@@ -1,0 +1,271 @@
+<?php $_shouldextend[1]=1; ?>
+<?php $this->startSection('content'); ?>
+<?php if(isset($check)): ?>
+
+<script>
+ alert('<?php echo \htmlentities($check??'', ENT_QUOTES, 'UTF-8', false); ?>')
+</script>
+
+
+<?php endif; ?>
+<div class="container">
+ <!-- <h1 class="h3 mb-4 text-gray-800">Các sản phẩm của <?php echo \htmlentities($sub->name_subcate??'', ENT_QUOTES, 'UTF-8', false); ?></h1> -->
+ <h1 class="h3 mb-4 text-gray-800">Các sản phẩm </h1>
+
+ <!-- <select id="select2" onchange="changeProduct()" name="tinh-thanh[]" class="js-select2" multiple="multiple">
+ <?php $__currentLoopData = $oneproduct; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $one): $loop = $this->incrementLoopIndices();  ?>
+ <?php 
+ $optionValue = $one->id . '|' . $one->name_pro . '|' . $one->quantity . '|' . $one->datepro . '|' . $one->id_subcategory . '|' . $one->description;
+ ?>
+ <option value="<?php echo \htmlentities($optionValue??'', ENT_QUOTES, 'UTF-8', false); ?>">
+ <?php echo \htmlentities($one->id??'', ENT_QUOTES, 'UTF-8', false); ?> | <?php echo \htmlentities($one->name_pro??'', ENT_QUOTES, 'UTF-8', false); ?> | <?php echo \htmlentities($one->quantity??'', ENT_QUOTES, 'UTF-8', false); ?> | <?php echo \htmlentities($one->datepro??'', ENT_QUOTES, 'UTF-8', false); ?> | <?php echo \htmlentities($one->id_subcategory??'', ENT_QUOTES, 'UTF-8', false); ?> | <?php echo \htmlentities($one->description??'', ENT_QUOTES, 'UTF-8', false); ?>
+
+ </option>
+
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+</select>
+<br><br>
+
+
+
+
+
+<form id="myForm" method="post" action="<?php echo \htmlentities(route('doneUpToShop')??'', ENT_QUOTES, 'UTF-8', false); ?>">
+ <input type='hidden' name='<?php  echo '_token'; ?>' value='<?php echo $this->csrf_token; ?>'/>
+ <textarea class="form-control" name="selectedProducts" id="selectedProducts" cols="30" readonly rows="10"></textarea>
+ <input type="hidden" id="arrayOfArrays" name="arrayOfArrays">
+ <button type="submit" name="btn-submit">Submit</button>
+</form>
+
+<script>
+ $(document).ready(function() {
+ $('.js-select2').select2();
+ });
+
+ function changeProduct() {
+ var selectedValues = $('#select2').val();
+ var arrayOfObjects = [];
+
+ selectedValues.forEach(function(value) {
+ var parts = value.split('|');
+ var id = parts[0];
+ var name_pro = parts[1];
+ var quantity = parts[2];
+ var datepro = parts[3];
+ var id_subcategory = parts[4];
+ var description = parts[5];
+
+ var dataObject = {
+ id: id,
+ name_pro: name_pro,
+ quantity: quantity,
+ datepro: datepro,
+ id_subcategory: id_subcategory,
+ description: description
+ };
+
+ arrayOfObjects.push(dataObject);
+ });
+
+ $('#arrayOfArrays').val(JSON.stringify(arrayOfObjects));
+
+ var selectedDataList = '';
+ arrayOfObjects.forEach(function(obj) {
+ selectedDataList += obj.id + ' | ' + obj.name_pro + ' | ' + obj.quantity + ' | ' + obj.datepro + ' | ' + obj.id_subcategory + ' | ' + obj.description + '\n';
+ });
+
+ $('#selectedProducts').val(selectedDataList);
+ }
+</script> -->
+
+
+ <select id="productSelect" class="form-control">
+ <option value="">Chọn sản phẩm up lên sàn</option>
+ <?php $__currentLoopData = $oneproduct; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $one): $loop = $this->incrementLoopIndices();  ?>
+ <?php 
+ $optionValue = $one->id . '|' . $one->name_pro . '|' . $one->quantity . '|' . $one->datepro . '|' . $one->id_subcategory . '|' . $one->description;
+ ?>
+ <option value="<?php echo \htmlentities($optionValue??'', ENT_QUOTES, 'UTF-8', false); ?>">
+ <?php echo \htmlentities($one->id??'', ENT_QUOTES, 'UTF-8', false); ?> | <?php echo \htmlentities($one->name_pro??'', ENT_QUOTES, 'UTF-8', false); ?> | <?php echo \htmlentities($one->quantity??'', ENT_QUOTES, 'UTF-8', false); ?> | <?php echo \htmlentities($one->datepro??'', ENT_QUOTES, 'UTF-8', false); ?> | <?php echo \htmlentities($one->id_subcategory??'', ENT_QUOTES, 'UTF-8', false); ?>
+
+ </option>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ </select>
+
+
+ <br><br>
+
+ <select id="secondSelect" class="form-control" disabled>
+ <option value="">Chọn các biến thể</option>
+ <?php $__currentLoopData = $alldetail; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $all): $loop = $this->incrementLoopIndices();  ?>
+ <!-- <?php $__currentLoopData = $oneproduct; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $one): $loop = $this->incrementLoopIndices();  ?>
+ <?php if($all->id_pro == $one->id): ?> -->
+ <option value="<?php echo \htmlentities($all->id??'', ENT_QUOTES, 'UTF-8', false); ?> <?php echo \htmlentities($all->id_pro??'', ENT_QUOTES, 'UTF-8', false); ?> <?php echo \htmlentities($all->price??'', ENT_QUOTES, 'UTF-8', false); ?> <?php echo \htmlentities($all->image??'', ENT_QUOTES, 'UTF-8', false); ?> <?php echo \htmlentities($all->size??'', ENT_QUOTES, 'UTF-8', false); ?> <?php echo \htmlentities($all->count??'', ENT_QUOTES, 'UTF-8', false); ?>"><?php echo \htmlentities($all->id??'', ENT_QUOTES, 'UTF-8', false); ?>|<?php echo \htmlentities($all->price??'', ENT_QUOTES, 'UTF-8', false); ?>$|<?php echo \htmlentities($all->size??'', ENT_QUOTES, 'UTF-8', false); ?>|<?php echo \htmlentities($all->count??'', ENT_QUOTES, 'UTF-8', false); ?></option>
+ <!-- <?php endif; ?>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?> -->
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ </select>
+ <br><br>
+
+ <form action="<?php echo \htmlentities(route('submitUp')??'', ENT_QUOTES, 'UTF-8', false); ?>" method="post" class="form">
+ <div class="<div class=" card shadow mb-4">
+
+ <div class="card-body">
+ <div class="table-responsive">
+ <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+
+ <thead>
+ <tr>
+ <th>ID Pro</th>
+ <th>ID Detail</th>
+ <th>Name pro</th>
+ <th>giá </th>
+ <th>ảnh </th>
+ <th>size</th>
+ <th>số lượng</th>
+ </tr>
+ </thead>
+ <tfoot>
+ <tr>
+ <th>ID Pro</th>
+ <th>ID Detail</th>
+ <th>Name pro</th>
+ <th>giá </th>
+ <th>ảnh </th>
+ <th>size</th>
+ <th>số lượng</th>
+ </tr>
+ </tfoot>
+ <tbody>
+
+ <tr>
+
+ <!-- <td><input type="hidden" name="id_pro[]" value=""></td>
+ <td><input type="hidden" name="id_detail[]" value=""></td>
+ <td><input type="hidden" name="name_pro[]" value=""></td>
+ <td><input type="hidden" name="price[]" value=""></td>
+ <td><input type="hidden" name="image[]" value=""></td>
+ <td><input type="hidden" name="size[]" value=""></td>
+ <td><input type="text" name="quantity[]" value=""></td> -->
+ </tr>
+ </tbody>
+ </table>
+ </div>
+ </div>
+ </div>
+ <!-- <div id="inputContainer" class="from-control"></div> <br>
+ <input type="hidden" name="selectedData" id="selectedData"> -->
+ <button type="submit" name="btn-submit" class="btn btn-success ">Submit</button>
+ </form>
+ <script>
+ document.addEventListener('DOMContentLoaded', function() {
+ var productSelect = document.getElementById('productSelect');
+ var secondSelect = document.getElementById('secondSelect');
+ var selectedOptions = []; // Mảng lưu trữ các option đã được chọn
+ window.selectedName2;
+ window.id;
+
+ productSelect.addEventListener('change', function() {
+ var selectedId = this.value.split('|')[0]; // Lấy $one->id từ select thứ nhất
+ var selectedName = this.value.split('|')[1]; // Lấy $one->name từ select thứ nhất
+ window.id = this.value.split('|')[0];
+ window.selectedName2 = selectedName;
+ console.log(selectedName);
+ var options = secondSelect.querySelectorAll('option');
+
+ if (selectedId) {
+
+ secondSelect.removeAttribute('disabled'); // Kích hoạt select thứ hai
+ } else {
+ secondSelect.disabled = true; // Vô hiệu hóa select thứ hai
+ return;
+ }
+
+ options.forEach(function(option) {
+ var idPro = option.value.split(' ')[1]; // Lấy $all->id_pro từ select thứ hai
+
+ if (idPro === selectedId) {
+ option.style.display = 'block';
+ } else {
+ option.style.display = 'none';
+ }
+ });
+ });
+ });
+ document.addEventListener('DOMContentLoaded', function() {
+ var productSelect = document.getElementById('productSelect');
+ var secondSelect = document.getElementById('secondSelect');
+ var tableBody = document.querySelector('#dataTable tbody');
+
+ secondSelect.addEventListener('change', function() {
+ var selectedOption = this.options[this.selectedIndex];
+ var selectedValues = selectedOption.value.split(' ');
+ if (selectedOption) {
+ selectedOption.style.display = 'none'; // Ẩn option đã chọn
+ this.selectedIndex = -1; // Reset select box
+ }
+
+ // Tạo một hàng mới trong bảng
+ var newRow = tableBody.insertRow();
+
+ // Thêm các ô dữ liệu vào hàng mới
+ var cell1 = newRow.insertCell(0);
+ var cell2 = newRow.insertCell(1);
+ var cell3 = newRow.insertCell(2);
+ var cell4 = newRow.insertCell(3);
+ var cell5 = newRow.insertCell(4);
+ var cell6 = newRow.insertCell(5);
+ var cell7 = newRow.insertCell(6);
+
+ // var selectedName = this.value.split('|')[1]; // Lấy $one->name từ select thứ nhất
+console.log(window.id);
+ // Gán giá trị cho các ô dữ liệu từ dữ liệu của option đã chọn
+ cell1.innerHTML = selectedValues[1]; // ID Pro
+ var inputIdPro = document.createElement('input');
+ inputIdPro.setAttribute('type', 'hidden');
+ inputIdPro.setAttribute('name', 'id_pro[]');
+ inputIdPro.setAttribute('value', window.id);
+ cell1.appendChild(inputIdPro);
+ cell2.innerHTML = selectedValues[0]; // ID Detail
+ var inputIdDetail = document.createElement('input');
+ inputIdDetail.setAttribute('type', 'hidden');
+ inputIdDetail.setAttribute('name', 'id_detail[]');
+ inputIdDetail.setAttribute('value', selectedValues[0]);
+ cell2.appendChild(inputIdDetail);
+ cell3.innerHTML = window.selectedName2; // Name pro
+ var inputPrice = document.createElement('input');
+ inputPrice.setAttribute('type', 'number');
+ inputPrice.setAttribute('name', 'price[]'); // Đặt tên cho input quantity
+ inputPrice.setAttribute('value', selectedValues[2]);
+ cell4.appendChild(inputPrice); // Giá
+ var img = document.createElement('img');
+ img.src = selectedValues[3];
+ img.width = 80;
+ cell5.appendChild(img);
+ var inputImage = document.createElement('input');
+ inputImage.setAttribute('type', 'hidden');
+ inputImage.setAttribute('name', 'image[]'); // Đặt tên cho input quantity
+ inputImage.setAttribute('value', selectedValues[3]);
+ cell5.appendChild(inputImage); // Giá
+ cell6.innerHTML = selectedValues[4]; // Size
+ var inputSize = document.createElement('input');
+ inputSize.setAttribute('type', 'hidden');
+ inputSize.setAttribute('name', 'size[]');
+ inputSize.setAttribute('value', selectedValues[4]);
+ cell6.appendChild(inputSize);
+ var inputQuantity = document.createElement('input');
+ inputQuantity.setAttribute('type', 'number');
+ inputQuantity.setAttribute('name', 'quantity[]'); // Đặt tên cho input quantity
+ inputQuantity.setAttribute('value', selectedValues[5]);
+ cell7.appendChild(inputQuantity); // Số lượng
+
+ });
+ });
+ </script>
+
+ <?php $this->stopSection(); ?>
+<?php if (isset($_shouldextend[1])) { echo $this->runChild('layout.main'); } ?>

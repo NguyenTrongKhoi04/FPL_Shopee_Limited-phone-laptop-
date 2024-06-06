@@ -12,6 +12,9 @@ class BaseAdminController
         $viewDir = "./app/views/admin";
         $storageDir = "./storage";
         $blade = new BladeOne($viewDir, $storageDir, BladeOne::MODE_DEBUG);
+            // echo"<pre>";
+            // print_r($data);
+            // echo"</pre>";die;
         echo $blade->run($viewFile, $data);
     }
 }

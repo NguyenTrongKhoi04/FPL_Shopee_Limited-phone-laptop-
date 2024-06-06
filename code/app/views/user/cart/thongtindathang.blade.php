@@ -63,24 +63,24 @@
                         <div class="form-group my-3 ">
                             Email:
                             <span class="form-control">
-                                {{$account->gmail}}
+                                {{$account[0]->gmail}}
                             </span>
                         </div>
                         <div class="form-group my-3">
                             Ho Tên :
                             <span class="form-control">
-                                {{$account->username}}
+                                {{$account[0]->username}}
                             </span>
                         </div>
                     </div>
                     <div class="col-md-6 ">
                         <div class="form-group my-3">
                             Địa chỉ:
-                            <input type="text" name="address"  class="form-control" value="{{$account->address}}" >
+                            <input type="text" name="address"  class="form-control" value="{{$account[0]->address}}" >
                         </div>
                         <div class="form-group my-3">
                             Số điện thoại:
-                               <input type="text" name="phone" class="form-control" value=" {{$account->phone}}" >
+                               <input type="text" name="phone" class="form-control" value=" {{$account[0]->phone}}" >
                         </div>
 
                     </div>

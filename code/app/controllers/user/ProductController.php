@@ -39,13 +39,13 @@ class ProductController extends BaseController
         $categorys = $this->category->getCategory();
         $subCategorys = $this->subCategory->getSubCategory();
         $pagination = $this->product->pagination();
-        $totalPage = ceil(($pagination->total)/10);
+        $totalPage = ceil(($pagination[0]->total)/10);
         if(isset($_GET['page'])){
             $products = $this->product->productPagination($_GET['page']);
             $categorys = $this->category->getCategory();
             $subCategorys = $this->subCategory->getSubCategory();
             $pagination = $this->product->pagination();
-            $totalPage = ceil(($pagination->total)/10); 
+            $totalPage = ceil(($pagination[0]->total)/10); 
             return $this->render('product', compact('products', 'categorys', 'subCategorys', 'totalPage'));
         }
         return $this->render('product', compact('products', 'categorys', 'subCategorys', 'totalPage'));

@@ -1,0 +1,5 @@
+/// fix
+1) list all > xem chi tiết
+
+/// note 
+hết sale mới đổi được giá sale

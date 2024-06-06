@@ -1,0 +1,62 @@
+<?php $_shouldextend[1]=1; ?>
+<?php $this->startSection('content'); ?>
+
+ <!-- Modal hiện các sản phẩm trong danh mục con-->
+ <div class="wrap">
+ <div class="intro">
+
+ <div class="using-select2">
+ <h3>Select thông thường</h3>
+ <select name="tinh-thanh">
+ <option value="Hà Nội">Hà Nội</option>
+ <option value="Hải Phòng">Hải Phòng</option>
+ <option value="Huế">Huế</option>
+ <option value="Đà Nẵng">Đà Nẵng</option>
+ <option value="TPHCM">Hồ Chí Minh</option>
+ <option value="Vũng Tàu">Vũng Tàu</option>
+ </select>
+ </div>
+ <div class="using-select2">
+ <h3>select với Select2 </h3>
+ <select name="tinh-thanh" class="js-select2">
+ <option value="Hà Nội">Hà Nội</option>
+ <option value="Hải Phòng">Hải Phòng</option>
+ <option value="Huế">Huế</option>
+ <option value="Đà Nẵng">Đà Nẵng</option>
+ <option value="TPHCM">Hồ Chí Minh</option>
+ <option value="Vũng Tàu">Vũng Tàu</option>
+ </select>
+ <h3>Trường hợp chọn nhiều</h3>
+ <select name="tinh-thanh[]" class="js-select2" multiple="multiple">
+ <option value="Hà Nội">Hà Nội</option>
+ <option value="Hải Phòng">Hải Phòng</option>
+ <option value="Huế">Huế</option>
+ <option value="Đà Nẵng">Đà Nẵng</option>
+ <option value="TPHCM">Hồ Chí Minh</option>
+ <option value="Vũng Tàu">Vũng Tàu</option>
+ </select>
+ <script type="text/javascript">
+ $(document).ready(function() {
+ $('.js-select2').select2();
+ });
+ </script>
+ </div>
+
+
+ </div>
+ <!-- END SELECT 2 -->
+
+
+
+
+
+ </div>
+ <div class="modal-footer">
+ <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+ <button type="button" class="btn btn-primary">Understood</button>
+ </div>
+ </div>
+ </div>
+ <!-- endmodal -->
+ <?php $this->stopSection(); ?>
+<?php if (isset($_shouldextend[1])) { echo $this->runChild('layout.main'); } ?>

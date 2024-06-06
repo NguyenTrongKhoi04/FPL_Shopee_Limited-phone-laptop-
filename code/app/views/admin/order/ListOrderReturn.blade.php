@@ -4,8 +4,13 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
+
     <h1 class="h3 mb-2 text-gray-800">Đơn Hủy <span
             style="color: orange;">({{$totalOrderRequestConfirm[0]->count }})</span>
+
+    <!-- <h1 class="h3 mb-2 text-gray-800">Đơn Hoàn Trả <span
+            style="color: orange;">({{$totalOrderReturn[0]->count }})</span> -->
+
     </h1>
     <p class="mb-4">Các đơn hàng dã bị hủy</p>
 
@@ -71,13 +76,23 @@
                             </td>
                             <td>
                                 <a style="text-decoration: underline;"
+<<<<<<< HEAD
                                     href="{{route('orderDetailSuccess/'.$i->order_id)}}">Chi
+=======
+                                    href="{{route('orderDetailReturn/'.$i->order_id)}}">Chi
+>>>>>>> BuiDucNinh
                                     tiết
                                     đơn hàng</a>
                             </td>
                             <td>
                                 <?php if ($i->status == 7) { ?>
+<<<<<<< HEAD
                                 <a href=""><button class="btn btn-success">Xác nhận hoàn trả</button></a>
+=======
+                                <a href="{{route('confirmReturn/'.$i->order_id)}}">
+                                    <button onclick=" return confirm('Chắc chắn đồng ý hoàn trả')"
+                                        class="btn btn-success">Xác nhận hoàn trả</button></a>
+>>>>>>> BuiDucNinh
                                 <?php } else {
                                     echo "Đã xác nhận";
                                 } ?>
@@ -97,6 +112,7 @@
 <script>
 const checkboxItem = function(nameButton, dataset) {
     document.getElementById(nameButton).addEventListener('change', function() {
+<<<<<<< HEAD
 
         let rows = document.querySelectorAll(`tr[data-set="${dataset}"]`);
         console.log(this, dataset);
@@ -120,11 +136,26 @@ const checkboxItem = function(nameButton, dataset) {
                 row.style.display = '';
             });
         }
+=======
+        let rows = document.querySelectorAll(`tr[data-set="${dataset}"]`);
+        console.log(this, dataset);
+        rows.forEach(function(row) {
+            if (row.style.display === 'none') {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+>>>>>>> BuiDucNinh
     });
 }
 
 checkboxItem('cancel-success-checkbox', 8);
 checkboxItem('cancel-confirm-checkbox', 7);
 </script>
+<<<<<<< HEAD
+=======
+
+>>>>>>> BuiDucNinh
 <!-- End of Main Content -->
 @endsection

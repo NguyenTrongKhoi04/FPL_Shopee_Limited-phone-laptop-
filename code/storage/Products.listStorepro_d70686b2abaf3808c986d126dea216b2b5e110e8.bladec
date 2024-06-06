@@ -1,0 +1,267 @@
+<?php $_shouldextend[1]=1; ?>
+<?php $this->startSection('content'); ?>
+<?php if(isset($check)): ?>
+
+<script>
+alert('<?php echo \htmlentities($check??'', ENT_QUOTES, 'UTF-8', false); ?>')
+</script>
+
+
+<?php endif; ?>
+<?php if(isset($error)): ?>
+<!-- <?php $__currentLoopData = $error; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $er): $loop = $this->incrementLoopIndices();  ?> -->
+<script>
+alert('<?php echo \htmlentities($error[1]??'', ENT_QUOTES, 'UTF-8', false); ?>');
+</script>
+<!-- <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?> -->
+<?php endif; ?>
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+ <!-- Page Heading -->
+ <h1 class="h3 mb-4 text-gray-800">Tất cả sản phẩm trong kho: </h1>
+ <div class="float-end mb-3">
+ <button type="button" class="btn btn-success " data-bs-toggle="modal" data-bs-target="#exampleModal">Thêm mới
+ sản phẩm</button>
+ <button data-bs-toggle="collapse" class=" btn btn-success " data-bs-target="#demo">Danh Mục</button>
+ </div>
+ <div id="demo" class="collapse mb-3" style="margin-top: 80px; margin-left: 900px;">
+ <button type="button" class="btn btn-info " data-bs-toggle="modal" data-bs-target="#danhsachdanhmuc">Danh sách
+ danh mục</button>
+ <button type="button" class="btn btn-info " data-bs-toggle="modal" data-bs-target="#exampleModal2">Thêm mới danh
+ mục</button>
+ </div>
+ <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <div class="modal-dialog">
+ <div class="modal-content">
+ <div class="modal-header">
+ <h1 class="modal-title fs-xxl-5" id="exampleModalLabel">Thêm mới sản phẩm</h1>
+ <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+ </div>
+ <div class="modal-body">
+ <form action="<?php echo \htmlentities(route('add-storeProduct')??'', ENT_QUOTES, 'UTF-8', false); ?>" method="post" name="addForm">
+ <div class="mb-3">
+ <label for="exampleInputEmail1" class="form-label">Tên sản phẩm</label>
+ <input type="text" name="name_pro" class="form-control" id="" value="">
+ </div>
+ <div class="mb-3">
+ <label for="exampleInputPassword1" class="form-label">Số lượng còn lại</label>
+ <input type="number" name="quantity" class="form-control" id="" value="">
+ </div>
+ <div class="mb-3">
+ <label for="exampleInputPassword1" class="form-label">Loại sản phẩm</label>
+ <select class="rounded " name="id_subcategory" id="">
+ <?php $__currentLoopData = $subcategory; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $sub): $loop = $this->incrementLoopIndices();  ?>
+ <option class="rounded " value="<?php echo \htmlentities($sub->id??'', ENT_QUOTES, 'UTF-8', false); ?>"><?php echo \htmlentities($sub->name_subcate??'', ENT_QUOTES, 'UTF-8', false); ?></option>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ </select>
+ </div>
+ <div class="mb-3">
+ <label for="exampleInputPassword1" class="form-label">Mô tả</label>
+ <textarea name="description" id="" cols="30" rows="10"></textarea>
+ </div>
+ <button type="submit" name="btn-submit" class="btn btn-success">Submit</button>
+ </form>
+ </div>
+ <div class="modal-footer">
+ <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+ <button type="button" class="btn btn-primary">Save changes</button>
+ </div>
+ </div>
+ </div>
+ </div>
+ <!-- modal 2 -->
+ <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <div class="modal-dialog">
+ <div class="modal-content">
+ <div class="modal-header">
+ <h1 class="modal-title fs-xxl-5" id="exampleModalLabel">Thêm mới danh mục</h1>
+ <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+ </div>
+ <div class="modal-body">
+ <form action="<?php echo \htmlentities(route('add-subcategory')??'', ENT_QUOTES, 'UTF-8', false); ?>" method="post">
+ <div class="mb-3">
+ <label for="exampleInputEmail1" class="form-label">Tên danh mục</label>
+ <input type="text" name="name_subcate" class="form-control" id="" value="">
+ </div>
+ <div class="mb-3">
+ <label for="exampleInputPassword1" class="form-label">Loại sản phẩm</label>
+ <select class="rounded " name="id_category" id="">
+ <?php $__currentLoopData = $cate; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $ca): $loop = $this->incrementLoopIndices();  ?>
+ <option class="rounded " value="<?php echo \htmlentities($ca->id??'', ENT_QUOTES, 'UTF-8', false); ?>"><?php echo \htmlentities($ca->name_cate??'', ENT_QUOTES, 'UTF-8', false); ?></option>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ </select>
+ </div>
+ <button type="submit" name="btn-submitadd" class="btn btn-success">Submit</button>
+ </form>
+ </div>
+ <div class="modal-footer">
+ <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+ <button type="button" class="btn btn-primary">Save changes</button>
+ </div>
+ </div>
+ </div>
+ </div>
+
+ <!-- danh sach danh muc -->
+ <div class="modal fade" id="danhsachdanhmuc" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <div class="modal-dialog">
+ <div class="modal-content">
+ <div class="modal-header">
+ <h1 class="modal-title fs-xxl-5" id="exampleModalLabel">Danh sách danh mục</h1>
+ <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+ </div>
+ <div class="modal-body">
+ <table class="table table-hover">
+ <thead>
+ <tr>
+ <th scope="col">ID</th>
+ <th scope="col">Tên Danh Mục</th>
+ <th scope="col">Loại</th>
+ <th scope="col">Action</th>
+ </tr>
+ </thead>
+ <tbody>
+ <?php $__currentLoopData = $subcategory; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $sub): $loop = $this->incrementLoopIndices();  ?>
+ <tr>
+ <td><?php echo \htmlentities($sub->id??'', ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td><?php echo \htmlentities($sub->name_subcate??'', ENT_QUOTES, 'UTF-8', false); ?></td>
+ <?php $__currentLoopData = $cate; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $ca): $loop = $this->incrementLoopIndices();  ?>
+ <?php if($ca->id == $sub->id_category): ?>
+ <td><?php echo \htmlentities($ca->name_cate??'', ENT_QUOTES, 'UTF-8', false); ?></td>
+ <?php endif; ?>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ <td><a href="<?php echo \htmlentities(route('detailSubcate/'.$sub->id)??'', ENT_QUOTES, 'UTF-8', false); ?>"><button type="button"
+ class="btn btn-warning">Update</button></a> | <a
+ onclick="confirm('bạn có chắc xóa danh mục này')"
+ href="<?php echo \htmlentities(route('deleteSubcate/'.$sub->id)??'', ENT_QUOTES, 'UTF-8', false); ?>"><button
+ class="btn btn-danger">Delete</button></a></td>
+
+ </tr>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ </tbody>
+ </table>
+ </div>
+ <div class="modal-footer">
+ <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+ <button type="button" class="btn btn-primary">Save changes</button>
+ </div>
+ </div>
+ </div>
+ </div>
+ <!-- end2 modal -->
+ <table class="table table-hover">
+ <thead>
+ <tr>
+ <th scope="col">ID</th>
+ <th scope="col">Name</th>
+ <th scope="col">Quantity</th>
+ <th scope="col">Date Import</th>
+ <th scope="col">Category</th>
+ <th scope="col">Description</th>
+ </tr>
+ </thead>
+ <tbody>
+ <?php $__currentLoopData = $products; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $p): $loop = $this->incrementLoopIndices();  ?>
+
+ <tr>
+ <td><?php echo \htmlentities($p->id??'', ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td><?php echo \htmlentities($p->name_pro??'', ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td><?php echo \htmlentities($p->quantity??'', ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td style=""><?php echo \htmlentities($p->datepro??'', ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td style="width: 500px;text-overflow: ellipsis;"><?php echo \htmlentities($p->description??'', ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td>
+ <a href="<?php echo \htmlentities(route('seeDetail/'.$p->id)??'', ENT_QUOTES, 'UTF-8', false); ?>"> <button class="btn btn-success " style="font-size: 10px;">
+ See details
+ </button> </a> <br>
+ <button class="btn btn-warning" style="font-size: 10px;" data-bs-toggle="modal"
+ data-bs-target="#updateProduct<?php echo \htmlentities($p->id??'', ENT_QUOTES, 'UTF-8', false); ?>">
+ Update
+ </button> <br>
+ <a href="<?php echo \htmlentities(route('deleteStoreProduct/'.$p->id)??'', ENT_QUOTES, 'UTF-8', false); ?>"> <button onclick="confirm('bạn có chắc muốn xóa')"
+ class="btn btn-danger " style="font-size: 10px;""> 
+ Delete
+ </button>
+ </a>
+ </td>
+ </tr>
+ <!-- modal update product -->
+ <div class=" modal fade" id="updateProduct<?php echo \htmlentities($p->id??'', ENT_QUOTES, 'UTF-8', false); ?>" tabindex="-1" aria-labelledby="exampleModalLabel"
+ aria-hidden="true">
+ <div class="modal-dialog">
+ <div class="modal-content">
+ <div class="modal-header">
+ <h1 class="modal-title fs-5" id="exampleModalLabel"><b>Edit</b> <?php echo \htmlentities($p->name_pro??'', ENT_QUOTES, 'UTF-8', false); ?>
+
+ </h1>
+ <button type="button" class="btn-close" data-bs-dismiss="modal"
+ aria-label="Close"></button>
+ </div>
+ <div class="modal-body">
+ <form action="<?php echo \htmlentities(route('edit-storeProduct/'.$p->id)??'', ENT_QUOTES, 'UTF-8', false); ?>" method="post">
+ <div class="mb-3">
+ <label for="exampleInputEmail1" class="form-label">Tên sản phẩm</label>
+ <input type="text" name="name_pro" class="form-control" id=""
+ value="<?php echo \htmlentities($p->name_pro??'', ENT_QUOTES, 'UTF-8', false); ?>">
+ </div>
+ <div class="mb-3">
+ <label for="exampleInputPassword1" class="form-label">Số lượng còn
+ lại</label>
+ <input type="number" name="quantity" class="form-control" id=""
+ value="<?php echo \htmlentities($p->quantity??'', ENT_QUOTES, 'UTF-8', false); ?>">
+ </div>
+ <div class="mb-3">
+ <label for="exampleInputPassword1" class="form-label">Loại sản
+ phẩm</label>
+ <select class="rounded " name="id_subcategory" id="">
+ <?php $__currentLoopData = $subcategory; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $sub): $loop = $this->incrementLoopIndices();  ?>
+ <option class="rounded " value="<?php echo \htmlentities($sub->id??'', ENT_QUOTES, 'UTF-8', false); ?>"
+ <?= ($sub->id == $p->id_subcategory) ? 'selected' : ""  ?>>
+ <?php echo \htmlentities($sub->name_subcate??'', ENT_QUOTES, 'UTF-8', false); ?></option>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ </select>
+ </div>
+ <div class="mb-3">
+ <label for="exampleInputPassword1" class="form-label">Mô tả</label>
+ <textarea name="description" id="" cols="30"
+ rows="10"><?php echo \htmlentities($p->description??'', ENT_QUOTES, 'UTF-8', false); ?></textarea>
+ </div>
+ <button type="submit" name="btn-submit"
+ class="btn btn-success">Submit</button>
+ </form>
+ </div>
+ <div class="modal-footer">
+ <button type="button" class="btn btn-secondary"
+ data-bs-dismiss="modal">Close</button>
+ </div>
+ </div>
+ </div>
+</div>
+<!-- end modal update product -->
+
+
+
+<?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+</tbody>
+</table>
+
+<br>
+
+
+
+
+</div>
+</div>
+</div>
+</div>
+
+<!-- End of Main Content -->
+<?php $this->stopSection(); ?>
+<?php if (isset($_shouldextend[1])) { echo $this->runChild('layout.main'); } ?>

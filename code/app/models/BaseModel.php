@@ -41,7 +41,6 @@ class BaseModel
 
     //Function execute the query
     // hàm này sẽ làm hàm chạy câu truy vấn
-    
     public function execute($options = array())
     {   
         // session_destroy();
@@ -94,12 +93,25 @@ class BaseModel
     {
         if (!$option) {
             if (!$result = $this->execute())
+
                 return false;
         } else {
             if (!$result = $this->execute($option))
                 return false;
         }
-        return $result->fetch(PDO::FETCH_OBJ);
+        return $result->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function loadID($options = array())
+    {
+        $this->sta = $this->pdo->prepare($this->sql);
+        if ($options) {  //If have $options then system will be tranmission parameters
+            for ($i = 0; $i < count($options); $i++) {
+                $this->sta->bindParam($i + 1, $options[$i]);
+            }
+        }
+        $this->sta->execute();
+        return $this->pdo->lastInsertId();
     }
 
     //Function count the record on the table
